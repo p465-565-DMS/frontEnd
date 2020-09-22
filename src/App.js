@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { NavBar, Footer, Loading, PrivateRoute } from "./components";
 import { Home, Profile, ExternalApi } from "./views";
 
