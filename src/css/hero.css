@@ -1,0 +1,11 @@
+.mainDiv{
+    text-align: center;
+    margin-top: 6rem;
+}
+
+.heroFont{
+    margin-bottom: 4rem;
+    color: rgb(255, 248, 248);
+    text-shadow: 3px 4px #cc3f14;
+    font-size: 80px
+}

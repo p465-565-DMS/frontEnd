@@ -1,35 +1,23 @@
-.next-steps .fa-link {
-  margin-right: 5px;
+body,html{
+  margin:0;
+  padding:0;
+  width:100%;
+  background-color: #fffde2;
 }
 
-/* Fix for use only flexbox in content area */
-.next-steps .row {
-  margin-bottom: 0;
-}
-
-.next-steps .col-md-5 {
-  margin-bottom: 3rem;
-}
-
-@media (max-width: 768px) {
-  .next-steps .col-md-5 {
-    margin-bottom: 0;
-  }
-}
-
-.spinner {
-  position: absolute;
+.mainContainer{
   display: flex;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-  background-color: white;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-direction: column;
+  background-image:url("./img/mainbackground.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: auto;
+  min-height:100%;
+  position:relative;
 }
 
-.result-block-container .result-block {
-  opacity: 1;
+.spacer{
+  border: 6px dashed;
+  border-color: #fd745c;
+  border-bottom: none;
 }

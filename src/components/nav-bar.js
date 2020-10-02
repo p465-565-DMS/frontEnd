@@ -6,31 +6,42 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "./logout-button";
 import LoginButton from "./login-button";
 
+import navCss from "../css/nav-bar.css"
+import hermesLogo from "../img/logo.png"
+
 const MainNav = () => (
-    <Nav className="mr-auto">
-      <Nav.Link
+    <Nav className="mainnav">
+      <Nav.Link className="navItem"
         as={RouterNavLink}
         to="/"
         exact
         activeClassName="router-link-exact-active"
       >
-        Home
+        <h6>Home</h6>
       </Nav.Link>
-      <Nav.Link
+      <Nav.Link className="navItem"
         as={RouterNavLink}
         to="/profile"
         exact
         activeClassName="router-link-exact-active"
       >
-        Profile
+        <h6>Profile</h6>
       </Nav.Link>
-      <Nav.Link
+      <Nav.Link className="navItem"
         as={RouterNavLink}
         to="/external"
         exact
         activeClassName="router-link-exact-active"
       >
-        ExternalApi
+        <h6>ExternalApi</h6>
+      </Nav.Link>
+      <Nav.Link className="navItem"
+        as={RouterNavLink}
+        to="/maps"
+        exact
+        activeClassName="router-link-exact-active"
+      >
+        <h6>Map</h6>
       </Nav.Link>
     </Nav>
   );
@@ -47,10 +58,11 @@ const MainNav = () => (
   
   const NavBar = () => {
     return (
-      <Navbar bg="light" expand="md">
+      <Navbar expand="md" className='navbar'>
         <Container>
-          <Navbar.Brand as={RouterNavLink} className="logo" to="/" />
-          <MainNav />
+          <img className="app-logo" src={hermesLogo} alt="React logo" width="50"/>
+          <Navbar.Brand as={RouterNavLink} className="logo" to="/"/>
+          <MainNav/>
           <AuthNav />
         </Container>
       </Navbar>

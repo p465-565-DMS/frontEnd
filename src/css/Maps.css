@@ -1,0 +1,32 @@
+ul{
+}
+
+li{
+    list-style: none;
+    margin: 0px;
+    display: block;
+    border: 3px solid black;
+}
+
+.field{
+    list-style: none;
+    margin: 0px;
+    display: block;
+    width: 80%;
+    height: 500px;
+    margin: auto;
+}
+
+.former{
+    margin: auto;
+    display: inline-block;
+    width: 100%;
+}
+
+.button{
+    margin-left: 70%;
+}
+
+.spacerMap{
+    height:100px
+}

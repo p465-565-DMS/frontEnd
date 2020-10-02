@@ -1,7 +1,8 @@
 import React from "react";
+import footerCss from "../css/footer.css"
 
 const Footer = () => (
-  <footer className="bg-light p-3 text-center">
+  <footer className="footer">
     <div className="logo" />
     <p>
       Team 06

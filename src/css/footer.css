@@ -1,0 +1,17 @@
+.footer {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(226, 226, 226);
+    color: black;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+    background-image: url(../img/footerBG.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+    min-height: 300px;
+    text-align: center;
+    margin-top: 5rem;
+}
