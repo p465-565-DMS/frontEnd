@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { NavBar, Footer, Loading, PrivateRoute } from "./components";
-import { Home, Profile, ExternalApi, Map} from "./views";
+import { Home, Profile, ExternalApi, Map, ProfileEdit} from "./views";
 import appCss from "./App.css"
 
 import "./App.css";
@@ -23,9 +23,10 @@ const App = () => {
       <div className="mainContainer">
         <Container className="flex-grow-1 mt-5">
           <Switch>
-          <Route path="/" exact component={Home} />
+            <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/external" component={ExternalApi} />
+            <PrivateRoute path="/profileEdit" component={ProfileEdit} />
             <Route path="/maps" component={Map} />
           </Switch>
         </Container>

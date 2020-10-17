@@ -4,11 +4,11 @@ import { Highlight } from "../components";
 import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import profileCss from "../css/profile.css";
 import { useHistory } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 import { Route } from 'react-router-dom'
 
+import { useAuth0 } from "@auth0/auth0-react";
 
-const Profile = () => {
+const ProfileEdit = () => {
   const { user } = useAuth0();
   const { name, picture, email } = user;
   const object = JSON.parse(JSON.stringify(user, null, 2));
@@ -16,9 +16,9 @@ const Profile = () => {
     <Route render={({ history}) => (
       <button
         type='button'
-        onClick={() => { history.push('/profileEdit') }}
+        onClick={() => { history.push('/profile') }}
       >
-        Edit
+        Submit
       </button>
     )} />
   )
@@ -37,9 +37,6 @@ const Profile = () => {
           <h2>{name}</h2>
           <p className="lead text-muted">{email}</p>
         </Col>
-        <Col>
-          <Button/>
-        </Col>
       </Row>
       <Row>
         {
@@ -49,41 +46,42 @@ const Profile = () => {
         }
         <label for="staticFirstName" class="col-sm-2 col-form-label">First Name</label>
         <Col>
-          <input type="text" readonly class="form-control-plaintext" placeholder={object.nickname}/>
+          <input type="text" class="form-control" placeholder={object.nickname}/>
         </Col>
         <label for="staticLastName" class="col-sm-2 col-form-label">Last Name</label>
         <Col>
-          <input type="text" readonly class="form-control-plaintext" placeholder={object.name}/>
+          <input type="text" class="form-control" placeholder={object.name}/>
         </Col>
       </Row>
       <Row>
         <label for="staticEmail" class="col-sm-2 col-form-label">Email Address</label>
         <Col>
-          <input type="text" class="form-control-plaintext" placeholder={object.email} disabled/>
+          <input type="text" class="form-control" placeholder={object.email}/>
         </Col>
         <label for="staticLastUpdate" class="col-sm-2 col-form-label">Last Update</label>
         <Col>
-          <input type="text" class="form-control-plaintext" placeholder={object.updated_at} disabled/>
+          <input type="text" class="form-control" placeholder={object.updated_at}/>
         </Col>
       </Row>
       <Row>
         <label for="staticDoB" class="col-sm-2 col-form-label">Date of Birth</label>
         <Col>
-          <input type="text" class="form-control-plaintext" placeholder={" "} disabled/>
+          <input type="text" class="form-control" placeholder={" "}/>
         </Col>
         <label for="staticRoleId" class="col-sm-2 col-form-label">Role</label>
         <Col>
-          <input type="text" class="form-control-plaintext" placeholder={" "} disabled/>
+          <input type="text" class="form-control" placeholder={" "}/>
         </Col>
       </Row>
       <Row>
         <label for="staticAddress" class="col-sm-2 col-form-label">Address</label>
         <Col>
-          <input type="text" class="form-control-plaintext" placeholder={" "} disabled/>
+          <input type="text" class="form-control" placeholder={" "}/>
         </Col>
       </Row>
+      <Button/>
     </Container>
   );
 };
 
-export default Profile;
+export default ProfileEdit;
