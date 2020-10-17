@@ -17,6 +17,7 @@ const ProfileEdit = () => {
       <button
         type='button'
         onClick={() => { history.push('/profile') }}
+        class="btn btn-primary"
       >
         Submit
       </button>

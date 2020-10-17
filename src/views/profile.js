@@ -6,6 +6,8 @@ import profileCss from "../css/profile.css";
 import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Route } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/fontawesome-free-regular';
 
 
 const Profile = () => {
@@ -17,8 +19,10 @@ const Profile = () => {
       <button
         type='button'
         onClick={() => { history.push('/profileEdit') }}
+        class="btn btn-default"
+        aria-label="Edit"
       >
-        Edit
+        <FontAwesomeIcon icon={faEdit}/>
       </button>
     )} />
   )
@@ -27,6 +31,8 @@ const Profile = () => {
     <Container className="profileContainer">
       <Row className="align-items-center profile-header mb-5 text-center text-md-left">
         <Col md={2}>
+          <FontAwesomeIcon icon="home"/>
+          <FontAwesomeIcon icon="edit"/>
           <img
             src={picture}
             alt="Profile"
