@@ -9,12 +9,17 @@
     color: rgb(255, 248, 248);
     text-shadow: 3px 4px #cc3f14;
     font-size: 80px;
+    -webkit-text-stroke: 2px #cc3f14;
+    font-weight: 800;
 }
 
 .heroH2{
     margin-bottom: 4rem;
     margin-top: 3rem;
-    color: rgb(255, 248, 248);
-    text-shadow: 3px 4px #cc3f14;
-    font-size: 40px;
+    color: rgb(255, 255, 255);
+    font-style: italic;
+    font-size: 50px;
+    -webkit-text-stroke: 2px #cc3f14;
+    font-weight: 800;
+    text-shadow: 4px 3px #cc3f14;
 }

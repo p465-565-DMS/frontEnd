@@ -1,4 +1,13 @@
-body,html{
+body{
+  margin:0;
+  padding:0;
+  width:100%;
+  background-color: #fffde2;
+  background-image:url("./img/mainbackground.jpg");
+  background-repeat: no-repeat;
+}
+
+html{
   margin:0;
   padding:0;
   width:100%;
@@ -8,9 +17,6 @@ body,html{
 .mainContainer{
   display: flex;
   flex-direction: column;
-  background-image:url("./img/mainbackground.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
   height: auto;
   min-height:100%;
   position:relative;
@@ -18,8 +24,8 @@ body,html{
 }
 
 .spacer{
-  border: 6px dashed;
-  border-color: #fd745c;
+  border: 5px dashed;
+  border-color: #fff;
   border-bottom: none;
 }
 
