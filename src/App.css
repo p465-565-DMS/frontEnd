@@ -2,16 +2,17 @@ body{
   margin:0;
   padding:0;
   width:100%;
-  background-color: #fffde2;
+  background-color: #ffffff;
   background-image:url("./img/mainbackground.jpg");
   background-repeat: no-repeat;
+  background-position-y: 30px;
 }
 
 html{
   margin:0;
   padding:0;
   width:100%;
-  background-color: #fffde2;
+  background-color: #ffffff;
 }
 
 .mainContainer{

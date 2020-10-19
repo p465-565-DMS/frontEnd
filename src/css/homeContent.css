@@ -1,0 +1,75 @@
+.gridContainer {
+    grid-template-columns: 100px 50px 100px;
+    grid-template-rows: 80px auto 80px; 
+    column-gap: 10px;
+    row-gap: 15px;
+  }
+
+.homeContentBox{
+   margin: 0px;
+   padding-left: 50px;
+   padding-right: 50px;
+   padding-top: 100px;
+   width: 100%;
+   min-height:400px;
+   background-color: white;
+}
+
+.homeContentBox2{
+    margin: 0px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 100px;
+    width: 100%;
+    min-height:400px;
+    background-color: #fffde2;
+}
+
+.homeContentItemBox1{
+    min-height: 400px;
+    background-color: white;
+    text-align: center;
+}
+
+.homeContentItemBox2{
+    min-height: 400px;
+    background-color: #fffde2;
+    text-align: center;
+}
+
+.homeContentItem{
+    min-height: 400px;
+    background-color: white;
+    text-align: center;
+}
+
+.homeContentItemText{
+    min-height: 400px;
+    background-color: white;
+    text-align: left;
+    margin-left: 150px;
+    font-family: Helvetica, sans-serif;
+}
+
+.homeContentItem2{
+    min-height: 400px;
+    background-color: #fffde2;
+    text-align: center;
+}
+
+.homeContentItemText2{
+    min-height: 400px;
+    background-color: #fffde2;
+    text-align: left;
+    margin-right: 150px;
+    font-family: Helvetica, sans-serif;
+}
+
+.homeContentItemTextH1{
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.homeContentItemTextP{
+    font-size: 20px;
+}

@@ -1,26 +1,41 @@
 .cardList{
     margin-top: 150px;
-    display: table;
-    table-layout: auto;
-    width: 100%;  
-    padding-left: 25px;
-    padding-top: 20px;
+    display: inline-block;
+    width: 70%;
+    margin: 0;
+    padding-top: 10px;
 }
 
 .card{
     height: 200px;
     max-width: 300px;
-    margin-right: 60px;
+    margin: 20px 22px;
 }
 
 .overlayDiv{
     position: absolute;
-    top: 50%;
+    top: 30%;
 }
 
 .cardFont{
     color: rgb(255, 248, 248);
-    text-shadow: 3px 3px #cc3f14;
-    font-size: 70px;
+    text-shadow: 3px 3px #333333;
+    font-size: 35px;
     padding-left: 10px;
+}
+
+.gridItem{
+    justify-content: center;
+}
+
+.cardH1 {
+    margin-top: 20px;
+    padding-top: 50px;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    text-align: left;
+}
+
+
+.cardsCenter{
+    text-align: center;
 }

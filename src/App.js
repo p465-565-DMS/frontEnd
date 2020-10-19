@@ -17,11 +17,11 @@ const App = () => {
   }
 
   return (
-    <div id="app" >
+    <div>
       <NavBar />
       <div className="spacer"/>
       <div className="mainContainer">
-        <Container className="flex-grow-1 mt-5">
+        <div className="flex-grow-1">
           <Switch>
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile" component={Profile} />
@@ -29,7 +29,7 @@ const App = () => {
             <PrivateRoute path="/profileEdit" component={ProfileEdit} />
             <Route path="/maps" component={Map} />
           </Switch>
-        </Container>
+        </div>
       </div>
       <Footer />
     </div>
