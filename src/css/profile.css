@@ -1,0 +1,19 @@
+.profileDataStyle{
+    color: black;
+    width:100%;
+  }
+
+.profileLabelStyle{
+    width: auto;
+    margin-right: 10%;
+}
+
+.profileContainer{
+    background-color: #ffffffec;
+    margin-top: 100px;
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 100px;
+    border-radius: 15px;
+}

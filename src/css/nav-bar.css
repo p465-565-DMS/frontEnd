@@ -1,0 +1,23 @@
+.navbar{
+    background-color: #fd745c;
+    padding-top: 10px;
+}
+
+.mainnav{
+    margin-right: auto;
+}
+
+h6{
+    color: white;
+    font-family: Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+h6:hover{
+    color: rgba(44, 44, 44, 0.623);
+}
+
+.navItem{
+    height: 45px;
+    padding-top: 11px;
+}
