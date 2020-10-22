@@ -1,6 +1,6 @@
 import ExternalApi from "./external-api";
 import Home from "./home";
-import Profile from "./profile";
+import Profile from "./UserProfile";
 import Map from "./Maps"  
 import ProfileEdit from "./profileEdit";
 

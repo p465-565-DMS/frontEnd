@@ -24,6 +24,8 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { createBrowserHistory } from "history";
 
 import AdminLayout from "./layouts/Admin.js";
+import UserLayout from "./layouts/User.js";
+
 const hist = createBrowserHistory();
 
 const App = () => {
@@ -58,6 +60,8 @@ const App = () => {
         />
         <Route
           path="/admin" render={(props) => <AdminLayout {...props} />} />
+        <Route
+          path="/user" render={(props) => <UserLayout {...props} />} />
         <Redirect to="/index" />
         <Redirect from="/" to="/index" />
       </Switch>
