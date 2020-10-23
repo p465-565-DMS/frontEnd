@@ -19,7 +19,7 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 
-function IndexNavbar() {
+function PublicNavBar() {
   const { loginWithRedirect } = useAuth0();
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = React.useState(false);
@@ -105,4 +105,4 @@ function IndexNavbar() {
   );
 }
 
-export default IndexNavbar;
+export default PublicNavBar;

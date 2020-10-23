@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import PrivateNavBar from "./PrivateNavbar";
@@ -20,30 +20,17 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 
-const AuthNav = () => {
+export default function IndexNavbar() {
   const { isAuthenticated } = useAuth0();
-
+  useEffect(() => {
+    console.log(isAuthenticated)
+  });
   return (
     <div>
       {isAuthenticated ? <PrivateNavBar /> : <PublicNavBar />}
     </div>
   );
 };
-const IndexNavbar = () => {
-  return (
-  //   <Navbar expand="md" className='navbar'>
-  //     <Container>
-  //       <img className="app-logo" src={hermesLogo} alt="React logo" width="50"/>
-  //       <Navbar.Brand as={RouterNavLink} className="logo" to="/"/>
-  //       <MainNav/>
-  //       <AuthNav />
-  //     </Container>
-  //   </Navbar>
-  <AuthNav/>
-  );
-};
-
-export default IndexNavbar;
 
 // function IndexNavbar() {
 //   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");

@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 /*!
 
 =========================================================
@@ -33,12 +34,16 @@ import {
   Col,
 } from "reactstrap";
 
-class UserProfile extends React.Component {
-  render() {
+export default function UserProfile() {
+  const {user} = useAuth0();
+  //const {email, nickname, picture} = user;
+  const UpdateProfile = () =>{
+    alert("Sending");
+  }
     return (
       <>
         <div className="content">
-          <Row>
+             <Row>
             <Col md="4">
               <Card className="card-user">
                 <div className="image">
@@ -93,7 +98,8 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>Username</label>
                           <Input
-                            defaultValue="michael23"
+                            disabled
+                            defaultValue="user123"
                             placeholder="Username"
                             type="text"
                           />
@@ -104,7 +110,11 @@ class UserProfile extends React.Component {
                           <label htmlFor="exampleInputEmail1">
                             Email address
                           </label>
-                          <Input placeholder="Email" type="email" />
+                          <Input
+                          disabled
+                          defaultValue="abc@email.com "
+                          placeholder="Email"
+                          type="email" />
                         </FormGroup>
                       </Col>
                       <Col className="pl-1" md="3">
@@ -186,6 +196,7 @@ class UserProfile extends React.Component {
                           className="btn-round"
                           color="primary"
                           type="submit"
+                          onClick = {UpdateProfile}
                         >
                           Update Profile
                         </Button>
@@ -200,6 +211,4 @@ class UserProfile extends React.Component {
       </>
     );
   }
-}
 
-export default UserProfile;

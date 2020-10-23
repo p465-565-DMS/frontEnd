@@ -33,8 +33,8 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      backgroundColor: "black",
-      activeColor: "info",
+      backgroundColor: "red",
+      activeColor: "danger",
     };
     this.mainPanel = React.createRef();
   }

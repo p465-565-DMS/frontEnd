@@ -68,6 +68,17 @@ class FixedPlugin extends Component {
                     this.props.handleBgClick("white");
                   }}
                 />
+                <span
+                  className={
+                    this.props.bgColor === "red"
+                      ? "badge filter badge-primary active"
+                      : "badge filter badge-primary"
+                  }
+                  data-color="red"
+                  onClick={() => {
+                    this.props.handleBgClick("red");
+                  }}
+                />
               </div>
             </li>
             <li className="header-title">SIDEBAR ACTIVE COLOR</li>

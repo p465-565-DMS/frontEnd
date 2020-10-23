@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Footer, Loading, PrivateRoute } from "./components";
 import NavBar from "./components/Navbars/navbar"
-import { Home, Profile, ExternalApi, Map, ProfileEdit} from "./views";
+import { Home, Profile, ExternalApi, Map, ProfileEdit } from "./views";
 import appCss from "./App.css"
 import "./assets/css/bootstrap.min.css";
 import "./assets/scss/now-ui-kit.scss?v=1.4.0";
@@ -37,50 +37,15 @@ const App = () => {
 
   return (
     <div id="app" >
-      <IndexNavbar/>
-      <BrowserRouter history={hist}>
-    <Switch>
+      <IndexNavbar />
       <Switch>
         <Route path="/index" render={(props) => <Index {...props} />} />
-        <Route
-          path="/nucleo-icons"
-          render={(props) => <NucleoIcons {...props} />}
-        />
-        <Route
-          path="/landing-page"
-          render={(props) => <LandingPage {...props} />}
-        />
-        <Route
-          path="/profile-page"
-          render={(props) => <ProfilePage {...props} />}
-        />
-        <Route
-          path="/login-page"
-          render={(props) => <LoginPage {...props} />}
-        />
         <Route
           path="/admin" render={(props) => <AdminLayout {...props} />} />
         <Route
           path="/user" render={(props) => <UserLayout {...props} />} />
-        <Redirect to="/index" />
         <Redirect from="/" to="/index" />
-      </Switch>
-    </Switch>
-  </BrowserRouter>
-  {/* <DarkFooter /> */}
-      {/* <div className="spacer"/>
-      <div className="mainContainer">
-        <Container className="flex-grow-1 mt-5">
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <PrivateRoute path="/profile" component={Profile} />
-            <PrivateRoute path="/external" component={ExternalApi} />
-            <PrivateRoute path="/profileEdit" component={ProfileEdit} />
-            <Route path="/maps" component={Map} />
-          </Switch>
-        </Container>
-      </div>
-      <Footer /> */}
+        </Switch>
     </div>
   );
 };

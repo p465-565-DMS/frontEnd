@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory  } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import logo from "./logo40.png"
 import { NavLink as RouterNavLink } from "react-router-dom";
@@ -20,8 +20,16 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 
-function IndexNavbar() {
-  const { logout } = useAuth0();
+function PrivateNavBar() {
+  const { user, logout } = useAuth0();
+  const history = useHistory();
+  const routeUserProfile = () => {
+    history.push(`/admin/user-page`);
+  };
+  const routeIndex = () => {
+    history.push(`/index`);
+  };
+  
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   React.useEffect(() => {
@@ -81,8 +89,7 @@ function IndexNavbar() {
                   <Nav className="ml-auto" navbar>
                     <NavItem className="active">
                       <NavLink
-                        href="/index"
-                        onClick={() => <Redirect to="/index"/>}
+                        onClick={routeIndex}
                         >
                         <i className="now-ui-icons objects_globe"></i>
                         <p>Home</p>
@@ -103,8 +110,7 @@ function IndexNavbar() {
                         </DropdownToggle>
                         <DropdownMenu right>
                           <DropdownItem
-                            href="/admin/user-page"
-                            onClick={() => <Redirect to="/user-page"/>}
+                            onClick={routeUserProfile}
                           >
                             Profile
                           </DropdownItem>
@@ -134,4 +140,4 @@ function IndexNavbar() {
   );
 }
 
-export default IndexNavbar;
+export default PrivateNavBar;
