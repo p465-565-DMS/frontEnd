@@ -39,11 +39,13 @@ const App = () => {
     <div id="app" >
       <IndexNavbar />
       <Switch>
-        <Route path="/index" render={(props) => <Index {...props} />} />
-        <Route
+        <Route path="/index" exact component={Index} />
+        {/* <PrivateRoute
           path="/admin" render={(props) => <AdminLayout {...props} />} />
         <Route
-          path="/user" render={(props) => <UserLayout {...props} />} />
+          path="/user" render={(props) => <UserLayout {...props} />} /> */}
+        <PrivateRoute path="/admin" component={AdminLayout} />
+        <PrivateRoute path="/user" component={UserLayout} />
         <Redirect from="/" to="/index" />
         </Switch>
     </div>

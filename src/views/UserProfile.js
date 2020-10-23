@@ -1,4 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
+
 /*!
 
 =========================================================
@@ -18,6 +18,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 */
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // reactstrap components
 import {
@@ -35,9 +36,10 @@ import {
 } from "reactstrap";
 
 export default function UserProfile() {
-  const {user} = useAuth0();
-  //const {email, nickname, picture} = user;
-  const UpdateProfile = () =>{
+  const { user } = useAuth0();
+
+  const UpdateProfile = (e) =>{
+    e.preventDefault();
     alert("Sending");
   }
     return (
@@ -57,9 +59,9 @@ export default function UserProfile() {
                     <img
                       alt="..."
                       className="avatar border-gray"
-                      src={require("../assets/img/mike.jpg")}
+                      src={`${user.picture}`}
                     />
-                    <h5 className="title">User 12345</h5>
+                    <h5 className="title">{user.nickname}</h5>
                   </div>
                 </CardBody>
               </Card>
@@ -76,7 +78,7 @@ export default function UserProfile() {
                         <FormGroup>
                           <label>First Name</label>
                           <Input
-                            defaultValue="User"
+                            defaultValue=""
                             placeholder="First Name"
                             type="text"
                           />
@@ -86,7 +88,7 @@ export default function UserProfile() {
                         <FormGroup>
                           <label>Last Name</label>
                           <Input
-                            defaultValue="12345"
+                            defaultValue=""
                             placeholder="Last Name"
                             type="text"
                           />
@@ -99,7 +101,7 @@ export default function UserProfile() {
                           <label>Username</label>
                           <Input
                             disabled
-                            defaultValue="user123"
+                            defaultValue={`${user.nickname}`}
                             placeholder="Username"
                             type="text"
                           />
@@ -112,7 +114,7 @@ export default function UserProfile() {
                           </label>
                           <Input
                           disabled
-                          defaultValue="abc@email.com "
+                          defaultValue={`${user.email}`}
                           placeholder="Email"
                           type="email" />
                         </FormGroup>
@@ -121,7 +123,7 @@ export default function UserProfile() {
                         <FormGroup>
                           <label>Role</label>
                           <Input
-                            defaultValue="Admin"
+                            defaultValue={`${user.role}`}
                             disabled
                             placeholder="Role"
                             type="text"
@@ -132,7 +134,7 @@ export default function UserProfile() {
                     <Row>
                       <Col className="pr-1" md="6">
                         <FormGroup>
-                          <label>Company (disabled)</label>
+                          <label>Company</label>
                           <Input
                             defaultValue="Creative Code Inc."
                             disabled
@@ -210,5 +212,4 @@ export default function UserProfile() {
         </div>
       </>
     );
-  }
-
+}
