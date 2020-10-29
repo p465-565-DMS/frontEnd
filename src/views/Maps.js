@@ -100,7 +100,7 @@ const Maps = () => {
       </div>
       <div className="field">
         <CustomSkinMap
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeyruKDAu13YYMgWVU6f4ZPk_zRFmzsgY"
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}"
           loadingElement={<div style={{ height: `100%` }} />}
           containerElement={<div style={{ height: `100vh`, width: `100%` }} />}
           mapElement={<div style={{ height: `60%`, width: `100%`, marginLeft:`0px`, marginTop:`0px`, paddingLeft:`0px`}} />}

@@ -24,6 +24,7 @@ import TableList from "./views/EmployeeTable.js";
 import Maps from "./views/Map.js";
 import UserPage from "./views/UserProfile.js";
 import UpgradeToPro from "./views/Upgrade.js";
+import FillInfo from "./views/FillInfoPage.js";
 
 var UserRoutes = [
   {

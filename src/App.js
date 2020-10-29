@@ -25,6 +25,8 @@ import { createBrowserHistory } from "history";
 
 import AdminLayout from "./layouts/Admin.js";
 import UserLayout from "./layouts/User.js";
+import FillInfoPage from "./views/FillInfoPage.js";
+import Maps from "./views/Maps.js";
 
 const hist = createBrowserHistory();
 
@@ -40,6 +42,8 @@ const App = () => {
       <IndexNavbar />
       <Switch>
         <Route path="/index" exact component={Index} />
+        <Route path="/fill-info" exact component={FillInfoPage} />
+        <Route path="/map" exact component={Maps} />
         {/* <PrivateRoute
           path="/admin" render={(props) => <AdminLayout {...props} />} />
         <Route
