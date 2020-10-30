@@ -27,7 +27,7 @@ const loadScript = (url, callback) => {
 function handleScriptLoad(updateQuery, autoCompleteRef) {
   autoComplete = new window.google.maps.places.Autocomplete(
     autoCompleteRef.current,
-    { types: ["(cities)"], componentRestrictions: { country: "us" } }
+    { types: ["geocode"], componentRestrictions: { country: "us" } }
   );
   autoComplete.setFields(["address_components", "formatted_address"]);
   autoComplete.addListener("place_changed", () =>
@@ -58,7 +58,7 @@ function SearchLocationInput() {
       <Input
         innerRef={autoCompleteRef}
         onChange={event => setQuery(event.target.value)}
-        placeholder="Enter a City"
+        placeholder="Enter Your Address"
         value={query}
         type="text"
       />

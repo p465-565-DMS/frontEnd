@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchLocationInput from '../components/SearchLocationInput';
+import { Redirect, useHistory } from "react-router-dom";
+import { Loading } from "../components"
 // reactstrap components
 import {
   Button,
@@ -16,12 +18,74 @@ import {
   Col,
 } from "reactstrap";
 
-export default function UserProfile() {
+export default function UserProfile(props) {
+  const history = useHistory();
   const { user } = useAuth0();
+  const { email, picture, nickname } = user;
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [role, setRole] = useState("");
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const [message, setMessage] = useState("");
+  const { getAccessTokenSilently } = useAuth0();
+  const [isLoadingTrue, setLoading] = useState("False");
 
-  const UpdateProfile = (e) =>{
-    e.preventDefault();
-    alert("Sending");
+  const callSecureApi = async (userDetails)  =>{
+    const token = await getAccessTokenSilently();
+    fetch(`${apiUrl}/fill-info`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+    },
+    body: userDetails,
+  }).then((response) => {
+    if (!response.ok) {
+      console.log("SOMETHING WENT WRONG");
+    } else {
+      console.log("SUCCESSS");
+      history.push(window.location.origin);
+    }
+  });
+};
+
+const lookup = {User:1, DeliveryDriver:2, DeliveryAdmin:3, Admin:4}
+
+const handleSubmit = (evt) => {
+  setLoading("True")
+  evt.preventDefault();
+  let streetAddress = localStorage.getItem("streetAddress");
+  let city = localStorage.getItem("city");
+  let state = localStorage.getItem("state");
+  let country = localStorage.getItem("country");
+  let googleMapLink = localStorage.getItem("googleMapLink");
+  let auth0_id = user.sub;
+  let username = user.nickname;
+  let address = {
+    address: streetAddress,
+    city,
+    state,
+    zip: zipCode,
+    country,
+    google_map_link: googleMapLink,
+  };
+
+  let userDetails = JSON.stringify({
+    auth0_id,
+    username,
+    email,
+    roleid: lookup[role],
+    fname: firstName,
+    lname: lastName,
+    address,
+  });
+  console.log(userDetails);
+  callSecureApi(userDetails);
+  };
+  if (isLoadingTrue === "True") {
+    return <Loading />;
   }
     return (
       <>
@@ -34,15 +98,17 @@ export default function UserProfile() {
                   <CardTitle tag="h5">Complete Your Profile</CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <Form>
+                  <Form onSubmit = {handleSubmit}>
                     <Row>
                       <Col className="pr-1" md="6">
                         <FormGroup>
                           <label>First Name</label>
                           <Input
-                            defaultValue=""
+                            required
                             placeholder="First Name"
                             type="text"
+                            onChange={e => setFirstName(e.target.value)}
+                            value={firstName}
                           />
                         </FormGroup>
                       </Col>
@@ -50,8 +116,10 @@ export default function UserProfile() {
                         <FormGroup>
                           <label>Last Name</label>
                           <Input
-                            defaultValue=""
+                            required
                             placeholder="Last Name"
+                            onChange={e => setLastName(e.target.value)}
+                            value={lastName}
                             type="text"
                           />
                         </FormGroup>
@@ -63,7 +131,7 @@ export default function UserProfile() {
                           <label>Username</label>
                           <Input
                             disabled
-                            defaultValue={`${user.nickname}`}
+                            defaultValue={nickname}
                             placeholder="Username"
                             type="text"
                           />
@@ -76,7 +144,7 @@ export default function UserProfile() {
                           </label>
                           <Input
                           disabled
-                          defaultValue={`${user.email}`}
+                          defaultValue={email}
                           placeholder="Email"
                           type="email" />
                         </FormGroup>
@@ -85,46 +153,52 @@ export default function UserProfile() {
                         <FormGroup>
                           <label>Role</label>
                           <Input
-                            defaultValue={`${user.role}`}
                             placeholder="Role"
+                            onChange={e => setRole(e.target.value)}
                             type="select"
                           >
                             <option>User</option>
-                            <option>Deliver</option>
+                            <option>DeliveryDriver</option>
+                            <option>DeliveryAdmin</option>
                             </Input>
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                       <Col className="pr-1" md="6">
                         <FormGroup>
                           <label>Company</label>
                           <Input
                             placeholder="Company Name"
+                            onChange={e => (e.target.value)}
                             type="text"
                           />
                         </FormGroup>
                       </Col>
-                      <Col className="pl-1" md="6">
+                     <Col className="pl-1" md="6">
                         <FormGroup>
                           <label htmlFor="exampleInputEmail1">
                             Phone Number
                           </label>
-                          <Input placeholder="(123)456-7890" type="phone" />
+                          <Input 
+                          required
+                          placeholder="(123)456-7890" 
+                          onChange={e => setPhoneNumber(e.target.value)}
+                          type="phone" />
                         </FormGroup>
-                      </Col>
-                    </Row>
+                      </Col> 
+                    </Row> */}
                     <Row>
                       <Col md="12">
                         <FormGroup>
                           <label>Address</label>
-                          <SearchLocationInput
+                          <SearchLocationInput required
                           />
                         </FormGroup>
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="pr-1" md="4">
+                      {/* <Col className="pr-1" md="4">
                         <FormGroup>
                           <label>City</label>
                           <Input
@@ -141,11 +215,15 @@ export default function UserProfile() {
                             type="text"
                           />
                         </FormGroup>
-                      </Col>
-                      <Col className="pl-1" md="4">
+                      </Col> */}
+                      <Col md="4">
                         <FormGroup>
                           <label>Postal Code</label>
-                          <Input placeholder="ZIP Code" type="number" />
+                          <Input 
+                          required
+                          placeholder="ZIP Code" 
+                          onChange={e => setZipCode(e.target.value)}
+                          type="number" />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -155,7 +233,6 @@ export default function UserProfile() {
                           className="btn-round"
                           color="primary"
                           type="submit"
-                          onClick = {UpdateProfile}
                         >
                           Submit
                         </Button>

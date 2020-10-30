@@ -42,7 +42,6 @@ const App = () => {
       <IndexNavbar />
       <Switch>
         <Route path="/index" exact component={Index} />
-        <Route path="/fill-info" exact component={FillInfoPage} />
         <Route path="/map" exact component={Maps} />
         {/* <PrivateRoute
           path="/admin" render={(props) => <AdminLayout {...props} />} />
@@ -50,6 +49,7 @@ const App = () => {
           path="/user" render={(props) => <UserLayout {...props} />} /> */}
         <PrivateRoute path="/admin" component={AdminLayout} />
         <PrivateRoute path="/user" component={UserLayout} />
+        <PrivateRoute path="/fill-info"  component={FillInfoPage} />
         <Redirect from="/" to="/index" />
         </Switch>
     </div>
