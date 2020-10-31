@@ -1,69 +1,70 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-    Input,
-  } from "reactstrap";
-
-let autoComplete;
-
-const loadScript = (url, callback) => {
-  let script = document.createElement("script");
-  script.type = "text/javascript";
-
-  if (script.readyState) {
-    script.onreadystatechange = function() {
-      if (script.readyState === "loaded" || script.readyState === "complete") {
-        script.onreadystatechange = null;
-        callback();
-      }
-    };
-  } else {
-    script.onload = () => callback();
+import React from "react";
+/* global google */
+import { Input } from "reactstrap";
+class SearchLocationInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.initialState();
+    this.autocompleteInput = React.createRef();
+    this.autocomplete = null;
+    this.handlePlaceChanged = this.handlePlaceChanged.bind(this);
   }
 
-  script.src = url;
-  document.getElementsByTagName("head")[0].appendChild(script);
-};
-
-function handleScriptLoad(updateQuery, autoCompleteRef) {
-  autoComplete = new window.google.maps.places.Autocomplete(
-    autoCompleteRef.current,
-    { types: ["geocode"], componentRestrictions: { country: "us" } }
-  );
-  autoComplete.setFields(["address_components", "formatted_address"]);
-  autoComplete.addListener("place_changed", () =>
-    handlePlaceSelect(updateQuery)
-  );
-}
-
-async function handlePlaceSelect(updateQuery) {
-  const addressObject = autoComplete.getPlace();
-  const query = addressObject.formatted_address;
-  updateQuery(query);
-  console.log(addressObject);
-}
-
-function SearchLocationInput() {
-  const [query, setQuery] = useState("");
-  const autoCompleteRef = useRef(null);
-
-  useEffect(() => {
-    loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=AIzaSyCeyruKDAu13YYMgWVU6f4ZPk_zRFmzsgY&libraries=places`,
-      () => handleScriptLoad(setQuery, autoCompleteRef)
+  componentDidMount() {
+    this.autocomplete = new google.maps.places.Autocomplete(
+      this.autocompleteInput.current,
+      { types: ["geocode"] }
     );
-  }, []);
 
-  return (
-    <div className="search-location-input">
-      <Input
-        innerRef={autoCompleteRef}
-        onChange={event => setQuery(event.target.value)}
+    this.autocomplete.addListener("place_changed", this.handlePlaceChanged);
+  }
+
+  handlePlaceChanged() {
+    let addressObject = this.autocomplete.getPlace();
+    let address = addressObject.address_components;
+    this.setState({
+      name: addressObject.name,
+      streetAddress: `${address[0].long_name} ${address[1].long_name}`,
+      city: address[2].long_name,
+      country: address[6].long_name,
+      state: address[5].long_name,
+      googleMapLink: addressObject.url,
+    });
+    localStorage.setItem("streetAddress", this.state.streetAddress);
+    localStorage.setItem("city", this.state.city);
+    localStorage.setItem("state", this.state.state);
+    localStorage.setItem("country", this.state.country);
+    localStorage.setItem("googleMapLink", this.state.googleMapLink);
+  }
+  initialState() {
+    return {
+      name: "",
+      streetAddress: "",
+      city: "",
+      state: "",
+      count: "",
+      zipCode: "",
+      googleMapLink: "",
+    };
+  }
+
+  render() {
+    return (
+      <input
+        ref={this.autocompleteInput}
+        id="autocomplete"
         placeholder="Enter Your Address"
-        value={query}
         type="text"
-      />
-    </div>
-  );
+        style={{
+          width: "100%",
+          border: "0px",
+          marginTop: "25px",
+          marginBottom: "25px",
+          fontSize: "14px",
+          color: "#495057"
+        }}
+      ></input>
+    );
+  }
 }
-
 export default SearchLocationInput;

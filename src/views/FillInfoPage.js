@@ -54,6 +54,7 @@ export default function UserProfile(props) {
 const lookup = {User:1, DeliveryDriver:2, DeliveryAdmin:3, Admin:4}
 
 const handleSubmit = (evt) => {
+  console.log(role)
   setLoading("True")
   evt.preventDefault();
   let streetAddress = localStorage.getItem("streetAddress");
@@ -63,23 +64,14 @@ const handleSubmit = (evt) => {
   let googleMapLink = localStorage.getItem("googleMapLink");
   let auth0_id = user.sub;
   let username = user.nickname;
-  let address = {
-    address: streetAddress,
-    city,
-    state,
-    zip: zipCode,
-    country,
-    google_map_link: googleMapLink,
-  };
-
+  let userpassword = "123456"
   let userDetails = JSON.stringify({
-    auth0_id,
     username,
-    email,
-    roleid: lookup[role],
+    roleid: "1",
+    userpassword,
     fname: firstName,
     lname: lastName,
-    address,
+    address: streetAddress,
   });
   console.log(userDetails);
   callSecureApi(userDetails);
@@ -223,7 +215,7 @@ const handleSubmit = (evt) => {
                           required
                           placeholder="ZIP Code" 
                           onChange={e => setZipCode(e.target.value)}
-                          type="number" />
+                          type="text" />
                         </FormGroup>
                       </Col>
                     </Row>
