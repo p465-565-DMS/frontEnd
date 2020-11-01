@@ -3,6 +3,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import SearchLocationInput from '../components/SearchLocationInput';
 import { Redirect, useHistory } from "react-router-dom";
 import { Loading } from "../components"
+
+
+
 // reactstrap components
 import {
   Button,
@@ -16,6 +19,11 @@ import {
   Input,
   Row,
   Col,
+  Collapse,
+  Container,
+  ListGroup, 
+  ListGroupItem,
+  Label,
 } from "reactstrap";
 
 export default function UserProfile(props) {
@@ -31,7 +39,20 @@ export default function UserProfile(props) {
   const [message, setMessage] = useState("");
   const { getAccessTokenSilently } = useAuth0();
   const [isLoadingTrue, setLoading] = useState("False");
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  const toggle1 = () => {
+    setIsOpen(!isOpen)
+    if (isOpen2){
+      setIsOpen2(!isOpen2)
+    }
+  };
+  const toggle2 = () => {
+    setIsOpen2(!isOpen2)
+    if (isOpen){
+      setIsOpen(!isOpen)
+    }
+  };
   const callSecureApi = async (userDetails)  =>{
     const token = await getAccessTokenSilently();
     fetch(`${apiUrl}/fill-info`, {
@@ -118,7 +139,7 @@ const handleSubmit = (evt) => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="pr-1" md="4">
+                      <Col className="pr-1" md="5">
                         <FormGroup>
                           <label>Username</label>
                           <Input
@@ -129,7 +150,7 @@ const handleSubmit = (evt) => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col className="px-1" md="5">
+                      <Col className="px-1" md="7">
                         <FormGroup>
                           <label htmlFor="exampleInputEmail1">
                             Email address
@@ -139,20 +160,6 @@ const handleSubmit = (evt) => {
                           defaultValue={email}
                           placeholder="Email"
                           type="email" />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pl-1" md="3">
-                        <FormGroup>
-                          <label>Role</label>
-                          <Input
-                            placeholder="Role"
-                            onChange={e => setRole(e.target.value)}
-                            type="select"
-                          >
-                            <option>User</option>
-                            <option>DeliveryDriver</option>
-                            <option>DeliveryAdmin</option>
-                            </Input>
                         </FormGroup>
                       </Col>
                     </Row>
@@ -181,15 +188,13 @@ const handleSubmit = (evt) => {
                       </Col> 
                     </Row> */}
                     <Row>
-                      <Col md="12">
+                      <Col className="pr-1" md="10">
                         <FormGroup>
                           <label>Address</label>
                           <SearchLocationInput required
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
-                    <Row>
                       {/* <Col className="pr-1" md="4">
                         <FormGroup>
                           <label>City</label>
@@ -208,7 +213,7 @@ const handleSubmit = (evt) => {
                           />
                         </FormGroup>
                       </Col> */}
-                      <Col md="4">
+                      <Col className="px-1" md="2">
                         <FormGroup>
                           <label>Postal Code</label>
                           <Input 
@@ -219,6 +224,142 @@ const handleSubmit = (evt) => {
                         </FormGroup>
                       </Col>
                     </Row>
+                    <div>
+                      <h5>If you want to become</h5>
+                      <div>
+                        <Button color="success" onClick={toggle1} style={{ marginBottom: '1rem' }}>Deliver Driver</Button>
+                        <Button color="success" onClick={toggle2} style={{ marginBottom: '1rem' }}>Deliver Admin</Button>
+                        <Collapse isOpen={isOpen}>
+                          <Container>
+                            <Row>
+                              <Col className="pl-1" md="6">
+                                <FormGroup>
+                                  <label>Company Name</label>
+                                  <Input
+                                    required
+                                    placeholder="Company Name"
+                                    type="text"
+                                    /*
+                                    onChange={e => setFirstName(e.target.value)}
+                                    value={firstName}
+                                    */
+                                  />
+                                </FormGroup>
+                              </Col>
+                              <Col className="pl-1" md="6">
+                                <FormGroup>
+                                  <label>Driver License</label>
+                                  <Input
+                                    required
+                                    placeholder="License No."
+                                    /*
+                                    onChange={e => setLastName(e.target.value)}
+                                    value={lastName}
+                                    type="text"
+                                    */
+                                  />
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                          </Container>
+                        </Collapse>
+                        <Collapse isOpen={isOpen2}>
+                          <Container>
+                            <Row>
+                              <Col className="pl-1" md="6">
+                                <FormGroup>
+                                  <label>Company Name</label>
+                                  <Input
+                                    required
+                                    placeholder="Company Name"
+                                    type="text"
+                                    /*
+                                    onChange={e => setFirstName(e.target.value)}
+                                    value={firstName}
+                                    */
+                                  />
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                          </Container>
+                          <h5>Delivery Item Preference</h5>
+                          <Container>
+                            <Row>
+                              <Col md="3">
+                                <Row className="pl-4">
+                                  <Label check>
+                                    <Input type="checkbox" id="checkbox1" />{' '}
+                                      Small Package
+                                  </Label>
+                                </Row>
+                                <Row className="pl-4">
+                                  <Label check>
+                                    <Input type="checkbox" id="checkbox2" />{' '}
+                                      Medium Package
+                                  </Label>
+                                </Row>
+                                <Row className="pl-4">
+                                  <Label check>
+                                    <Input type="checkbox" id="checkbox2" />{' '}
+                                      Large Package
+                                  </Label>
+                                </Row>
+                              </Col>
+                              <Col md="3">
+                                <Row className="pl-4">
+                                  <Label check>
+                                    <Input type="checkbox" id="checkbox3" />{' '}
+                                      Electronic Item
+                                  </Label>
+                                </Row>
+                                <Row className="pl-4">
+                                  <Label check>
+                                    <Input type="checkbox" id="checkbox4" />{' '}
+                                      Food
+                                  </Label>
+                                </Row>
+                                <Row className="pl-4">
+                                  <Label check>
+                                    <Input type="checkbox" id="checkbox2" />{' '}
+                                      Documents
+                                  </Label>
+                                </Row>
+                              </Col>
+                              <Col md="3">
+                                <Row className="pl-4">
+                                  <Label check>
+                                    <Input type="checkbox" id="checkbox3" />{' '}
+                                      Light
+                                  </Label>
+                                </Row>
+                                <Row className="pl-4">
+                                  <Label check>
+                                    <Input type="checkbox" id="checkbox4" />{' '}
+                                      Medium
+                                  </Label>
+                                </Row>
+                                <Row className="pl-4">
+                                  <Label check>
+                                    <Input type="checkbox" id="checkbox2" />{' '}
+                                      Heavy
+                                  </Label>
+                                </Row>
+                              </Col>
+                              <Col md="3">
+                                  <Label check>
+                                    <Input type="checkbox" id="checkbox3" />{' '}
+                                      Normal Delivery
+                                  </Label>
+                                  <Label check>
+                                    <Input type="checkbox" id="checkbox4" />{' '}
+                                      Express Delivery
+                                  </Label>
+                              </Col>
+                            </Row>
+                          </Container>
+                        </Collapse>
+                      </div>
+                    </div>
                     <Row>
                       <div className="update ml-auto mr-auto">
                         <Button

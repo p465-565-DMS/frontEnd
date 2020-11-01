@@ -50,20 +50,12 @@ class SearchLocationInput extends React.Component {
 
   render() {
     return (
-      <input
-        ref={this.autocompleteInput}
+      <Input
+        innerRef={this.autocompleteInput}
         id="autocomplete"
         placeholder="Enter Your Address"
         type="text"
-        style={{
-          width: "100%",
-          border: "0px",
-          marginTop: "25px",
-          marginBottom: "25px",
-          fontSize: "14px",
-          color: "#495057"
-        }}
-      ></input>
+      ></Input>
     );
   }
 }
