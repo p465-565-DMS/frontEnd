@@ -1,4 +1,6 @@
 import React from "react";
+import SearchLocationInput from '../../components/SearchLocationInput';
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -15,20 +17,37 @@ import {
   Input,
   Row,
   Col,
+  Button,
 } from "reactstrap";
 
-import deliveryGif from "../../assets/img/delivery.gif"
+
 // core components
 
 function Tabs() {
   const [iconPills, setIconPills] = React.useState("1");
   const [pills, setPills] = React.useState("1");
+  const ref1 = React.createRef();
+  const ref2 = React.createRef();
+  const CheckButton = () => (
+    <Route render={({ history}) => (
+      <Button
+        type='button'
+        onClick={() => { history.push('/search-result') }}
+        class="btn btn-success"
+        aria-label="Check"
+        className="mt-5"
+        size="lg"
+      >
+        Check
+      </Button>
+    )} />
+  )
   return (
     <>
       <div className="section section-tabs">
         <Container>
           <Row>
-            <Col className="ml-auto mr-auto" md="5" xl="5">
+            <Col className="ml-auto mr-auto" md="5" xl="7">
               <Card>
                 <CardHeader>
                   <Nav className="justify-content-center" role="tablist" tabs>
@@ -84,24 +103,60 @@ function Tabs() {
                       Get prices from multiple carriers:
                       UPS, USPS, FedEx, and DHL.
                       </p>
-                      <Col sm="12">
-                        <FormGroup>
-                          <Input
-                            defaultValue=""
-                            placeholder="From"
-                            type="text"
-                          ></Input>
-                        </FormGroup>
-                      </Col>
-                      <Col sm="12">
-                        <FormGroup>
-                          <Input
-                            defaultValue=""
-                            placeholder="To"
-                            type="text"
-                          ></Input>
-                        </FormGroup>
-                      </Col>
+                      <Row>
+                        <Col className="px-5 mt-3" sm="12">
+                            <h6 style={{textAlign:"left"}}>From</h6>
+                            <SearchLocationInput ref={ref1}/>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col className="px-5 mt-3" sm="12">
+                          <h6 style={{textAlign:"left"}}>To</h6>
+                            <SearchLocationInput ref={ref2}/>
+                        </Col>  
+                      </Row>       
+                      <Row>       
+                        <Col className="px-5 mt-3" sm="6">
+                          <h6 style={{textAlign:"left"}}>Date</h6>
+                            <Input placeholder="dd/mm/yyyy"></Input>
+                        </Col>
+                        <Col className="px-5 mt-3" sm="6">
+                          <h6 style={{textAlign:"left"}}>Delivery Speed</h6>
+                          <Input type="select" name="select" id="pkgType">
+                            <option>Regular</option>
+                            <option>Express</option>
+                          </Input>
+                        </Col>
+                      </Row>    
+                      <Row>
+                        <Col className="pl-5 mt-3" sm="4">
+                          <h6 style={{textAlign:"left"}}>Package type</h6>
+                          <Input type="select" name="select" id="pkgType">
+                            <option>Regular</option>
+                            <option>Electronic</option>
+                            <option>Food</option>
+                            <option>Documents</option>
+                            <option>Others</option>
+                          </Input>
+                        </Col>
+                        <Col className="px-5 mt-3" sm="4">
+                          <h6 style={{textAlign:"left"}}>Package size</h6>
+                          <Input type="select" name="select" id="pkgType">
+                            <option>Small</option>
+                            <option>Medium</option>
+                            <option>Large</option>
+                          </Input>
+                        </Col>
+                        <Col className="pr-5 mt-3" sm="4">
+                          <h6 style={{textAlign:"left"}}>Package weight</h6>
+                          <Input type="select" name="select" id="pkgType">
+                            <option>Delicate</option>
+                            <option>Medium</option>
+                            <option>Heavy</option>
+                          </Input>
+                        </Col>
+                      </Row>
+                      <CheckButton/>
                     </TabPane>
                     <TabPane tabId="iconPills2">
                       <p>

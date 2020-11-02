@@ -8,13 +8,8 @@
 }
 
 h6{
-    color: white;
-    font-family: Helvetica, sans-serif;
-    font-size: 20px;
-}
-
-h6:hover{
-    color: rgba(44, 44, 44, 0.623);
+    color: black;
+    font-size: 25px;
 }
 
 .navItem{

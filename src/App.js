@@ -4,9 +4,6 @@ import { Container } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Footer, Loading, PrivateRoute } from "./components";
-import NavBar from "./components/Navbars/navbar"
-import { Home, Profile, ExternalApi, Map, ProfileEdit } from "./views";
-import appCss from "./App.css"
 import "./assets/css/bootstrap.min.css";
 import "./assets/scss/now-ui-kit.scss?v=1.4.0";
 import "./assets/demo/demo.css?v=1.4.0";
@@ -27,6 +24,7 @@ import AdminLayout from "./layouts/Admin.js";
 import UserLayout from "./layouts/User.js";
 import FillInfoPage from "./views/FillInfoPage.js";
 import Maps from "./views/Maps.js";
+import SearchResult from "./views/Search-Result.js";
 
 const hist = createBrowserHistory();
 
@@ -43,6 +41,7 @@ const App = () => {
       <Switch>
         <Route path="/index" exact component={Index} />
         <Route path="/map" exact component={Maps} />
+        <Route path="/search-result" exact component={SearchResult} />
         {/* <PrivateRoute
           path="/admin" render={(props) => <AdminLayout {...props} />} />
         <Route
