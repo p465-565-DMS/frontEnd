@@ -4,8 +4,6 @@ import SearchLocationInput from '../components/SearchLocationInput';
 import { Redirect, useHistory } from "react-router-dom";
 import { Loading } from "../components"
 
-
-
 // reactstrap components
 import {
   Button,
@@ -29,28 +27,59 @@ import {
 export default function UserProfile(props) {
   const history = useHistory();
   const { user } = useAuth0();
-  const { email, picture, nickname } = user;
+  const { email, nickname } = user;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [zipCode, setZipCode] = useState("");
+  const [zipcode, setZipCode] = useState("");
+  const [company, setCompanyName] = useState("N/A");
+  const [license, setLicenseNo] = useState("N/A");
   const [role, setRole] = useState("");
   const apiUrl = process.env.REACT_APP_API_URL;
-  const [message, setMessage] = useState("");
   const { getAccessTokenSilently } = useAuth0();
   const [isLoadingTrue, setLoading] = useState("False");
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
-  const toggle1 = () => {
+  const toggle0 = () => {
     setIsOpen(!isOpen)
     if (isOpen2){
       setIsOpen2(!isOpen2)
     }
+    if (isOpen1){
+      setIsOpen1(!isOpen1)
+    }
+  };
+  const toggle1 = () => {
+    setIsOpen1(!isOpen1)
+    if (isOpen2){
+      setIsOpen2(!isOpen2)
+    }
+    if (isOpen){
+      setIsOpen(!isOpen)
+    }
   };
   const toggle2 = () => {
     setIsOpen2(!isOpen2)
+    if (isOpen1){
+      setIsOpen(!isOpen1)
+    }
     if (isOpen){
       setIsOpen(!isOpen)
+    }
+  };
+  const handleRole = (type) => {
+    if(type === "user"){
+      setRole("user");
+      toggle0();
+    }
+    else if(type === "driver"){
+      setRole("driver");
+      toggle1();
+    }
+    else{
+      setRole("dadmin");
+      toggle2();
     }
   };
   const callSecureApi = async (userDetails)  =>{
@@ -65,6 +94,7 @@ export default function UserProfile(props) {
   }).then((response) => {
     if (!response.ok) {
       console.log("SOMETHING WENT WRONG");
+      history.push("/fill-info");
     } else {
       console.log("SUCCESSS");
       history.push(window.location.origin);
@@ -72,29 +102,29 @@ export default function UserProfile(props) {
   });
 };
 
-const lookup = {User:1, DeliveryDriver:2, DeliveryAdmin:3, Admin:4}
-
 const handleSubmit = (evt) => {
-  console.log(role)
   setLoading("True")
   evt.preventDefault();
   let streetAddress = localStorage.getItem("streetAddress");
   let city = localStorage.getItem("city");
   let state = localStorage.getItem("state");
-  let country = localStorage.getItem("country");
   let googleMapLink = localStorage.getItem("googleMapLink");
-  let auth0_id = user.sub;
   let username = user.nickname;
-  let userpassword = "123456"
+  let address = {"streetAddress":streetAddress,"state":state,"city":city,"googleMapLink":googleMapLink};
+  let driver = {"cname":company,"lno":license};
+  let admin = {"cname":company,"spkg":"TRUE", "mpkg":"TRUE", "lpkg":"TRUE", "elec":"TRUE", "deli":"TRUE", "heavy":"TRUE", "doc":"TRUE", "other":"TRUE", "express":"TRUE", "normal":"TRUE"};
   let userDetails = JSON.stringify({
     username,
-    roleid: "1",
-    userpassword,
+    role,
     fname: firstName,
     lname: lastName,
-    address: streetAddress,
+    address,
+    phone: phoneNumber,
+    email,
+    zipCode:zipcode,
+    driver,
+    admin
   });
-  console.log(userDetails);
   callSecureApi(userDetails);
   };
   if (isLoadingTrue === "True") {
@@ -108,10 +138,10 @@ const handleSubmit = (evt) => {
             <Col md="8">
               <Card className="card-user">
                 <CardHeader>
-                  <CardTitle tag="h5">Complete Your Profile</CardTitle>
+                  <CardTitle tag="h4">Complete Your Profile</CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <Form onSubmit = {handleSubmit}>
+                  <form onSubmit = {handleSubmit}>
                     <Row>
                       <Col className="pr-1" md="6">
                         <FormGroup>
@@ -125,7 +155,7 @@ const handleSubmit = (evt) => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col className="pl-1" md="6">
+                      <Col className="pl-1" md="5">
                         <FormGroup>
                           <label>Last Name</label>
                           <Input
@@ -139,7 +169,7 @@ const handleSubmit = (evt) => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="pr-1" md="5">
+                      <Col className="pr-1" md="3">
                         <FormGroup>
                           <label>Username</label>
                           <Input
@@ -150,7 +180,7 @@ const handleSubmit = (evt) => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col className="px-1" md="7">
+                      <Col className="pr-1" md="4">
                         <FormGroup>
                           <label htmlFor="exampleInputEmail1">
                             Email address
@@ -162,19 +192,7 @@ const handleSubmit = (evt) => {
                           type="email" />
                         </FormGroup>
                       </Col>
-                    </Row>
-                    {/* <Row>
-                      <Col className="pr-1" md="6">
-                        <FormGroup>
-                          <label>Company</label>
-                          <Input
-                            placeholder="Company Name"
-                            onChange={e => (e.target.value)}
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                     <Col className="pl-1" md="6">
+                      <Col className="pr-1" md="4">
                         <FormGroup>
                           <label htmlFor="exampleInputEmail1">
                             Phone Number
@@ -186,34 +204,16 @@ const handleSubmit = (evt) => {
                           type="phone" />
                         </FormGroup>
                       </Col> 
-                    </Row> */}
+                    </Row>
                     <Row>
-                      <Col className="pr-1" md="10">
+                      <Col className="pr-1" md="8">
                         <FormGroup>
                           <label>Address</label>
                           <SearchLocationInput required
                           />
                         </FormGroup>
                       </Col>
-                      {/* <Col className="pr-1" md="4">
-                        <FormGroup>
-                          <label>City</label>
-                          <Input
-                            placeholder="City"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="px-1" md="4">
-                        <FormGroup>
-                          <label>Country</label>
-                          <Input
-                            placeholder="Country"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col> */}
-                      <Col className="px-1" md="2">
+                      <Col className="pr-1" md="3">
                         <FormGroup>
                           <label>Postal Code</label>
                           <Input 
@@ -225,24 +225,23 @@ const handleSubmit = (evt) => {
                       </Col>
                     </Row>
                     <div>
-                      <h5>If you want to become</h5>
+                      <h5>Select Your Role</h5>
                       <div>
-                        <Button color="success" onClick={toggle1} style={{ marginBottom: '1rem' }}>Deliver Driver</Button>
-                        <Button color="success" onClick={toggle2} style={{ marginBottom: '1rem' }}>Deliver Admin</Button>
-                        <Collapse isOpen={isOpen}>
+                        <Button color="success" onClick={() => handleRole("user")}style={{ marginBottom: '1rem' }}>User</Button>
+                        <Button color="success" onClick={() => handleRole("driver")} style={{ marginBottom: '1rem' }}>Delivery Driver</Button>
+                        <Button color="success" onClick={() => handleRole("dadmin")} style={{ marginBottom: '1rem' }}>Delivery Admin</Button>
+                        <Collapse isOpen={isOpen}></Collapse>
+                        <Collapse isOpen={isOpen1}>
                           <Container>
                             <Row>
                               <Col className="pl-1" md="6">
                                 <FormGroup>
                                   <label>Company Name</label>
                                   <Input
-                                    required
+                                    //required
                                     placeholder="Company Name"
                                     type="text"
-                                    /*
-                                    onChange={e => setFirstName(e.target.value)}
-                                    value={firstName}
-                                    */
+                                    onChange={e => setCompanyName(e.target.value)}
                                   />
                                 </FormGroup>
                               </Col>
@@ -250,13 +249,10 @@ const handleSubmit = (evt) => {
                                 <FormGroup>
                                   <label>Driver License</label>
                                   <Input
-                                    required
+                                   // required
                                     placeholder="License No."
-                                    /*
-                                    onChange={e => setLastName(e.target.value)}
-                                    value={lastName}
+                                    onChange={e => setLicenseNo(e.target.value)}
                                     type="text"
-                                    */
                                   />
                                 </FormGroup>
                               </Col>
@@ -270,13 +266,10 @@ const handleSubmit = (evt) => {
                                 <FormGroup>
                                   <label>Company Name</label>
                                   <Input
-                                    required
+                                    //required
                                     placeholder="Company Name"
                                     type="text"
-                                    /*
-                                    onChange={e => setFirstName(e.target.value)}
-                                    value={firstName}
-                                    */
+                                    onChange={e => setCompanyName(e.target.value)}
                                   />
                                 </FormGroup>
                               </Col>
@@ -309,19 +302,19 @@ const handleSubmit = (evt) => {
                                 <Row className="pl-4">
                                   <Label check>
                                     <Input type="checkbox" id="checkbox3" />{' '}
-                                      Electronic Item
+                                      Electronic Items
                                   </Label>
                                 </Row>
                                 <Row className="pl-4">
                                   <Label check>
                                     <Input type="checkbox" id="checkbox4" />{' '}
-                                      Food
+                                      Food Items
                                   </Label>
                                 </Row>
                                 <Row className="pl-4">
                                   <Label check>
                                     <Input type="checkbox" id="checkbox2" />{' '}
-                                      Documents
+                                      General Itmes
                                   </Label>
                                 </Row>
                               </Col>
@@ -329,31 +322,35 @@ const handleSubmit = (evt) => {
                                 <Row className="pl-4">
                                   <Label check>
                                     <Input type="checkbox" id="checkbox3" />{' '}
-                                      Light
+                                      Light Weight Item
                                   </Label>
                                 </Row>
                                 <Row className="pl-4">
                                   <Label check>
                                     <Input type="checkbox" id="checkbox4" />{' '}
-                                      Medium
+                                      Medium Weight Item
                                   </Label>
                                 </Row>
                                 <Row className="pl-4">
                                   <Label check>
                                     <Input type="checkbox" id="checkbox2" />{' '}
-                                      Heavy
+                                      Heavy Weight Item
                                   </Label>
                                 </Row>
                               </Col>
                               <Col md="3">
+                                <Row className="pl-4">
                                   <Label check>
                                     <Input type="checkbox" id="checkbox3" />{' '}
                                       Normal Delivery
                                   </Label>
+                                </Row>
+                                <Row className="pl-4">
                                   <Label check>
                                     <Input type="checkbox" id="checkbox4" />{' '}
                                       Express Delivery
                                   </Label>
+                                </Row>
                               </Col>
                             </Row>
                           </Container>
@@ -366,12 +363,13 @@ const handleSubmit = (evt) => {
                           className="btn-round"
                           color="primary"
                           type="submit"
+                          value="Submit"
                         >
                           Submit
                         </Button>
                       </div>
                     </Row>
-                  </Form>
+                  </form>
                 </CardBody>
               </Card>
             </Col>

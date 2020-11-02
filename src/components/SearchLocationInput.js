@@ -42,7 +42,6 @@ class SearchLocationInput extends React.Component {
       streetAddress: "",
       city: "",
       state: "",
-      count: "",
       zipCode: "",
       googleMapLink: "",
     };
