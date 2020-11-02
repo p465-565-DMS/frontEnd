@@ -1,5 +1,5 @@
 import React from "react";
-import SearchLocationInput from '../../components/SearchLocationInput';
+import SearchLocationInput from '../../components/googleAutocomplete/rateAndShipAddress';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 // reactstrap components
@@ -150,7 +150,7 @@ function Tabs() {
                         <Col className="pr-5 mt-3" sm="4">
                           <h6 style={{textAlign:"left"}}>Package weight</h6>
                           <Input type="select" name="select" id="pkgType">
-                            <option>Delicate</option>
+                            <option>Light</option>
                             <option>Medium</option>
                             <option>Heavy</option>
                           </Input>

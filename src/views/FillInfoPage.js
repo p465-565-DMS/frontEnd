@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import SearchLocationInput from '../components/SearchLocationInput';
+import SearchLocationInput from '../components/googleAutocomplete/SearchLocationInput';
 import { Redirect, useHistory } from "react-router-dom";
 import { Loading } from "../components"
 
