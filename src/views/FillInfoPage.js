@@ -62,7 +62,7 @@ export default function UserProfile(props) {
   const toggle2 = () => {
     setIsOpen2(!isOpen2)
     if (isOpen1){
-      setIsOpen(!isOpen1)
+      setIsOpen1(!isOpen1)
     }
     if (isOpen){
       setIsOpen(!isOpen)
