@@ -1,25 +1,8 @@
 
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import React, { useEffect, useState } from "react";
+import { Redirect, useHistory } from "react-router-dom";
+import { Loading } from "../components"
 // reactstrap components
 import {
   Button,
@@ -36,12 +19,92 @@ import {
 } from "reactstrap";
 
 export default function UserProfile() {
-  const { user } = useAuth0();
+  const history = useHistory();
+  const [data, setData] = useState({});
+  const { user, getAccessTokenSilently } = useAuth0();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [streetAddress, setStreetAddrs] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [role, setRole] = useState("");
+  const [url, setUrl] = useState("");
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const [isLoadingTrue, setLoading] = useState(false);
 
-  const UpdateProfile = (e) =>{
-    e.preventDefault();
-    alert("Sending");
-  }
+  React.useEffect(() => {
+    (async () => {
+      try {
+      const token = await getAccessTokenSilently();
+      let result = await fetch(`${apiUrl}/api/me`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await result.json();
+      localStorage.setItem("userid", res[0].userid);
+      setFirstName(res[0].fname);
+      setLastName(res[0].lname);
+      setRole(res[0].role);
+      setContactNumber(res[0].phone);
+      setZipCode(res[0].zipcode);
+      setStreetAddrs(res[0].address);
+      setCity(res[0].city);
+      setState(res[0].state);
+      setUrl(res[0].googlelink);
+    } catch{}
+  })(data);
+},[user]);
+
+const callSecureApi = async (userDetails) => {
+  const token = await getAccessTokenSilently();
+  fetch(`${apiUrl}/api/me`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: userDetails,
+  }).then((response) => {
+    if (!response.ok) {
+      console.log("SOMETHING WENT WRONG");
+    } else {
+      history.push("/admin/user-page");
+    }
+  });
+};
+
+const handleSubmit = (evt) => {
+  setLoading("True");
+  evt.preventDefault();
+  let address = {
+    streetAddress,
+    city,
+    state,
+    zip: zipCode,
+    googlelink: url,
+  };
+
+  let userDetails = JSON.stringify({
+    email,
+    fname: firstName,
+    lname: lastName,
+    phone: contactNumber,
+    role,
+    address,
+  });
+  console.log(userDetails);
+  callSecureApi(userDetails);
+};
+
+if (isLoadingTrue) {
+  return <Loading />;
+}
+  const { email } = user;  
     return (
       <>
         <div className="content">
@@ -72,15 +135,16 @@ export default function UserProfile() {
                   <CardTitle tag="h5">Edit Profile</CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <Form>
+                  <form onSubmit={handleSubmit}> 
                     <Row>
                       <Col className="pr-1" md="6">
                         <FormGroup>
                           <label>First Name</label>
                           <Input
-                            defaultValue=""
-                            placeholder="First Name"
+                            defaultValue={`${firstName}`}
                             type="text"
+                            onChange={e => setFirstName(e.target.value)}
+                            value={firstName}
                           />
                         </FormGroup>
                       </Col>
@@ -88,8 +152,9 @@ export default function UserProfile() {
                         <FormGroup>
                           <label>Last Name</label>
                           <Input
-                            defaultValue=""
-                            placeholder="Last Name"
+                            defaultValue={`${lastName}`}
+                            onChange={e => setLastName(e.target.value)}
+                            value={lastName}
                             type="text"
                           />
                         </FormGroup>
@@ -123,7 +188,7 @@ export default function UserProfile() {
                         <FormGroup>
                           <label>Role</label>
                           <Input
-                            defaultValue={`${user.role}`}
+                            defaultValue={`${role}`}
                             disabled
                             placeholder="Role"
                             type="text"
@@ -132,35 +197,26 @@ export default function UserProfile() {
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="pr-1" md="6">
+                      <Col className="pr-1" md="3">
                         <FormGroup>
-                          <label>Company</label>
-                          <Input
-                            defaultValue="Creative Code Inc."
-                            disabled
-                            placeholder="Company"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pl-1" md="6">
-                        <FormGroup>
-                          <label htmlFor="exampleInputEmail1">
+                          <label>
                             Phone Number
                           </label>
-                          <Input placeholder="(123)456-7890" type="phone" />
+                          <Input 
+                          defaultValue={`${contactNumber}`}
+                          onChange={e => setContactNumber(e.target.value)}
+                          type="phone" />
                         </FormGroup>
                       </Col>
                     </Row>
                     <Row>
-                      <Col md="12">
+                      <Col md="8">
                         <FormGroup>
                           <label>Address</label>
-                          <Input
-                            defaultValue="Melbourne, Australia"
-                            placeholder="Home Address"
-                            type="text"
-                          />
+                          <Input 
+                          defaultValue={`${streetAddress}`}
+                          onChange={e => setStreetAddrs(e.target.value)}
+                          type="text" />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -168,27 +224,19 @@ export default function UserProfile() {
                       <Col className="pr-1" md="4">
                         <FormGroup>
                           <label>City</label>
-                          <Input
-                            defaultValue="Melbourne"
-                            placeholder="City"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="px-1" md="4">
-                        <FormGroup>
-                          <label>Country</label>
-                          <Input
-                            defaultValue="Australia"
-                            placeholder="Country"
-                            type="text"
-                          />
+                          <Input 
+                          defaultValue={`${city}`}
+                          onChange={e => setCity(e.target.value)}
+                          type="text" />
                         </FormGroup>
                       </Col>
                       <Col className="pl-1" md="4">
                         <FormGroup>
                           <label>Postal Code</label>
-                          <Input placeholder="ZIP Code" type="number" />
+                          <Input 
+                          defaultValue={`${zipCode}`}
+                          onChange={e => setZipCode(e.target.value)}
+                          type="text" />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -198,13 +246,13 @@ export default function UserProfile() {
                           className="btn-round"
                           color="primary"
                           type="submit"
-                          onClick = {UpdateProfile}
+                          value="Submit"
                         >
                           Update Profile
                         </Button>
                       </div>
                     </Row>
-                  </Form>
+                  </form>
                 </CardBody>
               </Card>
             </Col>
