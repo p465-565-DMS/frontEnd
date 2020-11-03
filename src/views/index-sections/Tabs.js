@@ -1,7 +1,9 @@
-import React from "react";
 import SearchLocationInput from '../../components/googleAutocomplete/rateAndShipAddress';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
+import React, { useEffect, useState } from "react";
+import {useHistory } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Loading } from "../../components"
 // reactstrap components
 import {
   Card,
@@ -28,24 +30,62 @@ function qWrap(liberty, freedom){
 
 // core components
 function Tabs() {
-
+  const history = useHistory();
+  const { user, getAccessTokenSilently } = useAuth0();
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const [data, setData] = useState({});
   const [iconPills, setIconPills] = React.useState("1");
   const [pills, setPills] = React.useState("1");
+  const [queryValue, setQuery] = React.useState("");
   const ref1 = React.createRef();
   const ref2 = React.createRef();
+  const [isLoadingTrue, setLoading] = useState(false);
+
+
+const callSecureApi = async (query) => {
+  const token = await getAccessTokenSilently();
+  fetch(`${apiUrl}/api/search`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: query,
+  }).then((response) => {
+    if (!response.ok) {
+      console.log("SOMETHING WENT WRONG");
+    } else {
+      history.push("/search-result");
+    }
+  });
+};
+
+const handleSubmit = (queryValue) => {
+  setLoading("True");
+
+  let query = JSON.stringify({
+    queryValue,
+  });
+  console.log(query);
+  callSecureApi(query);
+};
+
+if (isLoadingTrue) {
+  return <Loading />;
+}
+
   const CheckButton = () => (
     <Route render={({history}) => (
       <Button
         type='button'
         onClick={() => {
           history.push('/search-result');
-
-
+          
           // let dateBox = document.getElementById("dateBox");
           // if(dateBox.value != ''){
             // customQuery += qWrap(dateBox.value);
           // }
-
+          
           let deliveryBox = document.getElementById("deliverySpeedBox");
           customQuery += qWrap("express", deliveryBox.value);
 
@@ -61,11 +101,11 @@ function Tabs() {
 
           customQuery += ";";
 
-          console.log(customQuery);
+          handleSubmit(customQuery)
 
+          
 
          }}
-        class="btn btn-success"
         aria-label="Check"
         className="mt-5"
         size="lg"
