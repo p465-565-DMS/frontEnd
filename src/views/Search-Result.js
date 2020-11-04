@@ -39,6 +39,8 @@ const selectButton = () => (
 )
 
 export default function SearchResult(props) {
+    const q = localStorage.result;
+    console.log(q);
     return (
       <>
         <Container className="content mt-5 pt-5">

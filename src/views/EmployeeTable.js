@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { MDBCol, MDBBtn} from "mdbreact";
 import { Form } from 'react-bootstrap';
@@ -31,8 +13,39 @@ import {
   Col,
 } from "reactstrap";
 
-class Tables extends React.Component {
-  render() {
+export default function Tables() {
+
+  const history = useHistory();
+  const [data, setData] = useState({});
+  const { user, getAccessTokenSilently } = useAuth0();
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const [isLoadingTrue, setLoading] = useState(false);
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+      const token = await getAccessTokenSilently();
+      let result = await fetch(`${apiUrl}/api/me`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await result.json();
+      localStorage.setItem("userid", res[0].userid);
+      setFirstName(res[0].fname);
+      setLastName(res[0].lname);
+      setRole(res[0].role);
+      setContactNumber(res[0].phone);
+      setZipCode(res[0].zipcode);
+      setStreetAddrs(res[0].address);
+      setCity(res[0].city);
+      setState(res[0].state);
+      setUrl(res[0].googlelink);
+    } catch{}
+  })(data);
+},[user]);
     return (
       <>
         <div className="content">
@@ -120,7 +133,4 @@ class Tables extends React.Component {
         </div>
       </>
     );
-  }
 }
-
-export default Tables;

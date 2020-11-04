@@ -1,22 +1,5 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 // react plugin used to create google maps
 import {
   withScriptjs,
@@ -31,7 +14,7 @@ const MapWrapper = withScriptjs(
   withGoogleMap((props) => (
     <GoogleMap
       defaultZoom={13}
-      defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
+      defaultCenter={{ lat: 39.1653, lng: -86.5264 }}
       defaultOptions={{
         scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
         styles: [
@@ -167,13 +150,35 @@ const MapWrapper = withScriptjs(
         ],
       }}
     >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
+      <Marker position={{ lat: 39.1653, lng: -86.5264 }} />
     </GoogleMap>
   ))
 );
 
-class Map extends React.Component {
-  render() {
+export default function Map() {
+  const [url, setUrl] = useState("");
+  const [data, setData] = useState({});
+  const { user, getAccessTokenSilently } = useAuth0();
+  const apiUrl = process.env.REACT_APP_API_URL;
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+      const token = await getAccessTokenSilently();
+      let result = await fetch(`${apiUrl}/api/me`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await result.json();
+      setUrl(res[0].googlelink);
+    } catch{}
+  })(data);
+  },[user]);
+
+  // render() {
     return (
       <>
         <div className="content">
@@ -202,6 +207,3 @@ class Map extends React.Component {
       </>
     );
   }
-}
-
-export default Map;

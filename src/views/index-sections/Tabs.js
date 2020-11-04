@@ -43,11 +43,11 @@ function Tabs() {
 
 
 const callSecureApi = async (query) => {
-  const token = await getAccessTokenSilently();
+  // const token = await getAccessTokenSilently();
   fetch(`${apiUrl}/api/search`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     body: query,
@@ -55,6 +55,8 @@ const callSecureApi = async (query) => {
     if (!response.ok) {
       console.log("SOMETHING WENT WRONG");
     } else {
+      response.text().then(function(data) {
+        localStorage.setItem("result", data); });
       history.push("/search-result");
     }
   });
@@ -66,7 +68,6 @@ const handleSubmit = (queryValue) => {
   let query = JSON.stringify({
     queryValue,
   });
-  console.log(query);
   callSecureApi(query);
 };
 
@@ -75,11 +76,11 @@ if (isLoadingTrue) {
 }
 
   const CheckButton = () => (
-    <Route render={({history}) => (
+    <Route render={() => (
       <Button
         type='button'
         onClick={() => {
-          history.push('/search-result');
+          // history.push('/search-result');
           
           // let dateBox = document.getElementById("dateBox");
           // if(dateBox.value != ''){
@@ -90,7 +91,6 @@ if (isLoadingTrue) {
           customQuery += qWrap("sd.pspeed", deliveryBox.value);
 
           let typeBox = document.getElementById("packageTypeBox");
-
           customQuery += qWrap("sd.ptype", typeBox.value);
 
           let sizeBox = document.getElementById("packageSizeBox");
@@ -100,8 +100,7 @@ if (isLoadingTrue) {
           customQuery += qWrap("sd.pweight", weightBox.value);
 
           customQuery += ";";
-
-          handleSubmit(customQuery)
+          handleSubmit(customQuery);
 
          }}
         aria-label="Check"
