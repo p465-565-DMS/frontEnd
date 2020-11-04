@@ -15,6 +15,46 @@ import {
   Col,
 } from "reactstrap";
 
+const renderCard = (card, index) => {
+  return(
+    <tr>
+      <th>{card.username}</th>
+      <th>{card.fname}</th>
+      <th>{card.lname}</th>
+      <th>{card.role}</th>
+      <th>{card.email}</th>
+    </tr>
+  )
+}
+
+var list = 
+[
+  {
+  fname: 'sigeh',
+  lname: 'llubed',
+  email: 'sigeh58579@llubed.com',
+  username: 'sigeh58579',
+  role: 'driver',
+  googlelink: 'https://maps.google.com/?q=1425+N+Dunn+St,+Bloomington,+IN+47408,+USA&ftid=0x886c66ce696aca37:0x8cf32b9df0547ad2'
+  },
+  {
+  fname: 'daxe',
+  lname: 'laf',
+  email: 'daxelaf572@mojzur.com',
+  username: 'daxelaf572',
+  role: 'driver',
+  googlelink: 'https://maps.google.com/?q=2307+E+2nd+St,+Bloomington,+IN+47401,+USA&ftid=0x886c66993c6b0b17:0xdab438e92530cd5a'
+  },
+  {
+  fname: 'limi',
+  lname: 'tax',
+  email: 'limitax114@adeata.com',
+  username: 'limitax114',
+  role: 'driver',
+  googlelink: 'https://maps.google.com/?q=694+S+Landmark+Ave,+Bloomington,+IN+47403,+USA&ftid=0x886c6711138040d1:0x3766bedc9edf6521'
+  }
+]
+
 export default function Tables() {
 
   const history = useHistory();
@@ -72,61 +112,15 @@ export default function Tables() {
                   <Table responsive>
                     <thead className="text-primary">
                       <tr>
-                        <th>User ID</th>
                         <th>Username</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Role</th>
-                        <th>Phone Number</th>
-                        <th>Salary</th>
+                        <th>email</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>304511</td>
-                        <td>dakotarice</td>
-                        <td>Dakota</td>
-                        <td>Rice</td>
-                        <td>Courier</td>
-                        <td>(234)859-7890</td>
-                        <td>$77,738</td>
-                      </tr>
-                      <tr>
-                        <td>758761</td>
-                        <td>jwatson</td>
-                        <td>Jessica</td>
-                        <td>Watson</td>
-                        <td>Courier</td>
-                        <td>(525)898-7890</td>
-                        <td>$45,738</td>
-                      </tr>
-                      <tr>
-                        <td>408576</td>
-                        <td>aadamy</td>
-                        <td>Amy</td>
-                        <td>Adam</td>
-                        <td>Courier</td>
-                        <td>(123)576-1290</td>
-                        <td>$57,738</td>
-                      </tr>
-                      <tr>
-                        <td>304231</td>
-                        <td>samsamsmith</td>
-                        <td>Sam</td>
-                        <td>Smith</td>
-                        <td>Courier</td>
-                        <td>(123)456-9990</td>
-                        <td>$36,738</td>
-                      </tr>
-                      <tr>
-                        <td>306911</td>
-                        <td>johndoedoe</td>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>Courier</td>
-                        <td>(123)234-7890</td>
-                        <td>$40,738</td>
-                      </tr>
+                        {list.map(renderCard)}
                     </tbody>
                   </Table>
                 </CardBody>
