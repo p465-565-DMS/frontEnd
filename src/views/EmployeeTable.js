@@ -17,37 +17,38 @@ import {
 
 export default function Tables() {
 
-//   const history = useHistory();
-//   const [data, setData] = useState({});
-//   const { user, getAccessTokenSilently } = useAuth0();
-//   const apiUrl = process.env.REACT_APP_API_URL;
-//   const [isLoadingTrue, setLoading] = useState(false);
+  const history = useHistory();
+  const [data, setData] = useState({});
+  const { user, getAccessTokenSilently } = useAuth0();
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const [isLoadingTrue, setLoading] = useState(false);
 
-//   React.useEffect(() => {
-//     (async () => {
-//       try {
-//       const token = await getAccessTokenSilently();
-//       let result = await fetch(`${apiUrl}/api/me`, {
-//         method: "GET",
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           "Content-Type": "application/json",
-//         },
-//       });
-//       const res = await result.json();
-//       localStorage.setItem("userid", res[0].userid);
-//       setFirstName(res[0].fname);
-//       setLastName(res[0].lname);
-//       setRole(res[0].role);
-//       setContactNumber(res[0].phone);
-//       setZipCode(res[0].zipcode);
-//       setStreetAddrs(res[0].address);
-//       setCity(res[0].city);
-//       setState(res[0].state);
-//       setUrl(res[0].googlelink);
-//     } catch{}
-//   })(data);
-// },[user]);
+  React.useEffect(() => {
+    (async () => {
+      try {
+      const token = await getAccessTokenSilently();
+      let result = await fetch(`${apiUrl}/api/employees`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await result.json();
+      console.log(res);
+      // localStorage.setItem("userid", res[0].userid);
+      // setFirstName(res[0].fname);
+      // setLastName(res[0].lname);
+      // setRole(res[0].role);
+      // setContactNumber(res[0].phone);
+      // setZipCode(res[0].zipcode);
+      // setStreetAddrs(res[0].address);
+      // setCity(res[0].city);
+      // setState(res[0].state);
+      // setUrl(res[0].googlelink);
+    } catch{}
+  })(data);
+},[user]);
     return (
       <>
         <div className="content">
