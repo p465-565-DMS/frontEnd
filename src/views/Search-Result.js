@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Divider from '@material-ui/core/Divider';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import SearchLocationInput from '../components/googleAutocomplete/rateAndShipAddress';
+
 // reactstrap components
 import {
   Button,
@@ -38,9 +40,34 @@ const selectButton = () => (
     )} />
 )
 
+const renderCard = (card, index) => {
+    return(
+        <Card className="d-flex flex-column mt-2">
+        <Row>
+            <Col md="1">
+            </Col>
+            <Col md="3">
+                <div className="pl-4 col-example text-left">{card.companyname}</div>
+            </Col>
+            <Col md="4">
+                {/*<div className="p-2 col-example text-left">{card.}</div>*/}
+            </Col>
+            <Col md="2">
+                <div className="p-2 col-example text-left">{card.price}</div>
+            </Col>
+            <Col md="2">
+                <Button className="m-1" outline color="primary" size="sm">select</Button>
+            </Col>
+        </Row>
+    </Card>
+    )
+}
+
 export default function SearchResult(props) {
     const q = localStorage.result;
     console.log(q);
+    var qList = JSON.parse(q);
+    console.log(qList[0])
     return (
       <>
         <Container className="content mt-5 pt-5">
@@ -53,80 +80,41 @@ export default function SearchResult(props) {
                     <Row>
                         <Col md="4 pl-4">
                             <span>From:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <span>Jordan Ave Bloomington</span>
+                            <SearchLocationInput></SearchLocationInput>
                         </Col>
                         <Col md="4 pl-4">
                             <span>To:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <span>E Rogers Rd Bloomington</span>
+                            <SearchLocationInput></SearchLocationInput>
                         </Col>
                         <Col md="4 pl-4">
                             <span>Date:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <span>12/31/2020</span>
+                            <Input placeholder="mm/dd/yyyy"></Input>
                         </Col>
                     </Row>
                 </Container>
             </Row>
             <Divider className="mt-2" variant="middle"/>
-            <Card className="d-flex flex-column mt-5">
+            <Container className="d-flex flex-column mt-5">
                 <Row>
-                    <Col md="4">
-                        <div className="p-2 col-example text-left">Company</div>
+                    <Col md="1">
+                    </Col>
+                    <Col md="3">
+                        <div className="pr-5 col-example text-left">Company</div>
                     </Col>
                     <Col md="4">
-                        <div className="p-2 col-example text-left">Estimate Arrival Date</div>
+                        {/*<div className="p-2 col-example text-left">Estimate Arrival Date</div>*/}
                     </Col>
                     <Col md="2">
-                        <div className="p-2 col-example text-left">Price</div>
+                        <div className="pl-3 col-example text-left">Price</div>
+                    </Col>
+                    <Col md="2">
                     </Col>
                 </Row>
                 <Divider variant="middle"/>
-                
-                <Row>
-                    <Col md="4">
-                        <div className="p-2 col-example text-left">Hermes</div>
-                    </Col>
-                    <Col md="4">
-                        <div className="p-2 col-example text-left">01/01/2020</div>
-                    </Col>
-                    <Col md="2">
-                        <div className="p-2 col-example text-left">$15</div>
-                    </Col>
-                    <Col md="2">
-                        <button className="m-1">select</button>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col md="4">
-                        <div className="p-2 col-example text-left">UPS</div>
-                    </Col>
-                    <Col md="4">
-                        <div className="p-2 col-example text-left">02/01/2020</div>
-                    </Col>
-                    <Col md="2">
-                        <div className="p-2 col-example text-left">$17</div>
-                    </Col>
-                    <Col md="2">
-                        <button className="m-1">select</button>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col md="4">
-                        <div className="p-2 col-example text-left">USPS</div>
-                    </Col>
-                    <Col md="4">
-                        <div className="p-2 col-example text-left">03/01/2020</div>
-                    </Col>
-                    <Col md="2">
-                        <div className="p-2 col-example text-left">$20</div>
-                    </Col>
-                    <Col md="2">
-                        <button className="m-1">select</button>
-                    </Col>
-                </Row>
-                
-            </Card>
+            </Container>
+            <div>
+                {qList.map(renderCard)}
+            </div>
             </Col>
             <Col md="2"/>
           </Row>

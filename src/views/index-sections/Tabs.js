@@ -57,6 +57,7 @@ const callSecureApi = async (query) => {
     } else {
       response.text().then(function(data) {
         localStorage.setItem("result", data); });
+        console.log(typeof localStorage.result)
       history.push("/search-result");
     }
   });
@@ -187,7 +188,7 @@ if (isLoadingTrue) {
                       <Row>
                         <Col className="px-5 mt-3" sm="6">
                           <h6 style={{textAlign:"left"}}>Date</h6>
-                            <Input placeholder="dd/mm/yyyy"
+                            <Input placeholder="mm/dd/yyyy"
                             id="dateBox"></Input>
                         </Col>
                         <Col className="px-5 mt-3" sm="6">
