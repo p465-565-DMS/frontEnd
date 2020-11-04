@@ -85,19 +85,19 @@ if (isLoadingTrue) {
           // if(dateBox.value != ''){
             // customQuery += qWrap(dateBox.value);
           // }
-          let customQuery = 'SELECT * FROM servicedetails WHERE 1=1';
+          let customQuery = 'SELECT da.companyname, sd.* FROM servicedetails sd, deliveryadmin da WHERE 1=1 AND da.adminid = sd.adminid';
           let deliveryBox = document.getElementById("deliverySpeedBox");
-          customQuery += qWrap("pspeed", deliveryBox.value);
+          customQuery += qWrap("sd.pspeed", deliveryBox.value);
 
           let typeBox = document.getElementById("packageTypeBox");
 
-          customQuery += qWrap("ptype", typeBox.value);
+          customQuery += qWrap("sd.ptype", typeBox.value);
 
           let sizeBox = document.getElementById("packageSizeBox");
-          customQuery += qWrap("psize", sizeBox.value);
+          customQuery += qWrap("sd.psize", sizeBox.value);
 
           let weightBox = document.getElementById("packageWeightBox");
-          customQuery += qWrap("pweight", weightBox.value);
+          customQuery += qWrap("sd.pweight", weightBox.value);
 
           customQuery += ";";
 
