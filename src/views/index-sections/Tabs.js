@@ -23,7 +23,7 @@ import {
 } from "reactstrap";
 
 
-let customQuery = 'SELECT * FROM DeliveryAdmin WHERE 1=1';
+
 function qWrap(liberty, freedom){
   return " AND " + liberty + " = " + "'" + freedom + "'";
 }
@@ -85,25 +85,23 @@ if (isLoadingTrue) {
           // if(dateBox.value != ''){
             // customQuery += qWrap(dateBox.value);
           // }
-          
+          let customQuery = 'SELECT * FROM servicedetails WHERE 1=1';
           let deliveryBox = document.getElementById("deliverySpeedBox");
-          customQuery += qWrap("express", deliveryBox.value);
+          customQuery += qWrap("pspeed", deliveryBox.value);
 
           let typeBox = document.getElementById("packageTypeBox");
 
-          customQuery += qWrap("packageType", typeBox.value);
+          customQuery += qWrap("ptype", typeBox.value);
 
           let sizeBox = document.getElementById("packageSizeBox");
-          customQuery += qWrap("size", sizeBox.value);
+          customQuery += qWrap("psize", sizeBox.value);
 
           let weightBox = document.getElementById("packageWeightBox");
-          customQuery += qWrap("heavy", weightBox.value);
+          customQuery += qWrap("pweight", weightBox.value);
 
           customQuery += ";";
 
           handleSubmit(customQuery)
-
-          
 
          }}
         aria-label="Check"

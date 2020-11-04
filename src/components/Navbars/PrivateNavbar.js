@@ -114,12 +114,12 @@ function PrivateNavBar() {
                           >
                             Profile
                           </DropdownItem>
-                          <DropdownItem
+                          {/* <DropdownItem
                             href="#pablo"
                             onClick={(e) => e.preventDefault()}
                           >
                             Settings
-                          </DropdownItem>
+                          </DropdownItem> */}
                           <DropdownItem
                             href="#pablo"
                             onClick={() =>
