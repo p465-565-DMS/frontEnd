@@ -20,7 +20,7 @@ import Dashboard from "./views/Dashboard.js";
 import Notifications from "./views/Notifications.js";
 import Icons from "./views/Icons.js";
 import Typography from "./views/Typography.js";
-import TableList from "./views/EmployeeTable.js";
+import OrderList from "./views/OrderTable.js";
 import Maps from "./views/Map.js";
 import UserPage from "./views/UserProfile.js";
 import UpgradeToPro from "./views/Upgrade.js";
@@ -50,10 +50,10 @@ var UserRoutes = [
   },
   {
     path: "/tables",
-    name: "Employees",
+    name: "Order History",
     icon: "nc-icon nc-tile-56",
-    component: TableList,
-    layout: "/user", 
+    component: OrderList,
+    layout: "/user",
   },
 ];
 export default UserRoutes;
