@@ -18,7 +18,7 @@ import {
   dashboardNASDAQChart,
 } from "../variables/charts.js";
 
-class Dashboard extends React.Component {
+class UserDashboard extends React.Component {
   render() {
     return (
       <>
@@ -148,7 +148,7 @@ class Dashboard extends React.Component {
                 <CardFooter>
                   <div className="legend ml-3">
                     <i className="fa fa-circle text-warning" /> Users{" "}
-                    <i className="fa fa-circle text-danger" /> Delivery Drivers{" "}
+                    <i className="fa fa-circle text-danger" /> Deliver Drivers{" "}
                     <i className="fa fa-circle text-success" /> Deliver Admins{" "}
                   </div>
                 </CardFooter>
@@ -209,4 +209,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+export default UserDashboard;
