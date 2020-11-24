@@ -87,7 +87,7 @@ if (isLoadingTrue) {
           // if(dateBox.value != ''){
             // customQuery += qWrap(dateBox.value);
           // }
-          let customQuery = 'SELECT da.companyname, sd.pspeed, sd.ptype, sd.psize, sd.pweight, sd.price FROM servicedetails sd, deliveryadmin da WHERE 1=1 AND da.adminid = sd.adminid';
+          let customQuery = 'SELECT da.companyname, sd.adminid, sd.pspeed, sd.ptype, sd.psize, sd.pweight, sd.price FROM servicedetails sd, deliveryadmin da WHERE 1=1 AND da.adminid = sd.adminid';
           let deliveryBox = document.getElementById("deliverySpeedBox");
           customQuery += qWrap("sd.pspeed", deliveryBox.value);
 

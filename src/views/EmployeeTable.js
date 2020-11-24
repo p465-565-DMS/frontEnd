@@ -15,50 +15,10 @@ import {
   Col,
 } from "reactstrap";
 
-const renderCard = (card, index) => {
-  return(
-    <tr>
-      <th>{card.username}</th>
-      <th>{card.fname}</th>
-      <th>{card.lname}</th>
-      <th>{card.role}</th>
-      <th>{card.email}</th>
-    </tr>
-  )
-}
-
-var list = 
-[
-  {
-  fname: 'sigeh',
-  lname: 'llubed',
-  email: 'sigeh58579@llubed.com',
-  username: 'sigeh58579',
-  role: 'driver',
-  googlelink: 'https://maps.google.com/?q=1425+N+Dunn+St,+Bloomington,+IN+47408,+USA&ftid=0x886c66ce696aca37:0x8cf32b9df0547ad2'
-  },
-  {
-  fname: 'daxe',
-  lname: 'laf',
-  email: 'daxelaf572@mojzur.com',
-  username: 'daxelaf572',
-  role: 'driver',
-  googlelink: 'https://maps.google.com/?q=2307+E+2nd+St,+Bloomington,+IN+47401,+USA&ftid=0x886c66993c6b0b17:0xdab438e92530cd5a'
-  },
-  {
-  fname: 'limi',
-  lname: 'tax',
-  email: 'limitax114@adeata.com',
-  username: 'limitax114',
-  role: 'driver',
-  googlelink: 'https://maps.google.com/?q=694+S+Landmark+Ave,+Bloomington,+IN+47403,+USA&ftid=0x886c6711138040d1:0x3766bedc9edf6521'
-  }
-]
-
 export default function Tables() {
 
   const history = useHistory();
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const { user, getAccessTokenSilently } = useAuth0();
   const apiUrl = process.env.REACT_APP_API_URL;
   const [isLoadingTrue, setLoading] = useState(false);
@@ -67,7 +27,7 @@ export default function Tables() {
     (async () => {
       try {
       const token = await getAccessTokenSilently();
-      let result = await fetch(`${apiUrl}/api/employees`, {
+      let result = await fetch(`${apiUrl}/admin/employees`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -76,16 +36,7 @@ export default function Tables() {
       });
       const res = await result.json();
       console.log(res);
-      // localStorage.setItem("userid", res[0].userid);
-      // setFirstName(res[0].fname);
-      // setLastName(res[0].lname);
-      // setRole(res[0].role);
-      // setContactNumber(res[0].phone);
-      // setZipCode(res[0].zipcode);
-      // setStreetAddrs(res[0].address);
-      // setCity(res[0].city);
-      // setState(res[0].state);
-      // setUrl(res[0].googlelink);
+      setData(res);
     } catch{}
   })(data);
 },[user]);
@@ -99,10 +50,10 @@ export default function Tables() {
                   <CardTitle tag="h4">Employee List</CardTitle>
                 </CardHeader>
                 <div>
-                  <MDBCol md="6">
+                  <MDBCol md="12">
                     <div>
                       <input type="text" placeholder="Search" aria-label="Search" />
-                      <MDBBtn outline color="warning" rounded size="sm" type="submit" className="mr-auto">
+                      <MDBBtn outline color="danger" rounded size="sm" type="submit" className="mr-auto">
                         Search
                       </MDBBtn>
                     </div>
@@ -110,17 +61,30 @@ export default function Tables() {
                 </div>
                 <CardBody>
                   <Table responsive>
-                    <thead className="text-primary">
+                    <thead className="text-danger">
                       <tr>
-                        <th>Username</th>
+                        <th>Email</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Role</th>
-                        <th>email</th>
+                        <th>Location</th>
                       </tr>
                     </thead>
                     <tbody>
-                        {list.map(renderCard)}
+                    {data.map(item => (
+                      <tr>
+                      <td>{item.email}</td>
+                      <td>{item.fname}</td>
+                      <td>{item.lname}</td>
+                      <td>{item.role}</td>
+                      <td class="td-actions">
+                        <button type="button" rel="tooltip" class="btn btn-danger" 
+                        onClick={() => (window.location = item.googlelink )} >
+                            <i class="now-ui-icons location_pin"></i>
+                        </button>
+                      </td>
+                      </tr>
+                    ))}
                     </tbody>
                   </Table>
                 </CardBody>

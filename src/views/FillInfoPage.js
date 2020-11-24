@@ -34,15 +34,15 @@ export default function UserProfile(props) {
   const [zipcode, setZipCode] = useState("");
   const [company, setCompanyName] = useState("N/A");
   const [license, setLicenseNo] = useState("N/A");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("user");
   const apiUrl = process.env.REACT_APP_API_URL;
   const { getAccessTokenSilently } = useAuth0();
   const [isLoadingTrue, setLoading] = useState("False");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen0, setIsOpen0] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const toggle0 = () => {
-    setIsOpen(!isOpen)
+    setIsOpen0(!isOpen0)
     if (isOpen2){
       setIsOpen2(!isOpen2)
     }
@@ -55,8 +55,8 @@ export default function UserProfile(props) {
     if (isOpen2){
       setIsOpen2(!isOpen2)
     }
-    if (isOpen){
-      setIsOpen(!isOpen)
+    if (isOpen0){
+      setIsOpen0(!isOpen0)
     }
   };
   const toggle2 = () => {
@@ -64,8 +64,8 @@ export default function UserProfile(props) {
     if (isOpen1){
       setIsOpen1(!isOpen1)
     }
-    if (isOpen){
-      setIsOpen(!isOpen)
+    if (isOpen0){
+      setIsOpen0(!isOpen0)
     }
   };
   const handleRole = (type) => {
@@ -215,7 +215,7 @@ const handleSubmit = (evt) => {
                       </Col>
                       <Col className="pr-1" md="3">
                         <FormGroup>
-                          <label>Postal Code</label>
+                          <label>Zip Code</label>
                           <Input 
                           required
                           placeholder="ZIP Code" 
@@ -230,7 +230,10 @@ const handleSubmit = (evt) => {
                         <Button color="success" onClick={() => handleRole("user")}style={{ marginBottom: '1rem' }}>User</Button>
                         <Button color="success" onClick={() => handleRole("driver")} style={{ marginBottom: '1rem' }}>Delivery Driver</Button>
                         <Button color="success" onClick={() => handleRole("dadmin")} style={{ marginBottom: '1rem' }}>Delivery Admin</Button>
-                        <Collapse isOpen={isOpen}></Collapse>
+                        <Collapse isOpen={isOpen0}>
+                        <Container>
+                        </Container>
+                        </Collapse>
                         <Collapse isOpen={isOpen1}>
                           <Container>
                             <Row>

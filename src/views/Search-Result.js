@@ -56,7 +56,7 @@ const renderCard = (card, index) => {
                 <div className="p-2 col-example text-left">{card.price}</div>
             </Col>
             <Col md="2">
-                <Button className="m-1" outline color="primary" size="sm">select</Button>
+                <Button className="m-1" outline color="danger" size="sm">select</Button>
             </Col>
         </Row>
     </Card>
