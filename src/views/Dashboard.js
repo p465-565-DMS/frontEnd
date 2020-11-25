@@ -2,12 +2,14 @@ import React from "react";
 // react plugin used to create charts
 import { Line, Pie } from "react-chartjs-2";
 // reactstrap components
+import { MDBCol, MDBBtn} from "mdbreact";
 import {
   Card,
   CardHeader,
   CardBody,
   CardFooter,
   CardTitle,
+  Table,
   Row,
   Col,
 } from "reactstrap";
@@ -23,7 +25,7 @@ class Dashboard extends React.Component {
     return (
       <>
         <div className="content">
-          {/*
+{/*           
           <Row>
             <Col lg="3" md="6" sm="6">
               <Card className="card-stats">
@@ -131,16 +133,18 @@ class Dashboard extends React.Component {
             </Col>
           </Row>
           */}
-          <Row>
+          {/* <Row>
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h5">Number of Users</CardTitle>
+                  <CardTitle tag="h5">Number of Orders</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Line
-                    data={dashboard24HoursPerformanceChart.data}
-                    options={dashboard24HoursPerformanceChart.options}
+                    // data={dashboard24HoursPerformanceChart.data}
+                    // options={dashboard24HoursPerformanceChart.options}
+                    data={dashboardNASDAQChart.data}
+                    options={dashboardNASDAQChart.options}
                     width={400}
                     height={90}
                   />
@@ -154,8 +158,31 @@ class Dashboard extends React.Component {
                 </CardFooter>
               </Card>
             </Col>
-          </Row>
+          </Row> */}
           <Row>
+          <Col md="7">
+              <Card className="card-chart">
+                <CardHeader>
+                  <CardTitle tag="h5">Number of Orders</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <Line
+                    data={dashboardNASDAQChart.data}
+                    options={dashboardNASDAQChart.options}
+                    width={400}
+                    height={173}
+                  />
+                </CardBody>
+                <CardFooter>
+                  <div className="chart-legend">
+                    {/*
+                    <i className="fa fa-circle text-info" /> Tesla Model S{" "}
+                    <i className="fa fa-circle text-warning" /> BMW 5 Series
+                    */}
+                  </div>
+                </CardFooter>
+              </Card>
+            </Col>
             <Col md="5">
               <Card>
                 <CardHeader>
@@ -170,7 +197,7 @@ class Dashboard extends React.Component {
                 <CardFooter>
                   <div className="legend ml-3">
                     <i className="fa fa-circle text-primary" /> Regular{" "}
-                    <i className="fa fa-circle text-warning" /> Electronic{" "}
+                    <i className="fa fa-circle text-warning" /> Electronics{" "}
                     <i className="fa fa-circle text-danger" /> Food{" "}
                     <br/>
                     <i className="fa fa-circle text-info" /> Documents{" "}
@@ -179,27 +206,54 @@ class Dashboard extends React.Component {
                 </CardFooter>
               </Card>
             </Col>
-            <Col md="7">
-              <Card className="card-chart">
+          </Row>
+        {/* </div> */}
+        {/* <div className="content"> */}
+          <Row>
+            <Col md="12">
+              <Card>
                 <CardHeader>
-                  <CardTitle tag="h5">Number of Orders</CardTitle>
+                  <CardTitle tag="h4">Orders</CardTitle>
                 </CardHeader>
+                <div>
+                  <MDBCol md="12">
+                    <div>
+                      <input type="text" placeholder="Search" aria-label="Search" />
+                      <MDBBtn outline color="danger" rounded size="sm" type="submit" className="mr-auto">
+                        Search
+                      </MDBBtn>
+                    </div>
+                  </MDBCol>
+                </div>
                 <CardBody>
-                  <Line
-                    data={dashboardNASDAQChart.data}
-                    options={dashboardNASDAQChart.options}
-                    width={400}
-                    height={100}
-                  />
+                  <Table responsive>
+                    <thead className="text-danger">
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Tracking ID</th>
+                        <th>Last Name</th>
+                        <th>Role</th>
+                        <th>Location</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {/* {data.map(item => (
+                      <tr>
+                      <td>{item.email}</td>
+                      <td>{item.fname}</td>
+                      <td>{item.lname}</td>
+                      <td>{item.role}</td>
+                      <td class="td-actions">
+                        <button type="button" rel="tooltip" class="btn btn-danger" 
+                        onClick={() => (window.location = item.googlelink )} >
+                            <i class="now-ui-icons location_pin"></i>
+                        </button>
+                      </td>
+                      </tr>
+                    ))} */}
+                    </tbody>
+                  </Table>
                 </CardBody>
-                <CardFooter>
-                  <div className="chart-legend">
-                    {/*
-                    <i className="fa fa-circle text-info" /> Tesla Model S{" "}
-                    <i className="fa fa-circle text-warning" /> BMW 5 Series
-                    */}
-                  </div>
-                </CardFooter>
               </Card>
             </Col>
           </Row>
