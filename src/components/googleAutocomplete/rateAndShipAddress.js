@@ -1,6 +1,8 @@
 import React from "react";
 /* global google */
 import { Input } from "reactstrap";
+import axios from 'axios';
+
 class SearchLocationInput extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +24,27 @@ class SearchLocationInput extends React.Component {
   handlePlaceChanged() {
     let addressObject = this.autocomplete.getPlace();
     let address = addressObject.address_components;
+    
+    let formattedAddress = addressObject.formatted_address;
+    axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+      params:{
+        address: formattedAddress,
+        key:'AIzaSyCeyruKDAu13YYMgWVU6f4ZPk_zRFmzsgY'
+      }
+    })
+    .then(function(response){
+      let lat = response.data.results[0].geometry.location.lat;
+      let lng = response.data.results[0].geometry.location.lng;
+      console.log(response)
+      console.log(formattedAddress)
+      console.log(lat)
+      console.log(lng)
+    })
+    .catch(function(error){
+      console.log(error);
+    });
+
+
     this.setState({
       name: addressObject.name,
       city: address[0].long_name,
