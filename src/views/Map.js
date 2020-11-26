@@ -171,71 +171,6 @@ export default function Map() {
   const [formatAddress, setAddress]  = useState("");
   const [userLat, setLat]  = useState("");
   const [userLng, setLng]  = useState("");
-  var autoDriveSteps = new Array();
-  var speedFactor = 10; // 10x faster animated drive
-
-  function setAnimatedRoute(origin, destination, map) {
-      // init routing services
-      var directionsService = new window.google.maps.DirectionsService;
-      var directionsRenderer = new window.google.maps.DirectionsRenderer({
-          map: map
-      });
-
-      //calculate route
-      directionsService.route({
-              origin: origin,
-              destination: destination,
-              travelMode: window.google.maps.TravelMode.DRIVING
-          },
-          function(response, status) {
-              if (status == window.google.maps.DirectionsStatus.OK) {
-                  // display the route
-                  directionsRenderer.setDirections(response);
-
-                  // calculate positions for the animation steps
-                  // the result is an array of LatLng, stored in autoDriveSteps
-                  autoDriveSteps = new Array();
-                  var remainingSeconds = 0;
-                  var leg = response.routes[0].legs[0]; // supporting single route, single legs currently
-                  leg.steps.forEach(function(step) {
-                      var stepSeconds = step.duration.value;
-                      var nextStopSeconds = speedFactor - remainingSeconds;
-                      while (nextStopSeconds <= stepSeconds) {
-                          var nextStopLatLng = getPointBetween(step.start_location, step.end_location, nextStopSeconds / stepSeconds);
-                          autoDriveSteps.push(nextStopLatLng);
-                          nextStopSeconds += speedFactor;
-                      }
-                      remainingSeconds = stepSeconds + speedFactor - nextStopSeconds;
-                  });
-                  if (remainingSeconds > 0) {
-                      autoDriveSteps.push(leg.end_location);
-                  }
-              } else {
-                  window.alert('Directions request failed due to ' + status);
-              }
-          });
-  }
-
-  // helper method to calculate a point between A and B at some ratio
-  function getPointBetween(a, b, ratio) {
-      return new window.google.maps.LatLng(a.lat() + (b.lat() - a.lat()) * ratio, a.lng() + (b.lng() - a.lng()) * ratio);
-  }
-
-  // start the route simulation   
-  function startRouteAnimation(marker) {
-      var autoDriveTimer = setInterval(function () {
-              // stop the timer if the route is finished
-              if (autoDriveSteps.length === 0) {
-                  clearInterval(autoDriveTimer);
-              } else {
-                  // move marker to the next position (always the first in the array)
-                  marker.setPosition(autoDriveSteps[0]);
-                  // remove the processed position
-                  autoDriveSteps.shift();
-              }
-          },
-          1000);
-  }
 
   React.useEffect(() => {
     (async () => {
@@ -257,8 +192,6 @@ export default function Map() {
   })(data);
   },[user]);
 
-  // console.log(formatAddress);
-  // console.log(url);
   axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
     params:{
       address: formatAddress,
@@ -268,18 +201,43 @@ export default function Map() {
   .then(function(response){
     let lat = response.data.results[0].geometry.location.lat;
     let lng = response.data.results[0].geometry.location.lng;
-    setLat(lat);
-    setLng(lng);
-    setAnimatedRoute((39.1400,-86.5890),(lat,lng),GoogleMap)
-    startRouteAnimation((39.1400,-86.5890))
-    // console.log(response)
-    // console.log(formatAddress)
-    // console.log(lat)
-    // console.log(lng)
+    setLat(+lat);
+    setLng(+lng);
+    var original_place = new window.google.maps.LatLng(lat, lng);
+    var destination_place = new window.google.maps.LatLng(39.1400, -86.5890);
+    console.log(response)
+    console.log(formatAddress)
+    console.log(lat)
+    console.log(lng)
   })
   .catch(function(error){
     console.log(error.response);
   });
+  
+  // console.log(formatAddress);
+  // console.log('latlnglatlng'+userLat+','+userLng);
+  // axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+  //   params:{
+  //     latlng: userLat+','+userLng,
+  //     address: formatAddress,
+  //     key:'AIzaSyCeyruKDAu13YYMgWVU6f4ZPk_zRFmzsgY'
+  //   }
+  // })
+  // .then(function(response){
+  //   let lat = response.data.results[0].geometry.location.lat;
+  //   let lng = response.data.results[0].geometry.location.lng;
+  //   setLat(+lat);
+  //   setLng(+lng);
+  //   var original_place = new window.google.maps.LatLng(lat, lng);
+  //   var destination_place = new window.google.maps.LatLng(39.1400, -86.5890);
+  //   console.log(response)
+  //   console.log(formatAddress)
+  //   console.log(lat)
+  //   console.log(lng)
+  // })
+  // .catch(function(error){
+  //   console.log(error.response);
+  // });
 
   // render() {
     return (
