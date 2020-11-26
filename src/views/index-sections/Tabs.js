@@ -3,11 +3,13 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import {useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Loading } from "../../components"
+import { Loading } from "../../components";
+import Datetime from "react-datetime";
 // reactstrap components
 import {
   Card,
   CardHeader,
+  FormGroup,
   CardBody,
   NavItem,
   NavLink,
@@ -15,7 +17,6 @@ import {
   TabContent,
   TabPane,
   Container,
-  FormGroup,
   Input,
   Row,
   Col,
@@ -188,8 +189,10 @@ if (isLoadingTrue) {
                       <Row>
                         <Col className="px-5 mt-3" sm="6">
                           <h6 style={{textAlign:"left"}}>Date</h6>
-                            <Input placeholder="mm/dd/yyyy"
-                            id="dateBox"></Input>
+                          <Datetime
+                            timeFormat={false}
+                            inputProps={{ placeholder: "Datetime Picker" }}
+                            />
                         </Col>
                         <Col className="px-5 mt-3" sm="6">
                           <h6 style={{textAlign:"left"}}>Delivery Speed</h6>

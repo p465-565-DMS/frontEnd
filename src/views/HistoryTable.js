@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import {useHistory } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import { MDBCol, MDBBtn} from "mdbreact";
 import { Form } from 'react-bootstrap';
 
@@ -7,14 +9,68 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter,
   CardTitle,
+  CardSubtitle,
+  CardText,
   Table,
   Row,
   Col,
+  Input,
 } from "reactstrap";
+// import { CardText } from "material-ui";
 
-class Tables extends React.Component {
-  render() {
+const renderCard = (card) => {
+  return(
+  <Card style = {{fontSize : "11px", width : "30%"}}>
+    <div>
+      <CardTitle tag="h4">Order ID: {card.packageid}</CardTitle>  
+      <CardBody>
+        <CardText>
+          <div className="content text-left">
+            <p><i class="now-ui-icons ui-1_email-85"></i> {card.email}</p>
+            <p><i class="now-ui-icons users_circle-08"></i> {card.fname}</p>
+            <p><i class="now-ui-icons location_compass-05"></i> {card.trackingid}</p>
+            <p><i class="now-ui-icons shopping_tag-content"></i> {card.packagetype}</p>
+            <p><i class="now-ui-icons business_badge"></i> {card.packageassigned}</p>
+            <p><i class="now-ui-icons shopping_delivery-fast"></i> {card.packagestatus}</p>
+            <p><i class="now-ui-icons location_pin"></i></p>
+            <p><i class="now-ui-icons business_money-coins"></i> ${card.price}</p>
+            <p><i class="now-ui-icons ui-2_chat-round"></i> {card.review}</p>
+          </div>
+        </CardText>
+      </CardBody>
+    </div>
+  </Card>
+  )
+}
+
+export default function OrderHistory() {
+
+  const history = useHistory();
+  const [data, setData] = useState([]);
+  const { user, getAccessTokenSilently } = useAuth0();
+  const apiUrl = process.env.REACT_APP_API_URL;
+  // const geocoder = new google.maps.Geocoder();
+  const [isLoadingTrue, setLoading] = useState(false);
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+      const token = await getAccessTokenSilently();
+      let result = await fetch(`${apiUrl}/admin/orderHistory`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await result.json();
+      console.log(res);
+      setData(res);
+    } catch{}
+  })(data);
+},[user]);
     return (
       <>
         <div className="content">
@@ -22,7 +78,7 @@ class Tables extends React.Component {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h4">Delivery History</CardTitle>
+                  <CardTitle tag="h4">Orders History</CardTitle>
                 </CardHeader>
                 <div>
                   <MDBCol md="6">
@@ -35,68 +91,7 @@ class Tables extends React.Component {
                   </MDBCol>
                 </div>
                 <CardBody>
-                  <Table responsive>
-                    <thead className="text-primary">
-                      <tr>
-                        <th>Package ID</th>
-                        <th>Package Content</th>
-                        <th>Customer Username</th>
-                        <th>Customer Name</th>
-                        <th>Customer Address</th>
-                        <th>Package Cost</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>304511</td>
-                        <td>Laptop</td>
-                        <td>gamerguy7864</td>
-                        <td>Derek</td>
-                        <td>$2165.63</td>
-                        <td>530 W Hoosier Court Ave</td>
-                      </tr>
-                      <tr>
-                        <td>406512</td>
-                        <td>Custom Furniture</td>
-                        <td>gertrude77</td>
-                        <td>Gertrude</td>
-                        <td>$217.86</td>
-                        <td>600 E Second Street</td>
-                      </tr>
-                      <tr>
-                        <td>978621</td>
-                        <td>Video Game Merchandise</td>
-                        <td>efan797</td>
-                        <td>Raheem</td>
-                        <td>$50.66</td>
-                        <td>131 N Clark Street</td>
-                      </tr>
-                      <tr>
-                        <td>647895</td>
-                        <td>Dragon Egg</td>
-                        <td>mortwinThedark</td>
-                        <td>Mortimer</td>
-                        <td>$7000.01</td>
-                        <td>403 N Roosevelt Street</td>
-                      </tr>
-                      <tr>
-                        <td>658963</td>
-                        <td>Makeup Kit</td>
-                        <td>darcyday</td>
-                        <td>Darcy</td>
-                        <td>$85.96</td>
-                        <td>3039 E Amy Lane</td>
-                      </tr>
-                      <tr>
-                        <td>25698</td>
-                        <td>Wand of Smiles</td>
-                        <td>tashavergo</td>
-                        <td>Tasha</td>
-                        <td>$304.65</td>
-                        <td>3209 E 10th Street, Apt. F11</td>
-                      </tr>
-                    </tbody>
-                  </Table>
+                  {data.map(renderCard)}
                 </CardBody>
               </Card>
             </Col>
@@ -105,6 +100,3 @@ class Tables extends React.Component {
       </>
     );
   }
-}
-
-export default Tables;
