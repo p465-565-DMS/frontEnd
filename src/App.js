@@ -22,6 +22,7 @@ import { createBrowserHistory } from "history";
 
 import AdminLayout from "./layouts/Admin.js";
 import UserLayout from "./layouts/User.js";
+import DriverLayout from "./layouts/Driver.js";
 import FillInfoPage from "./views/FillInfoPage.js";
 import Maps from "./views/Maps.js";
 import SearchResult from "./views/Search-Result.js";
@@ -48,6 +49,7 @@ const App = () => {
           path="/user" render={(props) => <UserLayout {...props} />} /> */}
         <PrivateRoute path="/admin" component={AdminLayout} />
         <PrivateRoute path="/user" component={UserLayout} />
+        <PrivateRoute path="/driver" component={DriverLayout}/>
         <PrivateRoute path="/fill-info"  component={FillInfoPage} />
         <Redirect from="/" to="/index" />
         </Switch>

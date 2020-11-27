@@ -143,14 +143,14 @@ import {
     callSecureApi1(serviceDetails);
     };
 
-    const handleSubmit1 = (item) => {
+    const handleSubmit1 = (item1) => {
       let newSpeed = speed;
       let newType = type;
       let newSize = size;
       let newWeight = weight;
       let newPrice = price;
       let serviceDetails1 = JSON.stringify({
-        id: item.id,
+        id: item1.id,
         pspeed: newSpeed,
         ptype: newType,
         psize: newSize,
@@ -160,8 +160,8 @@ import {
       callSecureApi2(serviceDetails1);
       };
 
-    const deleteRecord = (item) => {
-      let sid = item.id;
+    const deleteRecord = (item1) => {
+      let sid = item1.id;
       let payload = JSON.stringify({
         id: sid
       });
@@ -222,112 +222,6 @@ React.useEffect(() => {
     return (
       <>
         <div className="content">
-          {/* <Row>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-globe text-warning" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Capacity</p>
-                        <CardTitle tag="p">150GB</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Update Now
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-money-coins text-success" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Revenue</p>
-                        <CardTitle tag="p">$ 1,345</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="far fa-calendar" /> Last day
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-vector text-danger" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Errors</p>
-                        <CardTitle tag="p">23</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="far fa-clock" /> In the last hour
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-favourite-28 text-primary" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Followers</p>
-                        <CardTitle tag="p">+45K</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Update now
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-          </Row> */}
           <Row>
           <Col md="7">
               <Card className="card-chart">
@@ -545,13 +439,13 @@ React.useEffect(() => {
                       </tr>
                     </thead>
                     <tbody>
-                    {data3.map(item => (
+                    {data3.map(item1 => (
                       <tr>
-                      <td className="text-center">{item.pspeed}</td>
-                      <td className="text-center">{item.ptype}</td>
-                      <td className="text-center">{item.pweight}</td>
-                      <td className="text-center">{item.psize}</td>
-                      <td className="text-center">$ {item.price}</td>
+                      <td className="text-center">{item1.pspeed}</td>
+                      <td className="text-center">{item1.ptype}</td>
+                      <td className="text-center">{item1.pweight}</td>
+                      <td className="text-center">{item1.psize}</td>
+                      <td className="text-center">$ {item1.price}</td>
                       <td class="td-actions text-center">
                         <button type="button" rel="tooltip" class="btn btn-primary"  onClick={() => setModal2(true)}>
                             <i class="now-ui-icons ui-1_simple-delete"></i>
@@ -621,7 +515,7 @@ React.useEffect(() => {
                             <Button color="default"
                             type="submit"
                             value="Submit"
-                            onClick = {() => handleSubmit1(item)}
+                            onClick = {() => handleSubmit1(item1)}
                             >
                               Update
                             </Button>
@@ -634,7 +528,7 @@ React.useEffect(() => {
                             </Button>
                           </div>
                         </Modal>
-                        <button type="button" rel="tooltip" class="btn btn-danger"  onClick={() => deleteRecord(item)}>
+                        <button type="button" rel="tooltip" class="btn btn-danger"  onClick={() => deleteRecord(item1)}>
                             <i class="now-ui-icons ui-1_simple-remove"></i>
                         </button>
                       </td>

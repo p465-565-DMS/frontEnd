@@ -1,8 +1,8 @@
-import Dashboard from "./views/Dashboard.js";
+import Dashboard from "./views/DriverDashboard.js";
 import Notifications from "./views/Notifications.js";
 import Icons from "./views/Icons.js";
 import Typography from "./views/Typography.js";
-import TableList from "./views/HistoryTable.js";
+import OrderHistory from "./views/driverHistory";
 import Maps from "./views/Map.js";
 import UserPage from "./views/UserProfile.js";
 import UpgradeToPro from "./views/Upgrade.js";
@@ -30,10 +30,10 @@ var DriverRoutes = [
     layout: "/driver",
   },
   {
-    path: "/tables",
+    path: "/history",
     name: "Delivery History",
     icon: "nc-icon nc-tile-56",
-    component: List,
+    component: OrderHistory,
     layout: "/driver", 
   },
 ];
