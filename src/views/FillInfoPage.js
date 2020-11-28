@@ -109,8 +109,10 @@ const handleSubmit = (evt) => {
   let city = localStorage.getItem("city");
   let state = localStorage.getItem("state");
   let googleMapLink = localStorage.getItem("googleMapLink");
+  let lat = localStorage.getItem("lat");
+  let lng = localStorage.getItem("lng");
   let username = user.nickname;
-  let address = {"streetAddress":streetAddress,"state":state,"city":city,"googleMapLink":googleMapLink};
+  let address = {"streetAddress":streetAddress,"state":state,"city":city,"googleMapLink":googleMapLink,"lat":lat,"lng":lng};
   let driver = {"cname":company,"lno":license};
   let admin = {"cname":company,"spkg":"TRUE", "mpkg":"TRUE", "lpkg":"TRUE", "elec":"TRUE", "deli":"TRUE", "heavy":"TRUE", "doc":"TRUE", "other":"TRUE", "express":"TRUE", "normal":"TRUE"};
   let userDetails = JSON.stringify({
