@@ -14,7 +14,7 @@ import React from "react";
 // core components
 import IndexHeader from "../components/Headers/IndexHeader.js";
 import TransparentFooter from "../components/Footers/TransparentFooter";
-import Tabs from "./index-sections/Tabs.js";
+import Tabs from "./homeTabs.js";
 import Examples from "./index-sections/Examples.js";
 
 function Index() {

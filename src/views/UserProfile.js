@@ -232,7 +232,7 @@ if (isLoadingTrue) {
                       </Col>
                       <Col className="pl-1" md="4">
                         <FormGroup>
-                          <label>Postal Code</label>
+                          <label>Zip Code</label>
                           <Input 
                           defaultValue={`${zipCode}`}
                           onChange={e => setZipCode(e.target.value)}
