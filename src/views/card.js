@@ -24,8 +24,8 @@ export default function Cart(props) {
                   <Row>
                     <Col md="12" xs="12">
                       <div className="numbers">
-                        <p className="card-category">{props.items.username}</p>
-                        <CardTitle tag="p">First Name: `${props.items.fname}` + " " + `${props.items.lname}`</CardTitle>
+                        <p className="card-category">{props.items.email}</p>
+                        <CardTitle tag="p">{props.items.packageid}</CardTitle>
                         <p />
                       </div>
                     </Col>

@@ -31,8 +31,8 @@ const renderCard = (card) => {
             <p><i class="now-ui-icons ui-1_email-85"></i> {card.email}</p>
             <p><i class="now-ui-icons users_circle-08"></i> {card.fname}</p>
             <p><i class="now-ui-icons location_compass-05"></i> {card.trackingid}</p>
+            <p><i class="now-ui-icons ui-2_time-alarm"></i> {card.deadline}</p>
             <p><i class="now-ui-icons shopping_tag-content"></i> {card.packagetype}</p>
-            <p><i class="now-ui-icons business_badge"></i> {card.packageassigned}</p>
             <p><i class="now-ui-icons shopping_delivery-fast"></i> {card.packagestatus}</p>
             <p><i class="now-ui-icons location_pin"></i></p>
             <p><i class="now-ui-icons business_money-coins"></i> ${card.price}</p>
@@ -58,7 +58,7 @@ export default function OrderHistory() {
     (async () => {
       try {
       const token = await getAccessTokenSilently();
-      let result = await fetch(`${apiUrl}/admin/orderHistory`, {
+      let result = await fetch(`${apiUrl}/driver/orderHistory`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

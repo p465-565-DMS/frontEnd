@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Divider from '@material-ui/core/Divider';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import SearchLocationInput from '../components/googleAutocomplete/rateAndShipAddress';
+import SearchLocationInput from '../components/googleAutocomplete/rateAndShipAddress1';
 
 // reactstrap components
 import {
@@ -11,6 +11,7 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
+  CardText,
   FormGroup,
   Form,
   Input,
@@ -19,11 +20,6 @@ import {
 } from "reactstrap";
 import { Container } from "@material-ui/core";
 
-
-const divStyle = {
-    //border: '2px solid black',
-    //borderRadius: '5px'  
-};
 
 const selectButton = () => (
     <Route render={({history}) => (
@@ -40,32 +36,71 @@ const selectButton = () => (
     )} />
 )
 
-const renderCard = (card, index) => {
+// const renderCard = (card, index) => {
+//     return(
+//         <Card className="d-flex flex-column mt-2">
+//         <Row>
+//             <Col>
+//                 <div className="pl-5 col-example text-left">{card.companyname}</div>
+//             </Col>
+//             <Col>
+//                 <div className="pl-5 col-example text-left">{card.address}</div>
+//             </Col>
+//             <Col>
+//                 <div className="p-2 col-example text-left">{card.pspeed}</div>
+//             </Col>
+//             <Col>
+//                 <div className="p-2 col-example text-left">{card.ptype}</div>
+//             </Col>
+//             <Col>
+//                 <div className="p-2 col-example text-left">{card.pweight}</div>
+//             </Col>
+//             <Col>
+//                 <div className="p-2 col-example text-left">{card.psize}</div>
+//             </Col>
+//             <Col>
+//                 <div className="p-2 col-example text-left">{card.price}</div>
+//             </Col>
+//             <Col>
+//                 <Button className="m-1" outline color="danger" size="sm">select</Button>
+//             </Col>
+//         </Row>
+//     </Card>
+//     )
+// }
+
+const renderCard = (card) => {
     return(
-        <Card className="d-flex flex-column mt-2">
-        <Row>
-            <Col md="1">
-            </Col>
-            <Col md="3">
-                <div className="pl-4 col-example text-left">{card.companyname}</div>
-            </Col>
-            <Col md="4">
-                {/*<div className="p-2 col-example text-left">{card.}</div>*/}
-            </Col>
-            <Col md="2">
-                <div className="p-2 col-example text-left">{card.price}</div>
-            </Col>
-            <Col md="2">
-                <Button className="m-1" outline color="danger" size="sm">select</Button>
-            </Col>
-        </Row>
+    <Card style = {{fontSize : "11px", width : "50%"}}>
+      <div>
+        <CardTitle tag="h4">{card.companyname}</CardTitle>  
+        <CardBody>
+          <CardText>
+            <div className="content text-left">
+              <p><i class="now-ui-icons shopping_shop"></i> {card.address}</p>
+              <p><i class="now-ui-icons shopping_delivery-fast"></i> {card.pspeed}</p>
+              <p><i class="now-ui-icons shopping_tag-content"></i> {card.ptype}</p>
+              <p><i class="now-ui-icons shopping_basket"></i> {card.pweight}</p>
+              <p><i class="now-ui-icons design-2_ruler-pencil"></i> {card.psize}</p>
+              <p><i class="now-ui-icons business_money-coins"></i> ${card.price}</p>
+              <Button className="btn-icon btn-round" color="danger" type="button">
+                <i className="now-ui-icons gestures_tap-01"></i>
+                </Button>
+            </div>
+          </CardText>
+        </CardBody>
+      </div>
     </Card>
     )
-}
+  }
 
 export default function SearchResult(props) {
     const q = localStorage.result;
+    const deadline = localStorage.getItem("deliveryDate");
+    const fullAddress1 = localStorage.getItem("fullAddress1");
+    const fullAddress2 = localStorage.getItem("fullAddress2");
     console.log(q);
+    console.log(fullAddress1, fullAddress2, deadline);
     var qList = JSON.parse(q);
     console.log(qList[0])
     return (
@@ -73,48 +108,64 @@ export default function SearchResult(props) {
         <Container className="content mt-5 pt-5">
              <Row>
              <Col md="2"/>
-            <Col md="8">
+            <Col>
             <Row>
-                <Container style={divStyle}>
+                <Container>
                     <h2>Search Result</h2>
                     <Row>
                         <Col md="4 pl-4">
                             <span>From:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <SearchLocationInput></SearchLocationInput>
+                            {`${fullAddress1}`}
                         </Col>
                         <Col md="4 pl-4">
                             <span>To:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <SearchLocationInput></SearchLocationInput>
+                            {`${fullAddress2}`}
                         </Col>
                         <Col md="4 pl-4">
-                            <span>Date:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <Input placeholder="mm/dd/yyyy"></Input>
+                            <span>Deliver By:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            {`${deadline}`}
                         </Col>
                     </Row>
                 </Container>
             </Row>
-            <Divider className="mt-2" variant="middle"/>
-            <Container className="d-flex flex-column mt-5">
+            <Divider className="mt-3" variant="middle"/>
+            {/* <Container className="d-flex flex-column mt-8">
                 <Row>
-                    <Col md="1">
+                    <Col>
+                        <div className="pl-4 col-example text-left">Company</div>
                     </Col>
-                    <Col md="3">
-                        <div className="pr-5 col-example text-left">Company</div>
+                    <Col>
+                        <div className="pl-4 col-example text-left">Address</div>
                     </Col>
-                    <Col md="4">
-                        {/*<div className="p-2 col-example text-left">Estimate Arrival Date</div>*/}
+                    <Col>
+                        <div className="pl-4 col-example text-left">Speed</div>
                     </Col>
-                    <Col md="2">
-                        <div className="pl-3 col-example text-left">Price</div>
+                    <Col>
+                        <div className="pl-4 col-example text-left">Content</div>
                     </Col>
-                    <Col md="2">
+                    <Col>
+                        <div className="pl-4 col-example text-left">Weight</div>
+                    </Col>
+                    <Col>
+                        <div className="pl-4 col-example text-left">Size</div>
+                    </Col>
+                    <Col>
+                        <div className="pl-2 col-example text-left">Price</div>
                     </Col>
                 </Row>
                 <Divider variant="middle"/>
+            </Container> */}
+            <Container className="d-flex flex-column mt-8">
+                {/* <Row>
+                <div>
+                    {qList.map(renderCard)}
+                </div>
+                </Row> */}
+                <div>
+                  {qList.map(renderCard)}
+                </div>
+                <Divider variant="middle"/>
             </Container>
-            <div>
-                {qList.map(renderCard)}
-            </div>
             </Col>
             <Col md="2"/>
           </Row>

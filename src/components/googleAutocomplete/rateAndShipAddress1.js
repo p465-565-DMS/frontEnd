@@ -3,7 +3,7 @@ import React from "react";
 import { Input } from "reactstrap";
 import axios from 'axios';
 
-class SearchLocationInput extends React.Component {
+class SearchLocationInput1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.initialState();
@@ -49,11 +49,13 @@ class SearchLocationInput extends React.Component {
       country: address[2].long_name,
       state: address[1].long_name,
       googleMapLink: addressObject.url,
+      fullAddress: addressObject.formatted_address
     });
-    localStorage.setItem("city", this.state.city);
-    localStorage.setItem("state", this.state.state);
-    localStorage.setItem("country", this.state.country);
-    localStorage.setItem("googleMapLink", this.state.googleMapLink);
+    localStorage.setItem("city1", this.state.city);
+    localStorage.setItem("state1", this.state.state);
+    localStorage.setItem("country1", this.state.country);
+    localStorage.setItem("googleMapLink1", this.state.googleMapLink);
+    localStorage.setItem("fullAddress1", this.state.fullAddress);
   }
   initialState() {
     return {
@@ -72,10 +74,10 @@ class SearchLocationInput extends React.Component {
       <Input
         innerRef={this.autocompleteInput}
         id="autocomplete"
-        placeholder="Enter Your Address"
+        placeholder="Enter Source City"
         type="text"
       ></Input>
     );
   }
 }
-export default SearchLocationInput;
+export default SearchLocationInput1;

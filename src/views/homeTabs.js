@@ -1,9 +1,10 @@
-import SearchLocationInput from '../../components/googleAutocomplete/rateAndShipAddress1';
+import SearchLocationInput1 from '../components/googleAutocomplete/rateAndShipAddress1';
+import SearchLocationInput2 from '../components/googleAutocomplete/rateAndShipAddress2';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import {useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Loading } from "../../components";
+import { Loading } from "../components";
 import Datetime from "react-datetime";
 // reactstrap components
 import {
@@ -23,8 +24,6 @@ import {
   Button,
 } from "reactstrap";
 
-
-
 function qWrap(liberty, freedom){
   return " AND " + liberty + " = " + "'" + freedom + "'";
 }
@@ -32,23 +31,47 @@ function qWrap(liberty, freedom){
 // core components
 function Tabs() {
   const history = useHistory();
-  const { user, getAccessTokenSilently } = useAuth0();
   const apiUrl = process.env.REACT_APP_API_URL;
-  const [data, setData] = useState({});
   const [iconPills, setIconPills] = React.useState("1");
+  const [date, setDate] = useState("");
+  const [trackId, setTrackId] = useState("");
   const [pills, setPills] = React.useState("1");
   const [queryValue, setQuery] = React.useState("");
   const ref1 = React.createRef();
   const ref2 = React.createRef();
   const [isLoadingTrue, setLoading] = useState(false);
 
+  const callSecureApi1 = async (payload) => {
+    fetch(`${apiUrl}/api/trackPackage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: payload,
+    }).then((response) => {
+      if (!response.ok) {
+        console.log("SOMETHING WENT WRONG");
+      } else {
+        response.text().then(function(data) {
+          localStorage.setItem("trackInfo", data); });
+          console.log(localStorage.getItem("trackInfo"))
+      }
+    });
+  };
 
+  const sendData = () => {
+    let tid = trackId;
+    let payload = JSON.stringify({
+      trackingid: tid
+    });
+    console.log(payload)
+    callSecureApi1(payload);
+  };
+  
 const callSecureApi = async (query) => {
-  // const token = await getAccessTokenSilently();
   fetch(`${apiUrl}/api/search`, {
     method: "POST",
     headers: {
-      // Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     body: query,
@@ -58,7 +81,7 @@ const callSecureApi = async (query) => {
     } else {
       response.text().then(function(data) {
         localStorage.setItem("result", data); });
-        console.log(typeof localStorage.result)
+        console.log(localStorage.result)
       history.push("/search-result");
     }
   });
@@ -88,7 +111,7 @@ if (isLoadingTrue) {
           // if(dateBox.value != ''){
             // customQuery += qWrap(dateBox.value);
           // }
-          let customQuery = 'SELECT da.companyname, sd.adminid, sd.pspeed, sd.ptype, sd.psize, sd.pweight, sd.price FROM servicedetails sd, deliveryadmin da WHERE 1=1 AND da.adminid = sd.adminid';
+          let customQuery = 'SELECT u.address, da.companyname, sd.adminid, sd.pspeed, sd.ptype, sd.psize, sd.pweight, sd.price FROM users u, servicedetails sd, deliveryadmin da WHERE 1=1 AND da.adminid = sd.adminid AND u.userid = da.userid';
           let deliveryBox = document.getElementById("deliverySpeedBox");
           customQuery += qWrap("sd.pspeed", deliveryBox.value);
 
@@ -100,13 +123,16 @@ if (isLoadingTrue) {
 
           let weightBox = document.getElementById("packageWeightBox");
           customQuery += qWrap("sd.pweight", weightBox.value);
+          
+          let deadline = date;
+          localStorage.setItem("deliveryDate", deadline);
 
           customQuery += ";";
           handleSubmit(customQuery);
 
          }}
         aria-label="Check"
-        className="mt-5"
+        className="mt-5 btn-round"
         size="lg"
       >
         Check
@@ -177,13 +203,13 @@ if (isLoadingTrue) {
                       <Row>
                         <Col className="px-5 mt-3" sm="12">
                             <h6 style={{textAlign:"left"}}>From</h6>
-                            <SearchLocationInput ref={ref1}/>
+                            <SearchLocationInput1 />
                         </Col>
                       </Row>
                       <Row>
                         <Col className="px-5 mt-3" sm="12">
                           <h6 style={{textAlign:"left"}}>To</h6>
-                            <SearchLocationInput ref={ref2}/>
+                            <SearchLocationInput2 />
                         </Col>
                       </Row>
                       <Row>
@@ -191,7 +217,8 @@ if (isLoadingTrue) {
                           <h6 style={{textAlign:"left"}}>Date</h6>
                           <Datetime
                             timeFormat={false}
-                            inputProps={{ placeholder: "Datetime Picker" }}
+                            inputProps={{ placeholder: "Delivery Date" }}
+                            onChange={e => {setDate(e.format("MM/DD/YYYY").toString())}}
                             />
                         </Col>
                         <Col className="px-5 mt-3" sm="6">
@@ -244,7 +271,11 @@ if (isLoadingTrue) {
                             defaultValue=""
                             placeholder="Tracking ID"
                             type="text"
+                            onChange={e => setTrackId(e.target.value)}
                           ></Input>
+                          <Button className="btn-round" type="button" onClick = {() => sendData()}>
+                            Track
+                        </Button>
                         </FormGroup>
                       </Col>
                     </TabPane>
