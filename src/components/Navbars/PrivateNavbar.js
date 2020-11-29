@@ -23,9 +23,26 @@ import {
 function PrivateNavBar() {
   const { user, logout } = useAuth0();
   const history = useHistory();
+  // const routeUserProfile = () => {
+  //   history.push(`/admin/user-page`);
+  // };
+
   const routeUserProfile = () => {
-    history.push(`/admin/user-page`);
+    let role = localStorage.getItem("role");
+    console.log(role)
+    if (role === "dadmin"){
+      let path = `/admin/user-page`;
+      history.push(path);
+    } else if (role === "driver"){
+      let path = `/driver/user-page`;
+      history.push(path);
+    }
+    else if (role === "user"){
+      let path = `/user/user-page`;
+      history.push(path)
+    }  
   };
+
   const routeIndex = () => {
     history.push(`/index`);
   };

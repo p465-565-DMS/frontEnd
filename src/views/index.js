@@ -54,7 +54,8 @@ function Index() {
         })
         .then((data) => {
           if (data) {
-          console.log(data);
+            console.log(data[0].role);
+            localStorage.setItem("role",data[0].role);
           }
         })
       }})(user);

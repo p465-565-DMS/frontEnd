@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+/* global google */
 import { MDBCol, MDBBtn} from "mdbreact";
 import { Form } from 'react-bootstrap';
 
@@ -51,7 +52,7 @@ export default function OrderHistory() {
   const [data, setData] = useState([]);
   const { user, getAccessTokenSilently } = useAuth0();
   const apiUrl = process.env.REACT_APP_API_URL;
-  // const geocoder = new google.maps.Geocoder();
+  const geocoder = new google.maps.Geocoder();
   const [isLoadingTrue, setLoading] = useState(false);
 
   React.useEffect(() => {
