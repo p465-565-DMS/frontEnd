@@ -35,10 +35,8 @@ class SearchLocationInput1 extends React.Component {
     .then(function(response){
       let lat = response.data.results[0].geometry.location.lat;
       let lng = response.data.results[0].geometry.location.lng;
-      console.log(response)
-      console.log(formattedAddress)
-      console.log(lat)
-      console.log(lng)
+      localStorage.setItem("lat",+lat);
+      localStorage.setItem("lng",+lng);
     })
     .catch(function(error){
       console.log(error);
@@ -66,6 +64,8 @@ class SearchLocationInput1 extends React.Component {
       state: "",
       zipCode: "",
       googleMapLink: "",
+      lat: "",
+      lng: "",
     };
   }
 
