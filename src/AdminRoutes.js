@@ -6,6 +6,7 @@ import TableList from "./views/EmployeeTable.js";
 import orderHistory from "./views/HistoryTable"
 import Maps from "./views/Map.js";
 import UserPage from "./views/UserProfile.js";
+import ChatView from "./views/Chat/Chat.js";
 import UpgradeToPro from "./views/Upgrade.js";
 
 var AdminRoutes = [
@@ -42,6 +43,13 @@ var AdminRoutes = [
     name: "Order History",
     icon: "nc-icon nc-calendar-60",
     component: orderHistory,
+    layout: "/admin", 
+  },
+  {
+    path: "/messages",
+    name: "Chat",
+    icon: "nc-icon nc-chat-33",
+    component: ChatView,
     layout: "/admin", 
   },
 ];

@@ -5,6 +5,7 @@ import Typography from "./views/Typography.js";
 import OrderHistory from "./views/driverHistory";
 import Maps from "./views/Map.js";
 import UserPage from "./views/UserProfile.js";
+import ChatView from "./views/Chat/Chat.js";
 import UpgradeToPro from "./views/Upgrade.js";
 
 var DriverRoutes = [
@@ -34,6 +35,13 @@ var DriverRoutes = [
     name: "Delivery History",
     icon: "nc-icon nc-tile-56",
     component: OrderHistory,
+    layout: "/driver", 
+  },
+  {
+    path: "/messages",
+    name: "Chat",
+    icon: "nc-icon nc-chat-33",
+    component: ChatView,
     layout: "/driver", 
   },
 ];
