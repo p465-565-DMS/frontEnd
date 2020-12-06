@@ -18,13 +18,6 @@ var UserRoutes = [
     layout: "/user",
   },
   {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/user",
-  },
-  {
     path: "/history",
     name: "Order History",
     icon: "nc-icon nc-tile-56",

@@ -6,6 +6,7 @@ import {useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Loading } from "../components";
 import Datetime from "react-datetime";
+import StoresNearby from "./StoresNearby.js";
 // reactstrap components
 import {
   Card,
@@ -285,6 +286,7 @@ if (isLoadingTrue) {
                       you can ship and collect packages. Locate the nearest
                       service points to view opening hours and drop-off deadlines.
                       </p>
+                      <StoresNearby/>
                     </TabPane>
                   </TabContent>
                 </CardBody>
