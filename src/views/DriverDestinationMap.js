@@ -36,27 +36,27 @@ export default function Map() {
         },
       });
       const res = await result.json();
-        console.log(res[0].googlelink);
+        //console.log(res[0].googlelink);
         setGooglelink(res[0].googlelink);
 
     } catch{}
   })(data);
   },[user]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     (async () => {
       try {
-        // const token = await getAccessTokenSilently();
-      let result = await fetch(`${apiUrl}/api/address`, {
+        const token = await getAccessTokenSilently();
+      let result = await fetch(`${apiUrl}/api/destination`, {
         method: "GET",
         headers: {
-            // Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
       const res = await result.json();
-         localStorage.setItem('adminLocations', JSON.stringify(res));
-         console.log(localStorage.getItem("adminLocations"));
+        console.log("dd",res);
+        //localStorage.setItem('adminLocations', JSON.stringify(res));
         // setStoreRes(res);
         // setLat(localStorage.getItem("userLat"));
         // setLng(localStorage.getItem("userLng"));
@@ -86,6 +86,7 @@ export default function Map() {
           <Row>
             <Col md="12">
               <Card>
+                <CardHeader>Google Maps</CardHeader>
                 <CardBody>
                   <div
                     id="map"
@@ -93,10 +94,10 @@ export default function Map() {
                     style={{ position: "relative", overflow: "hidden" }}
                   >
                     <MapWrapper
-                       userCoord = {coords}
+                    userCoord = {coords}
                     //   lat = {localStorage.getItem("userLat")}
                     //   lng = {localStorage.getItem("userLng")}
-                       markers = {localStorage.getItem("adminLocations")}
+                       //markers = {localStorage.getItem("adminLocations")}
                     // markers = {storeRes}
                       googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeyruKDAu13YYMgWVU6f4ZPk_zRFmzsgY"
                       loadingElement={<div style={{ height: `100%` }} />}
@@ -255,12 +256,12 @@ export default function Map() {
       >
         {/* user location: */}
         {<Marker position={props.userCoord} />}
-        {console.log(props.markers)}
+        {console.log(props.userCoord)}
         {/* random locations */}
-        { JSON.parse(props.markers).map((marker, index) => {
+        {/* { JSON.parse(props.markers).map((marker, index) => {
           const position = { lat: +marker.lat, lng: +marker.lng };
           return <Marker key={index} position={position} />;
-        })}
+        })} */}
       </GoogleMap>
     ))
   );

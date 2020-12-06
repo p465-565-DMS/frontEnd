@@ -27,6 +27,9 @@ import FillInfoPage from "./views/FillInfoPage.js";
 import Maps from "./views/Maps.js";
 import SearchResult from "./views/Search-Result.js";
 
+import TrackDeliver from "./views/TrackDeliver.js";
+import DDestination from "./views/DriverDestinationMap.js"
+
 const hist = createBrowserHistory();
 
 const App = () => {
@@ -43,6 +46,8 @@ const App = () => {
         <Route path="/index" exact component={Index} />
         <Route path="/map" exact component={Maps} />
         <Route path="/search-result" exact component={SearchResult} />
+        <PrivateRoute path="/td" exact component={TrackDeliver} />
+        <PrivateRoute path="/dd" exact component={DDestination} />
         {/* <PrivateRoute
           path="/admin" render={(props) => <AdminLayout {...props} />} />
         <Route
