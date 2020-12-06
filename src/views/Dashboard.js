@@ -6,7 +6,6 @@ import { Line, Pie } from "react-chartjs-2";
 // reactstrap components
 import { MDBCol, MDBBtn} from "mdbreact";
 import Cart from "./card.js"
-import { v4 as uuidv4 } from 'uuid';
 import {
   Card,
   CardHeader,
@@ -34,6 +33,7 @@ import {
     const [data1, setData] = useState([]);
     const [data2, setData1] = useState([]);
     const [data3, setData2] = useState([]);
+    const [company, setCompany] = useState({});
     const [speed, setSpeed] = useState("");
     const [type, setType] = useState("");
     const [weight, setWeight] = useState("");
@@ -206,6 +206,23 @@ React.useEffect(() => {
   (async () => {
     try {
     const token = await getAccessTokenSilently();
+    let result = await fetch(`${apiUrl}/admin/company`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    const cname = await result.json();
+    console.log(cname[0]);
+    setCompany(cname[0]);
+  } catch{}
+})();
+},[user]);
+React.useEffect(() => {
+  (async () => {
+    try {
+    const token = await getAccessTokenSilently();
     let result = await fetch(`${apiUrl}/admin/services`, {
       method: "GET",
       headers: {
@@ -223,6 +240,13 @@ React.useEffect(() => {
       <>
         <div className="content">
           <Row>
+          <Card>
+            <CardHeader>
+              <CardTitle tag="h3">{company.companyname}</CardTitle>
+              <CardTitle tag="h6">{company.address}, {company.city}, {company.state}</CardTitle>
+              <CardTitle tag="h6">{company.email}, +1{company.phone}</CardTitle>
+            </CardHeader>
+          </Card>
           <Col md="7">
               <Card className="card-chart">
                 <CardHeader>

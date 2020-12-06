@@ -23,10 +23,10 @@ import {
 
 const renderCard = (card) => {
   return(
-  <Card style = {{fontSize : "11px", width : "30%"}}>
-    <div>
-      <CardTitle tag="h4">Order ID: {card.packageid}</CardTitle>  
-      <CardBody>
+  <Card style = {{fontSize : "11px", width : "30%", marginRight: "20px"}}>
+    <div style = {{backgroundColor:"#ef8157"}}>
+      <CardTitle style={{marginLeft: "10px"}} tag="h4">Order ID: {card.packageid}</CardTitle>  
+      <CardBody style={{backgroundColor: "whitesmoke"}}>
         <CardText>
           <div className="content text-left">
             <p><i class="now-ui-icons ui-1_email-85"></i> {card.email}</p>
@@ -35,7 +35,7 @@ const renderCard = (card) => {
             <p><i class="now-ui-icons shopping_tag-content"></i> {card.packagetype}</p>
             <p><i class="now-ui-icons business_badge"></i> {card.packageassigned}</p>
             <p><i class="now-ui-icons shopping_delivery-fast"></i> {card.packagestatus}</p>
-            <p><i class="now-ui-icons location_pin"></i></p>
+            {/* <p><i class="now-ui-icons location_pin"></i></p> */}
             <p><i class="now-ui-icons business_money-coins"></i> ${card.price}</p>
             <p><i class="now-ui-icons ui-2_chat-round"></i> {card.review}</p>
           </div>
@@ -82,14 +82,14 @@ export default function OrderHistory() {
                   <CardTitle tag="h4">Orders History</CardTitle>
                 </CardHeader>
                 <div>
-                  <MDBCol md="6">
+                  {/* <MDBCol md="6">
                     <div>
                       <input type="text" placeholder="Search" aria-label="Search" />
                       <MDBBtn outline color="warning" rounded size="sm" type="submit" className="mr-auto">
                         Search
                       </MDBBtn>
                     </div>
-                  </MDBCol>
+                  </MDBCol> */}
                 </div>
                 <CardBody>
                   {data.map(renderCard)}

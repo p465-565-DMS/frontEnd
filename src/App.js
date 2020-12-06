@@ -24,6 +24,7 @@ import AdminLayout from "./layouts/Admin.js";
 import UserLayout from "./layouts/User.js";
 import DriverLayout from "./layouts/Driver.js";
 import FillInfoPage from "./views/FillInfoPage.js";
+import PaymentReview from "./views/PaymentReview.js"
 import Maps from "./views/Maps.js";
 import SearchResult from "./views/Search-Result.js";
 
@@ -56,6 +57,7 @@ const App = () => {
         <PrivateRoute path="/user" component={UserLayout} />
         <PrivateRoute path="/driver" component={DriverLayout}/>
         <PrivateRoute path="/fill-info"  component={FillInfoPage} />
+        <PrivateRoute path="/payment" component={PaymentReview} />
         <Redirect from="/" to="/index" />
         </Switch>
     </div>
