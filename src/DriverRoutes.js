@@ -24,13 +24,6 @@ var DriverRoutes = [
     layout: "/driver",
   },
   {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/driver",
-  },
-  {
     path: "/history",
     name: "Delivery History",
     icon: "nc-icon nc-tile-56",

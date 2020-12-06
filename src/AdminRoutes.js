@@ -25,13 +25,6 @@ var AdminRoutes = [
     layout: "/admin",
   },
   {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/admin",
-  },
-  {
     path: "/tables",
     name: "Employees",
     icon: "nc-icon nc-tile-56",
