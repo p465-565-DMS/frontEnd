@@ -1,4 +1,3 @@
-import Dashboard from "./views/Dashboard.js";
 import Notifications from "./views/Notifications.js";
 import Icons from "./views/Icons.js";
 import Typography from "./views/Typography.js";
@@ -8,6 +7,7 @@ import UserPage from "./views/UserProfile.js";
 import UpgradeToPro from "./views/Upgrade.js";
 import FillInfo from "./views/FillInfoPage.js";
 import ChatView from "./views/Chat/Chat.js";
+import Dashboard from "./views/UserDashboard.js";
 
 var UserRoutes = [
   {
@@ -15,6 +15,13 @@ var UserRoutes = [
     name: "User Profile",
     icon: "nc-icon nc-single-02",
     component: UserPage,
+    layout: "/user",
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: "nc-icon nc-layout-11",
+    component: Dashboard,
     layout: "/user",
   },
   {

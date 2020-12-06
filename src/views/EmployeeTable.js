@@ -92,7 +92,7 @@ export default function Tables() {
                         </Button>
                         <Modal show={show} onHide={handleClose}>
                           <Modal.Header closeButton>
-                            <Modal.Title>{item.fname + " " + item.lname}</Modal.Title>
+                            {/* <Modal.Title>{item.fname + " " + item.lname}</Modal.Title> */}
                           </Modal.Header>
                           <Modal.Body>
                             <TrackSingleDriverMap/>

@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 // react plugin used to create charts
 import { Line, Pie } from "react-chartjs-2";
+import {useHistory } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import DriverLocationStatus from '../components/googleAutocomplete/driverLocationStatus';
 // reactstrap components
 import {
   Card,
@@ -8,198 +11,144 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
+  CardText, 
+  Table,
+  Modal,
+  ModalBody,
   Row,
   Col,
+  Input,
+  Button,
 } from "reactstrap";
 // core components
 import {
   dashboard24HoursPerformanceChart,
-  dashboardEmailStatisticsChart,
-  dashboardNASDAQChart,
+  userdashboardEmailStatisticsChart,
+  userdashboardNASDAQChart,
 } from "../variables/charts.js";
 
-class UserDashboard extends React.Component {
-  render() {
+export default function UserDashboard() {
+
+  const history = useHistory();
+  const [data, setData] = useState([]);
+  const [status, setStatus] = useState("");
+  const { user, getAccessTokenSilently } = useAuth0();
+  const apiUrl = process.env.REACT_APP_API_URL;
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+      const token = await getAccessTokenSilently();
+      let result = await fetch(`${apiUrl}/user/currentOrders`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await result.json();
+      console.log(res);
+      setData(res);
+    } catch{}
+  })(data);
+},[user]);
+
+const renderCard = (card) => {
+  return(
+  <Card style = {{fontSize : "12px", width: "40%", marginRight: "20px"}}>
+    <div style = {{backgroundColor:"#ef8157"}}>
+      <CardTitle style={{marginLeft: "10px"}} tag="h4">Order ID: {card.packageid}</CardTitle>  
+      <CardBody style={{backgroundColor: "whitesmoke"}}>
+        <CardText>
+          <div className="content text-left">
+            <p><i class="now-ui-icons ui-1_email-85"></i> {card.email}</p>
+            <p><i class="now-ui-icons users_circle-08"></i> {card.packageassigned}</p>
+            <p><i class="now-ui-icons location_compass-05"></i> {card.trackingid}</p>
+            <p><i class="now-ui-icons shopping_shop"></i> {card.packagesource}</p>
+            <p><i class="now-ui-icons business_bank"></i> {card.packagedestination}</p>
+            <p><i class="now-ui-icons ui-2_time-alarm"></i> {card.deadline}</p>
+            <p><i class="now-ui-icons shopping_tag-content"></i> {card.packagetype}</p>
+            <p><i class="now-ui-icons shopping_delivery-fast"></i> {card.packagestatus}</p>
+            <p><i class="now-ui-icons business_money-coins"></i> ${card.price}</p>
+          </div>
+        </CardText>
+      </CardBody>
+    </div>
+  </Card>
+  )
+}
+
     return (
       <>
-        <div className="content">
-          {/*
-          <Row>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-globe text-warning" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Capacity</p>
-                        <CardTitle tag="p">150GB</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Update Now
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-money-coins text-success" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Revenue</p>
-                        <CardTitle tag="p">$ 1,345</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="far fa-calendar" /> Last day
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-vector text-danger" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Errors</p>
-                        <CardTitle tag="p">23</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="far fa-clock" /> In the last hour
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-favourite-28 text-primary" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Followers</p>
-                        <CardTitle tag="p">+45K</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Update now
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-          </Row>
-          */}
+      <div className="content">
+        <Row>
+        <Col md="7">
+            <Card className="card-chart">
+              <CardHeader>
+                <CardTitle tag="h5">Payment Statistics</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Line
+                  data={userdashboardNASDAQChart.data}
+                  options={userdashboardNASDAQChart.options}
+                  width={400}
+                  height={179}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="5">
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h5">Percentage of Package Types</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Pie
+                  data={userdashboardEmailStatisticsChart.data}
+                  options={userdashboardEmailStatisticsChart.options}
+                />
+              </CardBody>
+              <CardFooter>
+                <div className="legend ml-3">
+                  <i className="fa fa-circle text-primary" /> Regular{" "}
+                  <i className="fa fa-circle text-warning" /> Electronics{" "}
+                  <i className="fa fa-circle text-danger" /> Food{" "}
+                  <br/>
+                  <i className="fa fa-circle text-info" /> Documents{" "}
+                  <i className="fa fa-circle text-gray" /> Others
+                </div>
+              </CardFooter>
+            </Card>
+          </Col>
+        </Row>          
           <Row>
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h5">Number of Users</CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Line
-                    data={dashboard24HoursPerformanceChart.data}
-                    options={dashboard24HoursPerformanceChart.options}
-                    width={400}
-                    height={90}
-                  />
-                </CardBody>
-                <CardFooter>
-                  <div className="legend ml-3">
-                    <i className="fa fa-circle text-warning" /> Users{" "}
-                    <i className="fa fa-circle text-danger" /> Deliver Drivers{" "}
-                    <i className="fa fa-circle text-success" /> Deliver Admins{" "}
+                <div class="row">
+                  <div class="col-md text-left">
+                    <CardTitle tag="h4">Current Orders</CardTitle>
                   </div>
-                </CardFooter>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col md="5">
-              <Card>
-                <CardHeader>
-                  <CardTitle tag="h5">Percentage of Package Types Sent</CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Pie
-                    data={dashboardEmailStatisticsChart.data}
-                    options={dashboardEmailStatisticsChart.options}
-                  />
-                </CardBody>
-                <CardFooter>
-                  <div className="legend ml-3">
-                    <i className="fa fa-circle text-primary" /> Regular{" "}
-                    <i className="fa fa-circle text-warning" /> Electronic{" "}
-                    <i className="fa fa-circle text-danger" /> Food{" "}
-                    <br/>
-                    <i className="fa fa-circle text-info" /> Documents{" "}
-                    <i className="fa fa-circle text-gray" /> Others
+                  <div class="col-md text-right">
+                    <button type="button" rel="tooltip" class="btn btn-success" onClick={() => history.push("/")}>
+                      <i class="now-ui-icons ui-1_simple-add"></i> Place New Order
+                    </button>
                   </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col md="7">
-              <Card className="card-chart">
-                <CardHeader>
-                  <CardTitle tag="h5">Number of Orders</CardTitle>
+                </div>
                 </CardHeader>
+                <div>
+                  {/* <MDBCol md="6">
+                    <div>
+                      <input type="text" placeholder="Search" aria-label="Search" />
+                      <MDBBtn outline color="warning" rounded size="sm" type="submit" className="mr-auto">
+                        Search
+                      </MDBBtn>
+                    </div>
+                  </MDBCol> */}
+                </div>
                 <CardBody>
-                  <Line
-                    data={dashboardNASDAQChart.data}
-                    options={dashboardNASDAQChart.options}
-                    width={400}
-                    height={100}
-                  />
+                  {data.map(renderCard)}
                 </CardBody>
-                <CardFooter>
-                  <div className="chart-legend">
-                    {/*
-                    <i className="fa fa-circle text-info" /> Tesla Model S{" "}
-                    <i className="fa fa-circle text-warning" /> BMW 5 Series
-                    */}
-                  </div>
-                </CardFooter>
               </Card>
             </Col>
           </Row>
@@ -207,6 +156,3 @@ class UserDashboard extends React.Component {
       </>
     );
   }
-}
-
-export default UserDashboard;

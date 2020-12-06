@@ -22,8 +22,8 @@ import {
 // core components
 import {
   dashboard24HoursPerformanceChart,
-  dashboardEmailStatisticsChart,
-  dashboardNASDAQChart,
+  driverdashboardEmailStatisticsChart,
+  driverdashboardNASDAQChart,
 } from "../variables/charts.js";
 
 export default function Dashboard() {
@@ -96,8 +96,8 @@ export default function Dashboard() {
               </CardHeader>
               <CardBody>
                 <Line
-                  data={dashboardNASDAQChart.data}
-                  options={dashboardNASDAQChart.options}
+                  data={driverdashboardNASDAQChart.data}
+                  options={driverdashboardNASDAQChart.options}
                   width={400}
                   height={179}
                 />
@@ -111,8 +111,8 @@ export default function Dashboard() {
               </CardHeader>
               <CardBody>
                 <Pie
-                  data={dashboardEmailStatisticsChart.data}
-                  options={dashboardEmailStatisticsChart.options}
+                  data={driverdashboardEmailStatisticsChart.data}
+                  options={driverdashboardEmailStatisticsChart.options}
                 />
               </CardBody>
               <CardFooter>

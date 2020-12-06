@@ -46,11 +46,11 @@ export default function Map() {
   useEffect(() => {
     (async () => {
       try {
-        const token = await getAccessTokenSilently();
+        // const token = await getAccessTokenSilently();
       let result = await fetch(`${apiUrl}/api/address`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -255,6 +255,7 @@ export default function Map() {
         {/* user location: */}
         {<Marker position={props.userCoord} />}
         {console.log(props.userCoord)}
+        {console.log(props.markers)}
         {/* random locations */}
         { JSON.parse(props.markers).map((marker, index) => {
           const position = { lat: +marker.lat, lng: +marker.lng };
