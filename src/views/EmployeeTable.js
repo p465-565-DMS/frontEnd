@@ -3,6 +3,8 @@ import {useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { MDBCol, MDBBtn} from "mdbreact";
 import { Form } from 'react-bootstrap';
+import { Modal, Button } from "react-bootstrap";
+import TrackSingleDriverMap from "./TrackSingleDriverMap.js";
 
 // reactstrap components
 import {
@@ -22,6 +24,13 @@ export default function Tables() {
   const { user, getAccessTokenSilently } = useAuth0();
   const apiUrl = process.env.REACT_APP_API_URL;
   const [isLoadingTrue, setLoading] = useState(false);
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = (link) => {
+    localStorage.setItem("employeeTrackingLink", link);
+    setShow(true);
+  }
 
   React.useEffect(() => {
     (async () => {
@@ -78,10 +87,25 @@ export default function Tables() {
                       <td>{item.lname}</td>
                       <td>{item.role}</td>
                       <td class="td-actions">
-                        <button type="button" rel="tooltip" class="btn btn-danger" 
-                        onClick={() => (window.location = item.googlelink )} >
-                            <i class="now-ui-icons location_pin"></i>
-                        </button>
+                        <Button variant="danger" onClick={() => handleShow(item.googlelink)}>
+                          <i class="now-ui-icons location_pin"></i>
+                        </Button>
+                        <Modal show={show} onHide={handleClose}>
+                          <Modal.Header closeButton>
+                            <Modal.Title>{item.fname + " " + item.lname}</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <TrackSingleDriverMap/>
+                          </Modal.Body>
+                          {/* <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                              Close
+                            </Button>
+                            <Button variant="primary" onClick={handleClose}>
+                              Save Changes
+                            </Button>
+                          </Modal.Footer> */}
+                        </Modal>
                       </td>
                       </tr>
                     ))}
