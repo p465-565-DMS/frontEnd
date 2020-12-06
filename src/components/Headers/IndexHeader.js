@@ -24,16 +24,16 @@ function IndexHeader() {
 
   return (
     <>
-      <div className="page-header clear-filter" >
+      <div className="page-header page-header-small" >
         <div
           className="page-header-image"
           style={{
-            backgroundImage: "url(" + require("../../assets/img/bg.png") + ")",
+            backgroundImage: "url(" + require("../../assets/img/bg1.png") + ")",
           }}
           ref={pageHeader}
         ></div>
         <Container>
-          <div className="content-center brand">
+          <div className="content-center brand" style={{top: "60%"}}>
             <img
               alt="..."
               className="n-logo"

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import Divider from '@material-ui/core/Divider';
+import {useHistory } from "react-router-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import SearchLocationInput from '../components/googleAutocomplete/rateAndShipAddress1';
 
@@ -13,12 +15,12 @@ import {
   CardTitle,
   CardText,
   FormGroup,
+  Container,
   Form,
   Input,
   Row,
   Col,
 } from "reactstrap";
-import { Container } from "@material-ui/core";
 
 
 const selectButton = () => (
@@ -35,6 +37,7 @@ const selectButton = () => (
       </Button>
     )} />
 )
+
 
 // const renderCard = (card, index) => {
 //     return(
@@ -69,32 +72,13 @@ const selectButton = () => (
 //     )
 // }
 
-const renderCard = (card) => {
-    return(
-    <Card style = {{fontSize : "11px", width : "50%"}}>
-      <div>
-        <CardTitle tag="h4">{card.companyname}</CardTitle>  
-        <CardBody>
-          <CardText>
-            <div className="content text-left">
-              <p><i class="now-ui-icons shopping_shop"></i> {card.address}</p>
-              <p><i class="now-ui-icons shopping_delivery-fast"></i> {card.pspeed}</p>
-              <p><i class="now-ui-icons shopping_tag-content"></i> {card.ptype}</p>
-              <p><i class="now-ui-icons shopping_basket"></i> {card.pweight}</p>
-              <p><i class="now-ui-icons design-2_ruler-pencil"></i> {card.psize}</p>
-              <p><i class="now-ui-icons business_money-coins"></i> ${card.price}</p>
-              <Button className="btn-icon btn-round" color="danger" type="button">
-                <i className="now-ui-icons gestures_tap-01"></i>
-                </Button>
-            </div>
-          </CardText>
-        </CardBody>
-      </div>
-    </Card>
-    )
-  }
 
 export default function SearchResult(props) {
+    const [userId, setUser] = useState({});
+    const apiUrl = process.env.REACT_APP_API_URL;
+    const { user } = useAuth0();
+    const { getAccessTokenSilently } = useAuth0();
+    const history = useHistory();
     const q = localStorage.result;
     const deadline = localStorage.getItem("deliveryDate");
     const fullAddress1 = localStorage.getItem("fullAddress1");
@@ -103,6 +87,48 @@ export default function SearchResult(props) {
     console.log(fullAddress1, fullAddress2, deadline);
     var qList = JSON.parse(q);
     console.log(qList[0])
+
+    const renderCard = (card) => {
+      return(
+      <Card style = {{fontSize : "11px", width : "30%", marginRight: "20px"}}>
+        <div style = {{backgroundColor:"#ef8157"}}>
+          <CardTitle style={{marginLeft: "10px"}} tag="h4">{card.companyname}</CardTitle>  
+          <CardBody style={{backgroundColor: "whitesmoke"}}>
+            <CardText>
+              <div className="content text-left">
+                <p><i class="now-ui-icons shopping_shop"></i> {card.address}</p>
+                <p><i class="now-ui-icons shopping_delivery-fast"></i> {card.pspeed}</p>
+                <p><i class="now-ui-icons shopping_tag-content"></i> {card.ptype}</p>
+                <p><i class="now-ui-icons shopping_basket"></i> {card.pweight}</p>
+                <p><i class="now-ui-icons design-2_ruler-pencil"></i> {card.psize}</p>
+                <p><i class="now-ui-icons business_money-coins"></i> ${card.price}</p>
+                <Button className="btn-icon btn-round" color="danger" type="button" onClick={() => sendOrder(card)}>
+                  <i className="now-ui-icons gestures_tap-01"></i>
+                  </Button>
+              </div>
+            </CardText>
+          </CardBody>
+        </div>
+      </Card>
+      )
+    }
+
+    const sendOrder = (card) => {
+      let orderInfo = JSON.stringify({
+        source: card.address,
+        companyname: card.companyname,
+        adminid: card.adminid,
+        pspeed: card.pspeed,
+        ptype: card.ptype,
+        psize: card.psize,
+        pweight: card.pweight,
+        price: card.price
+      });
+      console.log(orderInfo)
+      localStorage.setItem("orderInfo", orderInfo);  
+      history.push('/payment');
+    }
+
     return (
       <>
         <Container className="content mt-5 pt-5">
