@@ -23,6 +23,8 @@ export default function Map() {
   const [coords, setCoords] = useState("");
   const geocoder = new window.google.maps.Geocoder();
   const [isLoadingCoords, setLoadingCoords] = useState(true);
+  const [isLoadingCoords2, setLoadingCoords2] = useState(true);
+  var rows = [];
 
   useEffect(() => {
     (async () => {
@@ -55,9 +57,8 @@ export default function Map() {
         },
       });
       const res = await result.json();
-         localStorage.setItem('adminLocations', JSON.stringify(res));
          //console.log(localStorage.getItem("adminLocations"));
-        // setStoreRes(res);
+         setStoreRes(res);
         // setLat(localStorage.getItem("userLat"));
         // setLng(localStorage.getItem("userLng"));
     } catch{}
@@ -77,6 +78,26 @@ export default function Map() {
             }
             setLoadingCoords(false);
         });
+    }
+  });
+
+  useEffect(()=>{
+    for (var i = 0; i < storeRes.length; i++){
+      if(isLoadingCoords2){
+          //console.log(storeRes[i]);
+          geocoder.geocode({address: storeRes[i].googlelink}, (result,status)=>{
+              if(status === "OK"){
+                  let location = result[0].geometry.location;
+                  rows.push({lat: location.lat(), lng: location.lng()});
+                  //console.log(rows);
+                  localStorage.setItem('adminLocations', JSON.stringify(rows));
+              }
+              else{
+                  console.log("coord not found");
+              }
+              setLoadingCoords2(false);
+          });
+      }
     }
   });
 
