@@ -15,6 +15,8 @@ import {
   CardBody,
   NavItem,
   NavLink,
+  Modal,
+  ModalBody,
   Nav,
   TabContent,
   TabPane,
@@ -37,6 +39,7 @@ function Tabs() {
   const [date, setDate] = useState("");
   const [trackId, setTrackId] = useState("");
   const [pills, setPills] = React.useState("1");
+  const [modal1, setModal1] = useState(false);
   const [queryValue, setQuery] = React.useState("");
   const ref1 = React.createRef();
   const ref2 = React.createRef();
@@ -87,6 +90,11 @@ const callSecureApi = async (query) => {
     }
   });
 };
+
+const hanndleSubmit1 = () => {
+  sendData();
+  setModal1(true);
+}
 
 const handleSubmit = (queryValue) => {
   setLoading("True");
@@ -274,9 +282,35 @@ if (isLoadingTrue) {
                             type="text"
                             onChange={e => setTrackId(e.target.value)}
                           ></Input>
-                          <Button className="btn-round" type="button" onClick = {() => sendData()}>
+                          <Button className="btn-round" type="button" onClick = {() => hanndleSubmit1()}>
                             Track
                         </Button>
+                        <Modal isOpen={modal1} toggle={() => setModal1(false)}>
+                        <div className="modal-header justify-content-center">
+                          <button
+                              className="close"
+                              type="button"
+                              onClick={() => setModal1(false)}
+                            >
+                              <i className="now-ui-icons ui-1_simple-remove"></i>
+                            </button>
+                            <h5 className="title title-up">Track The Package</h5>
+                        </div>
+                          <ModalBody>
+                            <p>
+                            Add body here.
+                            </p>
+                          </ModalBody>
+                          <div className="modal-footer">
+                            <Button
+                              color="danger"
+                              type="button"
+                              onClick={() => setModal1(false)}
+                            >
+                              Close
+                            </Button>
+                          </div>
+                        </Modal>
                         </FormGroup>
                       </Col>
                     </TabPane>
