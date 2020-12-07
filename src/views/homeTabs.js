@@ -62,7 +62,7 @@ function Tabs() {
           localStorage.setItem("homeTrackMap", data[0].packagelocation);
           //console.log(data[0].packagelocation);
         });
-          
+        setLoading(false);
           //console.log(localStorage.getItem("trackInfo"))
       }
     });
@@ -75,6 +75,7 @@ function Tabs() {
     });
     console.log(payload)
     callSecureApi1(payload);
+    setLoading(true);
   };
   
 const callSecureApi = async (query) => {

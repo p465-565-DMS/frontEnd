@@ -4,6 +4,9 @@ import { Line, Pie } from "react-chartjs-2";
 import {useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import DriverLocationStatus from '../components/googleAutocomplete/driverLocationStatus';
+import HomeTracking from "./UserDashboardTracking.js";
+import { Loading } from "../components";
+
 // reactstrap components
 import {
   Card,
@@ -34,6 +37,46 @@ export default function UserDashboard() {
   const [status, setStatus] = useState("");
   const { user, getAccessTokenSilently } = useAuth0();
   const apiUrl = process.env.REACT_APP_API_URL;
+  const [modal1, setModal1] = useState(false);
+  const [isLoadingTrue, setLoading] = useState(false);
+
+
+  const hanndleSubmit1 = (trackId) => {
+    sendData(trackId);
+    setModal1(true);
+  }
+
+  const sendData = (trackId) => {
+    let tid = trackId;
+    let payload = JSON.stringify({
+      trackingid: tid
+    });
+    //console.log(payload)
+    setLoading(true);
+    callSecureApi1(payload);
+  };
+
+  const callSecureApi1 = async (payload) => {
+    fetch(`${apiUrl}/api/trackPackage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: payload,
+    }).then((response) => {
+      if (!response.ok) {
+        console.log("SOMETHING WENT WRONG");
+      } else {
+        response.json().then(function(data) {
+          //localStorage.setItem("trackInfo", data); 
+          localStorage.setItem("dashTrackMap", data[0].packagelocation);
+          //console.log(data[0].packagelocation);
+        });
+          //console.log(localStorage.getItem("trackInfo"))
+          setLoading(false);
+      }
+    });
+  };
 
   React.useEffect(() => {
     (async () => {
@@ -53,6 +96,10 @@ export default function UserDashboard() {
   })(data);
 },[user]);
 
+if (isLoadingTrue) {
+  return <Loading />;
+}
+
 const renderCard = (card) => {
   return(
   <Card style = {{fontSize : "12px", width: "40%", marginRight: "20px"}}>
@@ -70,6 +117,28 @@ const renderCard = (card) => {
             <p><i class="now-ui-icons shopping_tag-content"></i> {card.packagetype}</p>
             <p><i class="now-ui-icons shopping_delivery-fast"></i> {card.packagestatus}</p>
             <p><i class="now-ui-icons business_money-coins"></i> ${card.price}</p>
+            <Button
+                color="black"
+                className="mr-1"
+                onClick = {() => hanndleSubmit1(card.trackingid)}
+              >
+                Track Package Location
+            </Button>
+            <Modal isOpen={modal1} toggle={() => setModal1(false)}>
+              <div className="modal-header justify-content-center">
+                <button
+                    className="close"
+                    type="button"
+                    onClick={() => setModal1(false)}
+                  >
+                    <i className="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
+                  <h5 className="title title-up">Package Location</h5>
+              </div>
+              <ModalBody>
+                <HomeTracking/>
+              </ModalBody>
+            </Modal>
           </div>
         </CardText>
       </CardBody>

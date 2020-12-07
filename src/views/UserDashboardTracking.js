@@ -13,30 +13,24 @@ import {
 // reactstrap components
 import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 
-export default function HomeTracking() {
-  const [data, setData] = useState({});
-  const [data1, setData1] = useState({});
-  const { user, getAccessTokenSilently } = useAuth0();
-  const apiUrl = process.env.REACT_APP_API_URL;
-  const [userLat, setLat]  = useState("");
-  const [userLng, setLng]  = useState("");
-  const [storeRes, setStoreRes]  = useState("");
+export default function UserDashboardTracking() {
   const [userGooglelink, setGooglelink]  = useState("");
   const [coords, setCoords] = useState("");
   const geocoder = new window.google.maps.Geocoder();
   const [isLoadingCoords, setLoadingCoords] = useState(true);
-  const [isLoadingTrue, setLoading] = useState(true);
+  const [isLoadingTrue, setLoading] = useState(false);
 
   useEffect(()=>{
     if(isLoadingCoords){
-        setGooglelink(localStorage.getItem("homeTrackMap"));
-        console.log(userGooglelink);
+        setGooglelink(localStorage.getItem("dashTrackMap"));
+        //console.log(userGooglelink);
+        setLoading(true);
         geocoder.geocode({address: userGooglelink}, (result,status)=>{
             if(status === "OK"){
                 let location = result[0].geometry.location;
-                console.log(result);
+                //console.log(result);
                 setCoords({lat: location.lat(), lng: location.lng()});
-                console.log(coords);
+                //console.log(coords);
             }
             else{
                 console.log("coord not found");
