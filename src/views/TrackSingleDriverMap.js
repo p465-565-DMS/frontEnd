@@ -57,7 +57,6 @@ export default function Map() {
                     userCoord = {coords}
                     //   lat = {localStorage.getItem("userLat")}
                     //   lng = {localStorage.getItem("userLng")}
-                       markers = {localStorage.getItem("adminLocations")}
                     // markers = {storeRes}
                       googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeyruKDAu13YYMgWVU6f4ZPk_zRFmzsgY"
                       loadingElement={<div style={{ height: `100%` }} />}

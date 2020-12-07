@@ -18,11 +18,13 @@ export default function Map() {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [userLat, setLat]  = useState("");
   const [userLng, setLng]  = useState("");
-  const [storeRes, setStoreRes]  = useState("");
+  const [desRes, setDesRes]  = useState("");
   const [userGooglelink, setGooglelink]  = useState("");
   const [coords, setCoords] = useState("");
   const geocoder = new window.google.maps.Geocoder();
   const [isLoadingCoords, setLoadingCoords] = useState(true);
+  const [isLoadingCoords2, setLoadingCoords2] = useState(true);
+  var rows = [];
 
   useEffect(() => {
     (async () => {
@@ -55,9 +57,8 @@ export default function Map() {
         },
       });
       const res = await result.json();
-        console.log("dd",res);
-        //localStorage.setItem('adminLocations', JSON.stringify(res));
-        // setStoreRes(res);
+        //console.log("dd",res);
+        setDesRes(res);
         // setLat(localStorage.getItem("userLat"));
         // setLng(localStorage.getItem("userLng"));
     } catch{}
@@ -80,6 +81,26 @@ export default function Map() {
     }
   });
 
+  useEffect(()=>{
+    for (var i = 0; i < desRes.length; i++){
+      if(isLoadingCoords2){
+          //console.log(desRes[i]);
+          geocoder.geocode({address: desRes[i].packagelocation}, (result,status)=>{
+              if(status === "OK"){
+                  let location = result[0].geometry.location;
+                  rows.push({lat: location.lat(), lng: location.lng()});
+                  console.log(rows);
+                  localStorage.setItem('driverDestinations', JSON.stringify(rows));
+              }
+              else{
+                  console.log("coord not found");
+              }
+              setLoadingCoords2(false);
+          });
+      }
+    }
+  });
+
     return (
       <>
         <div className="content">
@@ -94,10 +115,10 @@ export default function Map() {
                     style={{ position: "relative", overflow: "hidden" }}
                   >
                     <MapWrapper
-                    userCoord = {coords}
+                      userCoord = {coords}
                     //   lat = {localStorage.getItem("userLat")}
                     //   lng = {localStorage.getItem("userLng")}
-                       //markers = {localStorage.getItem("adminLocations")}
+                      markers = {localStorage.getItem('driverDestinations')}
                     // markers = {storeRes}
                       googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeyruKDAu13YYMgWVU6f4ZPk_zRFmzsgY"
                       loadingElement={<div style={{ height: `100%` }} />}
@@ -256,12 +277,14 @@ export default function Map() {
       >
         {/* user location: */}
         {<Marker position={props.userCoord} />}
-        {console.log(props.userCoord)}
+        {/* {console.log(props.userCoord)}
+        {console.log(props.markers)} */}
         {/* random locations */}
-        {/* { JSON.parse(props.markers).map((marker, index) => {
+        {console.log(props.markers)}
+        { JSON.parse(props.markers).map((marker, index) => {
           const position = { lat: +marker.lat, lng: +marker.lng };
           return <Marker key={index} position={position} />;
-        })} */}
+        })}
       </GoogleMap>
     ))
   );

@@ -7,6 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Loading } from "../components";
 import Datetime from "react-datetime";
 import StoresNearby from "./StoresNearby.js";
+import HomeTracking from "./HomeTracking.js";
 // reactstrap components
 import {
   Card,
@@ -56,9 +57,13 @@ function Tabs() {
       if (!response.ok) {
         console.log("SOMETHING WENT WRONG");
       } else {
-        response.text().then(function(data) {
-          localStorage.setItem("trackInfo", data); });
-          console.log(localStorage.getItem("trackInfo"))
+        response.json().then(function(data) {
+          localStorage.setItem("trackInfo", data); 
+          localStorage.setItem("homeTrackMap", data[0].packagelocation);
+          //console.log(data[0].packagelocation);
+        });
+          
+          //console.log(localStorage.getItem("trackInfo"))
       }
     });
   };
@@ -297,19 +302,8 @@ if (isLoadingTrue) {
                             <h5 className="title title-up">Track The Package</h5>
                         </div>
                           <ModalBody>
-                            <p>
-                            Add body here.
-                            </p>
+                            <HomeTracking/>
                           </ModalBody>
-                          <div className="modal-footer">
-                            <Button
-                              color="danger"
-                              type="button"
-                              onClick={() => setModal1(false)}
-                            >
-                              Close
-                            </Button>
-                          </div>
                         </Modal>
                         </FormGroup>
                       </Col>

@@ -7,6 +7,7 @@ import Maps from "./views/Map.js";
 import UserPage from "./views/UserProfile.js";
 import ChatView from "./views/Chat/Chat.js";
 import UpgradeToPro from "./views/Upgrade.js";
+import DriverDestinationMap from "./views/DriverDestinationMap.js";
 
 var DriverRoutes = [
   {
@@ -21,6 +22,13 @@ var DriverRoutes = [
     name: "Dashboard",
     icon: "nc-icon nc-layout-11",
     component: Dashboard,
+    layout: "/driver",
+  },
+  {
+    path: "/orderstracking",
+    name: "Track The Orders",
+    icon: "nc-icon nc-pin-3",
+    component: DriverDestinationMap,
     layout: "/driver",
   },
   {
