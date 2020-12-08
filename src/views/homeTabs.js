@@ -38,6 +38,7 @@ function Tabs() {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [iconPills, setIconPills] = React.useState("1");
   const [date, setDate] = useState("");
+  const [deliveryBox, setSpeed] = useState("");
   const [trackId, setTrackId] = useState("");
   const [pills, setPills] = React.useState("1");
   const [modal1, setModal1] = useState(false);
@@ -128,15 +129,19 @@ if (isLoadingTrue) {
           // }
           let customQuery = 'SELECT u.address, da.companyname, sd.adminid, sd.pspeed, sd.ptype, sd.psize, sd.pweight, sd.price FROM users u, servicedetails sd, deliveryadmin da WHERE 1=1 AND da.adminid = sd.adminid AND u.userid = da.userid';
           let deliveryBox = document.getElementById("deliverySpeedBox");
+          console.log(deliveryBox.value);
           customQuery += qWrap("sd.pspeed", deliveryBox.value);
 
           let typeBox = document.getElementById("packageTypeBox");
+          console.log(typeBox.value);
           customQuery += qWrap("sd.ptype", typeBox.value);
 
           let sizeBox = document.getElementById("packageSizeBox");
+          console.log(sizeBox.value);
           customQuery += qWrap("sd.psize", sizeBox.value);
 
           let weightBox = document.getElementById("packageWeightBox");
+          console.log(weightBox.value)
           customQuery += qWrap("sd.pweight", weightBox.value);
           
           let deadline = date;
@@ -239,8 +244,8 @@ if (isLoadingTrue) {
                         <Col className="px-5 mt-3" sm="6">
                           <h6 style={{textAlign:"left"}}>Delivery Speed</h6>
                           <Input type="select" name="select" id="deliverySpeedBox">
-                            <option>Regular</option>
-                            <option>Express</option>
+                            <option value="Regular">Regular(~7 Business Days)</option>
+                            <option value="Express">Express(~3 Business Days)</option>
                           </Input>
                         </Col>
                       </Row>
@@ -248,7 +253,7 @@ if (isLoadingTrue) {
                         <Col className="pl-5 mt-3" sm="4">
                           <h6 style={{textAlign:"left"}}>Package type</h6>
                           <Input type="select" name="select" id="packageTypeBox">
-                            <option>Regular</option>
+                            <option>General</option>
                             <option>Electronics</option>
                             <option>Food</option>
                             <option>Documents</option>
@@ -258,17 +263,17 @@ if (isLoadingTrue) {
                         <Col className="px-5 mt-3" sm="4">
                           <h6 style={{textAlign:"left"}}>Package size</h6>
                           <Input type="select" name="select" id="packageSizeBox">
-                            <option>Small</option>
-                            <option>Medium</option>
-                            <option>Large</option>
+                            <option value="Small">Small(~8"x8"x8")</option>
+                            <option value="Medium">Medium(~16"x16"x16")</option>
+                            <option value="Large">Large(~26"x26"x26")</option>
                           </Input>
                         </Col>
                         <Col className="pr-5 mt-3" sm="4">
                           <h6 style={{textAlign:"left"}}>Package weight</h6>
                           <Input type="select" name="select" id="packageWeightBox">
-                            <option>Light</option>
-                            <option>Medium</option>
-                            <option>Heavy</option>
+                            <option value="Light">Light(~1 lb - 10 lb)</option>
+                            <option value="Medium">Medium(~10 lb - 25 lb)</option>
+                            <option value="Heavy">Heavy(~25 lb+)</option>
                           </Input>
                         </Col>
                       </Row>
