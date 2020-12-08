@@ -20,10 +20,10 @@ function Examples() {
                 ></img>
             
             <div className="col">
-                <h3>
+                <h3 style={{fontFamily: 'Georgia'}}>
                 Services
                 </h3>
-              <p>Hermes is a website for customers to choose a delivery service from a wide variety of services (UPS, USPS, FedEx etc.). This is a one-stop-shop for customers and business owners to get items delivered across the globe and the website helps them with the best possible quote.</p>
+              <p style={{fontFamily: 'Georgia'}}>Hermes is a website for customers to choose a delivery service from a wide variety of services (UPS, USPS, FedEx etc.). This is a one-stop-shop for customers and business owners to get items delivered across the globe and the website helps them with the best possible quote.</p>
             </div>
           </Row>
           <Row>
@@ -36,10 +36,10 @@ function Examples() {
         
             <div className="col">
                
-              <h3>
+              <h3 style={{fontFamily: 'Georgia'}}>
                   Work With Hermes
                 </h3>
-                <p>Hermes is a website for customers to choose a delivery service from a wide variety of services (UPS, USPS, FedEx etc.). This is a one-stop-shop for customers and business owners to get items delivered across the globe and the website helps them with the best possible quote.</p>
+                <p style={{fontFamily: 'Georgia'}}>Hermes is a website for customers to choose a delivery service from a wide variety of services (UPS, USPS, FedEx etc.). This is a one-stop-shop for customers and business owners to get items delivered across the globe and the website helps them with the best possible quote.</p>
             </div>
           </Row>
         </Container>

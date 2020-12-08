@@ -54,9 +54,9 @@ export default function Cart(props) {
       <>
         {/* <div className="content"> */}
          
-            <Card style = {{fontSize : "11px", width: "30%", marginRight: "20px"}}>
-              <div style = {{backgroundColor:"#ef8157"}}>
-                <CardTitle style={{marginLeft: "10px"}} tag="h4">Order ID: {props.card.packageid}</CardTitle>  
+            <Card style = {{fontSize : "12px", width: "30%", marginRight: "20px",backgroundColor:"#ef8157", borderRadius:"10px"}}>
+              <div style = {{}}>
+                <CardTitle style={{margin: "10px", color:"white"}} tag="h4">Order ID: {props.card.packageid}</CardTitle>  
                 <CardBody style={{backgroundColor: "whitesmoke"}}>
                   <CardText>
                     <div className="content text-left">
