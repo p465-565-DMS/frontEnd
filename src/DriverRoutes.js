@@ -24,13 +24,13 @@ var DriverRoutes = [
     component: Dashboard,
     layout: "/driver",
   },
-  {
-    path: "/orderstracking",
-    name: "Track The Orders",
-    icon: "nc-icon nc-pin-3",
-    component: DriverDestinationMap,
-    layout: "/driver",
-  },
+//   {
+//     path: "/orderstracking",
+//     name: "Track The Orders",
+//     icon: "nc-icon nc-pin-3",
+//     component: DriverDestinationMap,
+//     layout: "/driver",
+//   },
   {
     path: "/history",
     name: "Delivery History",
