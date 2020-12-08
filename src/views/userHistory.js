@@ -3,7 +3,7 @@ import {useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { MDBCol, MDBBtn} from "mdbreact";
 import { Form } from 'react-bootstrap';
-
+import CartListing from "./card.js";
 // reactstrap components
 import {
   Card,
@@ -53,95 +53,33 @@ export default function OrderHistory() {
   })(data);
 },[user]);
 
-const callSecureApi = async (payload)  =>{
-  const token = await getAccessTokenSilently();
-  fetch(`${apiUrl}/user/review`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-  },
-  body: payload,
-}).then((response) => {
-  if (!response.ok) {
-    console.log("SOMETHING WENT WRONG");
-  } else {
-    console.log("SUCCESSS");
-  }
-});
-};
+// const callSecureApi = async (payload)  =>{
+//   const token = await getAccessTokenSilently();
+//   fetch(`${apiUrl}/user/review`, {
+//     method: "POST",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//       "Content-Type": "application/json",
+//   },
+//   body: payload,
+// }).then((response) => {
+//   if (!response.ok) {
+//     console.log("SOMETHING WENT WRONG");
+//   } else {
+//     console.log("SUCCESSS");
+//   }
+// });
+// };
 
-const sendReview = (packageid) => {  
-  let payload = JSON.stringify({
-    review,
-    packageid
-  });
-  callSecureApi(payload);
-  };
+// const sendReview = (packageid) => {  
+//   let payload = JSON.stringify({
+//     review,
+//     packageid
+//   });
+//   callSecureApi(payload);
+//   };
 
-const renderCard = (card) => {
-  return(
-  <Card style = {{fontSize : "11px", width : "30%", marginRight: "20px"}}>
-    <div style = {{backgroundColor:"#ef8157"}}>
-      <CardTitle style={{marginLeft: "10px"}} tag="h4">Order ID: {card.packageid}</CardTitle>  
-      <CardBody style={{backgroundColor: "whitesmoke"}}>
-        <CardText>
-          <div className="content text-left">
-            <p><i class="now-ui-icons travel_info"></i> {card.companyname}</p>
-            <p><i class="now-ui-icons ui-1_email-85"></i> {card.email}</p>
-            <p><i class="now-ui-icons users_circle-08"></i> {card.packageassigned}</p>
-            <p><i class="now-ui-icons location_compass-05"></i> {card.trackingid}</p>
-            <p><i class="now-ui-icons shopping_shop"></i> {card.packagesource}</p>
-            <p><i class="now-ui-icons business_bank"></i> {card.packagedestination}</p>
-            <p><i class="now-ui-icons ui-2_time-alarm"></i> {card.deadline}</p>
-            <p><i class="now-ui-icons shopping_tag-content"></i> {card.packagetype}</p>
-            <p><i class="now-ui-icons shopping_delivery-fast"></i> {card.packagestatus}</p>
-            <p><i class="now-ui-icons business_money-coins"></i> ${card.price}</p>
-            <p><i class="now-ui-icons ui-2_chat-round"></i> {card.review}</p>
-            <Button
-                color="black"
-                className="mr-1"
-                onClick={() => setModal1(true)}
-              >
-                Review
-              </Button>
-              <Modal isOpen={modal1} toggle={() => setModal1(false)}>
-              <div className="modal-header justify-content-center">
-                <button
-                    className="close"
-                    type="button"
-                    onClick={() => setModal1(false)}
-                  >
-                    <i className="now-ui-icons ui-1_simple-remove"></i>
-                  </button>
-                  <h5 className="title title-up">Please Provide Your Review</h5>
-              </div>
-                <ModalBody>
-                  <p>
-                  <Input
-                      placeholder="Review Delivery Service"
-                      type="text"
-                      onChange={e => setReview(e.target.value)}
-                  />
-                  </p>
-                </ModalBody>
-                <div className="modal-footer">
-                  <Button
-                    color="danger"
-                    type="button"
-                    onClick={() => sendReview(card.packageid)}
-                  >
-                    Send
-                  </Button>
-                </div>
-              </Modal>
-          </div>
-        </CardText>
-      </CardBody>
-    </div>
-  </Card>
-  )
-}
+
 
     return (
       <>
@@ -162,8 +100,18 @@ const renderCard = (card) => {
                     </div>
                   </MDBCol> */}
                 </div>
-                <CardBody>
-                  {data.map(renderCard)}
+                <CardBody >
+                  {/* {data.map(renderCard)} */}
+                  {data.map((value) => {
+                  return <CartListing card={value} />;
+                  })}
+                  {data.length === 0 ? (
+                    <h5>
+                      Looks Like you don't have any order history!
+                    </h5>
+                  ) : (
+                    <></>
+                  )}
                 </CardBody>
               </Card>
             </Col>
