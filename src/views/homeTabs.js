@@ -249,7 +249,7 @@ if (isLoadingTrue) {
                           <h6 style={{textAlign:"left"}}>Package type</h6>
                           <Input type="select" name="select" id="packageTypeBox">
                             <option>Regular</option>
-                            <option>Electronic</option>
+                            <option>Electronics</option>
                             <option>Food</option>
                             <option>Documents</option>
                             <option>Others</option>

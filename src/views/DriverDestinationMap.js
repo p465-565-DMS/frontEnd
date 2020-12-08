@@ -45,25 +45,43 @@ export default function Map() {
   })(data);
   },[user]);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const token = await getAccessTokenSilently();
+  //     let result1 = await fetch(`${apiUrl}/api/destination`, {
+  //       method: "GET",
+  //       headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     const res1 = await result1.json();
+  //       setDesRes(res1);
+  //       console.log(res1);
+  //       // setLat(localStorage.getItem("userLat"));
+  //       // setLng(localStorage.getItem("userLng"));
+  //   } catch{}
+  // })(data1);
+  // },[user]);
+
+  React.useEffect(() => {
     (async () => {
       try {
-        const token = await getAccessTokenSilently();
-      let result = await fetch(`${apiUrl}/api/destination`, {
+      const token = await getAccessTokenSilently();
+      let result1 = await fetch(`${apiUrl}/api/destination`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
-      const res = await result.json();
-        //console.log("dd",res);
-        setDesRes(res);
-        // setLat(localStorage.getItem("userLat"));
-        // setLng(localStorage.getItem("userLng"));
+      const res1 = await result1.json();
+      console.log(res1);
+      setData1(res1);
     } catch{}
   })(data1);
-  },[user]);
+},[user]);
 
   useEffect(()=>{
     if(isLoadingCoords){
@@ -82,10 +100,10 @@ export default function Map() {
   });
 
   useEffect(()=>{
-    for (var i = 0; i < desRes.length; i++){
+    for (var i = 0; i < data1.length; i++){
       if(isLoadingCoords2){
-          //console.log(desRes[i]);
-          geocoder.geocode({address: desRes[i].packagelocation}, (result,status)=>{
+          console.log(data1[i]);
+          geocoder.geocode({address: data1[i].packagelocation}, (result,status)=>{
               if(status === "OK"){
                   let location = result[0].geometry.location;
                   rows.push({lat: location.lat(), lng: location.lng()});

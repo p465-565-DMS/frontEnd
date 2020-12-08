@@ -89,7 +89,6 @@ export default function PaymentReview() {
       console.log("SOMETHING WENT WRONG");
     } else {
       console.log("SUCCESSS");
-    //   history.push(window.location.origin);
     }
   });
 };
@@ -127,6 +126,7 @@ export default function PaymentReview() {
 
     const handelSubmit = () => {
       placeOrder();
+      history.push(window.location.origin);
       setModal1(true);
     }
   return (
