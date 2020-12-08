@@ -1,0 +1,18 @@
+.navbar{
+    background-color: #fd745c;
+    padding-top: 10px;
+}
+
+.mainnav{
+    margin-right: auto;
+}
+
+h6{
+    color: black;
+    font-size: 25px;
+}
+
+.navItem{
+    height: 45px;
+    padding-top: 11px;
+}

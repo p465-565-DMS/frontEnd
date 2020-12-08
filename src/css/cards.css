@@ -1,0 +1,26 @@
+.cardList{
+    margin-top: 150px;
+    display: table;
+    table-layout: auto;
+    width: 100%;  
+    padding-left: 25px;
+    padding-top: 20px;
+}
+
+.card{
+    height: 200px;
+    max-width: 300px;
+    margin-right: 60px;
+}
+
+.overlayDiv{
+    position: absolute;
+    top: 50%;
+}
+
+.cardFont{
+    color: rgb(255, 248, 248);
+    text-shadow: 3px 3px #cc3f14;
+    font-size: 70px;
+    padding-left: 10px;
+}

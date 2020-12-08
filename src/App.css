@@ -1,35 +1,66 @@
-.next-steps .fa-link {
-  margin-right: 5px;
-}
+/* /* body{
+  margin:0;
+  padding:0;
+  width:100%;
+  background-color: #fffde2;
+  background-image:url("./img/mainbackground.jpg");
+  background-repeat: no-repeat;
+} */
 
-/* Fix for use only flexbox in content area */
-.next-steps .row {
-  margin-bottom: 0;
-}
+/* html{
+  margin:0;
+  padding:0;
+  width:100%;
+  background-color: #fffde2;
+} */
 
-.next-steps .col-md-5 {
-  margin-bottom: 3rem;
-}
-
-@media (max-width: 768px) {
-  .next-steps .col-md-5 {
-    margin-bottom: 0;
-  }
-}
-
-.spinner {
-  position: absolute;
+/* .mainContainer{
   display: flex;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-  background-color: white;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-direction: column;
+  height: auto;
+  min-height:100%;
+  position:relative;
+  width: 100%;
 }
 
-.result-block-container .result-block {
-  opacity: 1;
+.spacer{
+  border: 5px dashed;
+  border-color: #fff;
+  border-bottom: none;
 }
+
+.scroll-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+}
+.scroll-container .indicator {
+  height: 100%;
+  background: #8b0000;
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background: #8b0000;
+  color: #fff;
+  z-index: 1;
+}
+.scroll-to-top .icon {
+  margin-top: 10px;
+  animation: scrollTop 0.5s alternate ease infinite;
+}
+@keyframes scrollTop {
+  from {
+      transform: translateY(2px);
+  }
+  to {
+      transform: translateY(-1px);
+  }
+} */ 
