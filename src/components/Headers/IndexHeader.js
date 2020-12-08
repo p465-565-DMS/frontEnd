@@ -39,8 +39,8 @@ function IndexHeader() {
               className="n-logo"
               src={require("../../img/logo.png")}
             ></img>
-            <h1 className="h1-seo">Hermes Delivery Hub</h1>
-            <h3>We deliver for your need</h3>
+            <h1 style={{ fontSize: '5em', fontWeight: '500', fontFamily: 'Georgia'}}>Hermes Delivery Hub</h1>
+            <h3 style={{ fontSize: '2em', fontWeight: '500', fontFamily: 'Georgia'}}>We deliver for your need</h3>
           </div>
         </Container>
       </div>
