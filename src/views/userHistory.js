@@ -87,6 +87,7 @@ const renderCard = (card) => {
       <CardBody style={{backgroundColor: "whitesmoke"}}>
         <CardText>
           <div className="content text-left">
+            <p><i class="now-ui-icons travel_info"></i> {card.companyname}</p>
             <p><i class="now-ui-icons ui-1_email-85"></i> {card.email}</p>
             <p><i class="now-ui-icons users_circle-08"></i> {card.packageassigned}</p>
             <p><i class="now-ui-icons location_compass-05"></i> {card.trackingid}</p>
