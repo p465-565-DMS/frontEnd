@@ -253,7 +253,7 @@ if (isLoadingTrue) {
                         <Col className="pl-5 mt-3" sm="4">
                           <h6 style={{textAlign:"left"}}>Package type</h6>
                           <Input type="select" name="select" id="packageTypeBox">
-                            <option>General</option>
+                            <option>Regular</option>
                             <option>Electronics</option>
                             <option>Food</option>
                             <option>Documents</option>
