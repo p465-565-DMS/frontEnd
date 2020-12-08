@@ -1,40 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
-  Chat,
-  Channel,
-  Thread,
-  Window,
-  ChannelList,
-  ChannelHeader,
-  ChannelListMessenger,
-  MessageList,
-  MessageSimple,
-  MessageInput,
-  withChannelContext,
-} from "stream-chat-react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Table,
-  Row,
-  Col,
-  Input,
-  Button,
-} from "reactstrap";
+  Chat, Channel, Thread, Window, ChannelList, ChannelHeader, ChannelListMessenger, MessageList, MessageSimple, MessageInput, withChannelContext,} from "stream-chat-react";
+import {Card, CardHeader, CardBody, CardFooter, CardTitle, Table, Row, Col, Input, Button,} from "reactstrap";
 import { StreamChat } from "stream-chat";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-// import Card from "components/Card/Card.js";
 import "stream-chat-react/dist/css/index.css";
-// import GridItem from "components/Grid/GridItem.js";
-// import GridContainer from "components/Grid/GridContainer.js";
 import { Loading } from "../../components";
-// import CustomInput from "components/CustomInput/CustomInput.js";
-// import Button from "components/CustomButtons/Button.js";
-// import { whiteColor } from "assets/jss/material-dashboard-react.js";
 import "./index.css"
 import TextField from "@material-ui/core/TextField";
 import ArrowForwardRounded from "@material-ui/icons/ArrowForwardRounded";
@@ -42,6 +14,10 @@ import SearchIcon from "@material-ui/icons/Search";
 import { IconButton, InputAdornment } from "@material-ui/core";
 const chatClient = new StreamChat("4zs4u4w9qtyk");
 
+
+
+
+//EVERYTHING ABOVE THIS STAYS. EVERYTHING NOT BOILERPLATE MUST GOOOOOOOOOOO
 function ChatView() {
   const [channel, setChannel] = useState(null);
   const [newChat, setNewChat] = useState("");
@@ -49,13 +25,33 @@ function ChatView() {
   const { user } = useAuth0();
   const username = user.email.replace(/([^a-z0-9_-]+)/gi, "_");
 
+//This is it. process.env.reactblah blah blah is
+//REACT_APP_CHAT_USER=http://localhost:7000/messaging
+//is there any example
+//I copied Viral's code right below
+//can you show me his example
+//See? When I use his process.env.variable it works, but mine does not!
+
+console.log("WOW:" + username)
+const combo = username + ',' + user.nickname;
+const getstuff = axios.post("http://localhost:7000/messaging", {
+    combo,
+});
+
   useEffect(() => {
+
+    //Gets token from useEffect
     async function getToken() {
+      // var combo = username+','+user.nickname
+
       setLoading(true);
       let token;
       try {
+        console.log(username)
+        console.log(user.nickname)
         const response = await axios.post(process.env.REACT_APP_CHAT_URL, {
           username,
+
         });
         token = response.data.token;
       } catch (err) {
@@ -63,6 +59,7 @@ function ChatView() {
         return;
       }
 
+      //setUser defines WHO I AM
       chatClient.setUser(
         {
           id: username,
@@ -71,16 +68,14 @@ function ChatView() {
         token
       );
 
-      const channel = chatClient.channel("team", "group-messaging-2");
+      //for company in database...
+      // const channel = chatClient.channel("messaging", "landing-group1");
 
-      try {
-        await channel.watch();
-      } catch (err) {
-        console.log(err);
-        return;
-      }
-
-      setChannel(channel);
+      const filters = { type: 'team', members: { $in: [username] } };
+      const sort = { last_message_at: -1 };
+      const channels = chatClient.queryChannels(filters, sort);
+      console.log(channels)
+      setChannel(channels);
       setLoading(false);
     }
 
@@ -91,11 +86,26 @@ function ChatView() {
     return <Loading />;
   }
 
+  //We need to get the company of the worker
+    //1. Route to backend to serve SQL request and return coworkers
+  //We need to create DM's of every coworker
+    //2. Create channels with specific member lists
+    //HOW DO WE LINK BETWEEN THE USERNAME OF THE USER AND THE OAUTH USER?
+  //We need to create channel filter for only the worker in question
+    //3. Easy
 
+
+  // fetch(`/messaging?name=${encodeURIComponent('jack')}`)
+  //   .then(response => response.json())
+  //   .then(state => setState(state));
+
+
+
+  //Sends the message to the desired channel
   async function handleSubmit(evt) {
     evt.preventDefault();
 
-    const conversation = chatClient.channel("messaging", "channel-name", {
+    const conversation = chatClient.channel("messaging", "channel-name1", {
       name: "Founder Chat",
       image: "http://bit.ly/2O35mws",
       members: [newChat],
@@ -104,7 +114,8 @@ function ChatView() {
     await conversation.create();
   }
 
-
+  const filters = { type: 'team', members: { $in: [username] } };
+  const sort = { last_message_at: -1 };
   if (channel) {
     const CustomChannelHeader = withChannelContext(
       class CustomChannelHeader extends React.PureComponent {
@@ -126,48 +137,16 @@ function ChatView() {
 
     return (
       <Card style={{ paddingTop: "125px" }}>
-       
+
         <Row>
           <Chat client={chatClient} theme="team light">
             <Col xs={3}>
             <form onSubmit={handleSubmit} style={{ align: "right" }}>
-          <TextField
-            id="search-bar"
-            placeholder="Start a new conversation"
-            variant="outlined"
-            onChange={(e) => setNewChat(e.target.value)}
-            required
-            fullWidth
-            style = {{paddingLeft: "11px", width: "76%"}}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon
-                    fontSize="large"
-                  />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    type="submit"
-                    aria-label="search button"
-                    edge="end"
-                  >
-                    <ArrowForwardRounded
-                      fontSize="large"
-                    />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+
         </form>
               <ChannelList
-                options={{
-                  subscribe: true,
-                  state: true,
-                }}
+                filters={filters}
+                sort={sort}
                 List={ChannelListMessenger}
                 style= {{width: "100%"}}
               />
