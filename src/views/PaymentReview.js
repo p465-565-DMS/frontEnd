@@ -146,7 +146,7 @@ export default function PaymentReview() {
               className="n-logo"
               src={require("../img/logo.png")}
             ></img>
-            <h1 className="h1-seo">Review And Pay</h1>
+            <h1 style={{ fontSize: '3em', fontWeight: '300', fontFamily: 'Georgia'}}>Review And Pay</h1>
             {/* <h3>We deliver for your need</h3> */}
           </div>
         </Container>
@@ -156,17 +156,18 @@ export default function PaymentReview() {
         <Row>
             <Col xs="8">
                 <Container className="d-flex flex-column">
-                    <Card style = {{fontSize : "12px", marginRight: "20px"}}>
-                        <div style = {{backgroundColor:"#ef8157"}}>
-                        <CardTitle style={{marginLeft: "32%"}} tag="h3">Shipping Details</CardTitle>  
+                    <Card style = {{fontSize : "12px", marginRight: "20px", borderRadius:"30", backgroundColor:"#ef8157"}}>
+                        <div style = {{}}>
+                        <CardTitle style={{textAlign: "center", color:"white"}} tag="h3">Shipping Details</CardTitle>  
                         <CardBody style={{backgroundColor: "whitesmoke"}}>
                             <CardText>
                             <div className="content text-left">
-                            <form>
+                            <form style={{color: "red"}}>
                                 <Row>
                                     <Col className="pr-1" md="4">
                                         <FormGroup>
-                                        <label><i class="now-ui-icons users_circle-08"></i> Name</label>
+                                        <i class="now-ui-icons users_circle-08"></i>
+                                        <label style={{color: "black"}}> Name</label>
                                         <Input
                                             required
                                             placeholder="Full Name"
@@ -179,17 +180,18 @@ export default function PaymentReview() {
                                 <Row>
                                     <Col className="pr-1" md="8">
                                         <FormGroup>
-                                        <label><i class="now-ui-icons shopping_shop"></i> Shipping Address</label>
+                                        <i class="now-ui-icons shopping_shop"></i>
+                                        <label style={{color: "black"}}> Shipping Address</label>
                                         <SearchLocationInput required 
                                         />
                                         </FormGroup>
                                     </Col>
                                 </Row>
-                                <p><i class="now-ui-icons ui-2_time-alarm"></i><label> Estimate Delivery By:</label> {deadline}</p>
-                                <p><i class="now-ui-icons shopping_delivery-fast"></i><label> Selected Delivery Method:</label> {order.pspeed}</p>
-                                <p><i class="now-ui-icons shopping_tag-content"></i><label> Package Content: </label> {order.ptype}</p>
-                                <p><i class="now-ui-icons shopping_basket"></i><label> Package Weight: </label> {order.pweight}</p>
-                                <p><i class="now-ui-icons design-2_ruler-pencil"></i><label> Package Size: </label> {order.psize}</p>
+                                <p><i class="now-ui-icons ui-2_time-alarm"></i><label style={{color: "black"}}> Estimate Delivery By:</label> {deadline}</p>
+                                <p><i class="now-ui-icons shopping_delivery-fast"></i><label style={{color: "black"}}> Selected Delivery Method:</label> {order.pspeed}</p>
+                                <p><i class="now-ui-icons shopping_tag-content"></i><label style={{color: "black"}}> Package Content: </label> {order.ptype}</p>
+                                <p><i class="now-ui-icons shopping_basket"></i><label style={{color: "black"}}> Package Weight: </label> {order.pweight}</p>
+                                <p><i class="now-ui-icons design-2_ruler-pencil"></i><label style={{color: "black"}}> Package Size: </label> {order.psize}</p>
                             </form>
                             </div>
                             </CardText>
@@ -199,9 +201,9 @@ export default function PaymentReview() {
                     <Divider variant="middle"/>
                 </Container>
                 <Container className="d-flex flex-column">
-                    <Card style = {{fontSize : "12px", marginRight: "20px"}}>
-                        <div style = {{backgroundColor:"#ef8157"}}>
-                        <CardTitle style={{marginLeft: "32%"}} tag="h3">Payment Method</CardTitle>  
+                    <Card style = {{fontSize : "12px", marginRight: "20px", borderRadius:"30", backgroundColor:"#ef8157" }}>
+                        <div style = {{}}>
+                        <CardTitle style={{textAlign: "center", color:"white"}} tag="h3">Payment Method</CardTitle>  
                         <CardBody style={{backgroundColor: "whitesmoke"}}>
                             <CardText>
                             <div className="content text-left">
@@ -209,7 +211,7 @@ export default function PaymentReview() {
                                 <Row>
                                     <Col className="pr-1" md="8">
                                         <FormGroup>
-                                        <label>Card Number</label>
+                                        <label style={{color: "black"}}>Card Number</label>
                                         <div>
                                             <input style={{width: "80%"}} {...getCardNumberProps()} />
                                         </div>
@@ -217,7 +219,7 @@ export default function PaymentReview() {
                                     </Col>
                                     <Col className="pr-1" md="4">
                                         <FormGroup>
-                                        <label>Card Expiry</label>
+                                        <label style={{color: "black"}}>Card Expiry</label>
                                         <div>
                                             <input style={{width: "80%"}} {...getExpiryDateProps()} />
                                         </div>
@@ -227,7 +229,7 @@ export default function PaymentReview() {
                                 <Row>
                                     <Col className="pr-1" md="3">
                                         <FormGroup>
-                                        <label>Security Code</label>
+                                        <label style={{color: "black"}}>Security Code</label>
                                         <div>
                                             <input style={{width: "80%"}} {...getCVCProps()} />
                                         </div>
@@ -245,15 +247,15 @@ export default function PaymentReview() {
             </Col>
             <Col xs="4">
                 <Container className="d-flex flex-column" style={{alignItems:"flex-end"}}>
-                    <Card style = {{fontSize : "11px", width:"80%"}}>
-                        <div style = {{backgroundColor:"#ef8157"}}>
-                        <CardTitle style={{marginLeft: "12%"}} tag="h5">Order Summary</CardTitle>  
+                    <Card style = {{fontSize : "11px", width:"80%", backgroundColor:"#ef8157", borderRadius:"30"}}>
+                        <div style = {{}}>
+                        <CardTitle style={{textAlign: "center", color:"white"}} tag="h5">Order Summary</CardTitle>  
                         <CardBody style={{backgroundColor: "whitesmoke"}}>
                             <CardText>
                             <div className="content text-left">
-                                <p><i class="now-ui-icons users_circle-08"></i> Name: {name}</p>
-                                <p><i class="now-ui-icons shopping_shop"></i> Address: {order.source}</p>
-                                <p><i class="now-ui-icons business_money-coins"></i> Order Total: {order.price}</p>
+                                <p><i class="now-ui-icons users_circle-08" style={{color: "red"}}></i> Name: {name}</p>
+                                <p><i class="now-ui-icons shopping_shop" style={{color: "red"}}></i> Address: {order.source}</p>
+                                <p><i class="now-ui-icons business_money-coins" style={{color: "red"}}></i> Order Total: {order.price}</p>
                             </div>
                             </CardText>
                             <Button color="success" size="lg" onClick={() => handelSubmit()}>

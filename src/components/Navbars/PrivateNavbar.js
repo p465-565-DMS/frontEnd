@@ -84,7 +84,7 @@ function PrivateNavBar() {
                 <div className="navbar-translate">
                   <NavbarBrand
                     href="#pablo"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={() => history.push(window.location.origin)}
                   >
                     {<img src = {logo}/>}
                   </NavbarBrand>
@@ -104,14 +104,6 @@ function PrivateNavBar() {
                 </div>
                 <Collapse isOpen={collapseOpen} navbar>
                   <Nav className="ml-auto" navbar>
-                    <NavItem className="active">
-                      <NavLink
-                        onClick={routeIndex}
-                        >
-                        <i className="now-ui-icons objects_globe"></i>
-                        <p>Home</p>
-                      </NavLink>
-                    </NavItem>
                     <UncontrolledDropdown nav>
                         <DropdownToggle
                           caret
