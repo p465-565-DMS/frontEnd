@@ -90,9 +90,9 @@ export default function SearchResult(props) {
 
     const renderCard = (card) => {
       return(
-      <Card style = {{fontSize : "11px", width : "30%", marginRight: "20px"}}>
-        <div style = {{backgroundColor:"#ef8157"}}>
-          <CardTitle style={{marginLeft: "10px"}} tag="h4">{card.companyname}</CardTitle>  
+      <Card style = {{fontSize : "11px", width : "30%", margin: "10px", backgroundColor:"#ef8157", borderRadius:"10px"}}>
+        <div style = {{}}>
+          <CardTitle style={{margin: "10px", color: "white"}} tag="h3">{card.companyname}</CardTitle>  
           <CardBody style={{backgroundColor: "whitesmoke"}}>
             <CardText>
               <div className="content text-left">
@@ -102,8 +102,8 @@ export default function SearchResult(props) {
                 <p><i class="now-ui-icons shopping_basket"></i> {card.pweight}</p>
                 <p><i class="now-ui-icons design-2_ruler-pencil"></i> {card.psize}</p>
                 <p><i class="now-ui-icons business_money-coins"></i> ${card.price}</p>
-                <Button className="btn-icon btn-round" color="danger" type="button" onClick={() => sendOrder(card)}>
-                  <i className="now-ui-icons gestures_tap-01"></i>
+                <Button className="btn-round" color="danger" type="button" onClick={() => sendOrder(card)}>
+                  <i className="now-ui-icons gestures_tap-01"></i>Choose
                   </Button>
               </div>
             </CardText>
