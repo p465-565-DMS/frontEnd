@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import logo from "./logo40.png"
 // reactstrap components
@@ -23,6 +23,7 @@ function PublicNavBar() {
   const { loginWithRedirect } = useAuth0();
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = React.useState(false);
+  const history = useHistory();
   React.useEffect(() => {
     const updateNavbarColor = () => {
       if (
@@ -58,7 +59,7 @@ function PublicNavBar() {
                 <div className="navbar-translate">
                   <NavbarBrand
                     href="#pablo"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={() => history.push(window.location.origin)}
                   >
                     {<img src = {logo}/>} 
                   </NavbarBrand>
@@ -78,15 +79,6 @@ function PublicNavBar() {
                 </div>
                 <Collapse isOpen={collapseOpen} navbar>
                   <Nav className="ml-auto" navbar>
-                    <NavItem className="active">
-                      <NavLink
-                        href="/index"
-                        onClick={() => <Redirect to="/index"/>}
-                      >
-                        <i className="now-ui-icons objects_globe"></i>
-                        <p>Home</p>
-                      </NavLink>
-                    </NavItem>
                     <NavItem >
                       <NavLink
                         href="#pablo"
