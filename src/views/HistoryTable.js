@@ -23,9 +23,9 @@ import {
 
 const renderCard = (card) => {
   return(
-  <Card style = {{fontSize : "11px", width : "30%", marginRight: "20px"}}>
-    <div style = {{backgroundColor:"#ef8157"}}>
-      <CardTitle style={{marginLeft: "10px"}} tag="h4">Order ID: {card.packageid}</CardTitle>  
+  <Card style = {{fontSize : "11px", width : "40%", marginRight: "20px", borderRadius:"10px",backgroundColor:"#ef8157"}}>
+    <div style = {{}}>
+      <CardTitle style={{margin: "10px", color:"white"}} tag="h4">Order ID: {card.packageid}</CardTitle>  
       <CardBody style={{backgroundColor: "whitesmoke"}}>
         <CardText>
           <div className="content text-left">
