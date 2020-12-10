@@ -34,7 +34,7 @@ function ChatView() {
 
 console.log("WOW:" + username)
 const combo = username + ',' + user.nickname;
-const getstuff = axios.post("https://chat-server-hermes.herokuapp.com/messaging", {
+const getstuff = axios.post("http://localhost:7000/messaging", {
     combo,
 });
 
