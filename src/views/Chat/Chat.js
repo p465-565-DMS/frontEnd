@@ -25,6 +25,13 @@ function ChatView() {
   const { user } = useAuth0();
   const username = user.email.replace(/([^a-z0-9_-]+)/gi, "_");
 
+//This is it. process.env.reactblah blah blah is
+//REACT_APP_CHAT_USER=http://localhost:7000/messaging
+//is there any example
+//I copied Viral's code right below
+//can you show me his example
+//See? When I use his process.env.variable it works, but mine does not!
+
 console.log("WOW:" + username)
 const combo = username + ',' + user.nickname;
 const getstuff = axios.post("http://localhost:7000/messaging", {
